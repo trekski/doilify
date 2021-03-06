@@ -1,5 +1,5 @@
 <template>
-  <div><pre>{{ log }}</pre></div>
+  <div><pre v-for="(e, i) in log" :key="i" >{{ e }}</pre></div>
 </template>
 
 <script>
@@ -14,40 +14,32 @@ import crochetDrawDemo from './engine/links/demos/crochetDraw.js'
 import crochetOperationDemo from './engine/stitches/operations/demos/operations.js'
 import crochetStitchDemo from './engine/stitches/demos/stitchFactory.js'
 
-let l = ''
+const l = []
 
 function log (a) {
-  l += '> ' + a + '\n'
+  l.push(`> ${a}`)
 }
 
 function header (a) {
-  l += '\n*** ' + a + ' ***\n\n'
+  l.push(`\n*** ${a} ***\n\n`)
 }
 
 header('Ved2d demo')
 vectorDemo(log)
-
 header('idGenerator demo')
 helperDemo(log)
-
 header('graphics demo')
 graphicsDemo(log)
-
 header('factory demo')
 factoryDemo(log)
-
 header('NODE demo')
 crochetNodeDemo(log)
-
 header('LINK demo')
 crochetLinkDemo(log)
-
 header('DRAW LINK demo')
 crochetDrawDemo(log)
-
 header('crochet operation demo')
 crochetOperationDemo(log)
-
 header('STITCH demo')
 crochetStitchDemo(log)
 
@@ -67,4 +59,5 @@ export default {
 <style>
 #app {
 }
+pre {margin: 0px}
 </style>

@@ -18,6 +18,8 @@ import vectorDemo from './engine/misc/demos/vector.js'
 import helperDemo from './engine/misc/demos/helpers.js'
 import graphicsDemo from './engine/misc/demos/graphics.js'
 import factoryDemo from './engine/misc/demos/factory.js'
+import crochetNodeDemo from './engine/nodes/demos/crochetNode.js'
+
 let l = ''
 
 function log (a) {
@@ -39,6 +41,9 @@ graphicsDemo(log)
 
 header('factory demo')
 factoryDemo(log)
+
+header('NODE demo')
+crochetNodeDemo(log)
 
 export default {
   name: 'Demo',

@@ -3,22 +3,14 @@
 </template>
 
 <script>
-// import HelloWorld from './components/HelloWorld.vue'
-
-// import Vec2d from './engine/misc/vector.js'
-// import Vec2d from '../../CrochetTool/engine/misc/vector.js'
-// import * as d3 from '../../CrochetTool/d3.v5.min.js'
-
-// // alert(v)
-// const simulation = d3
-//  .forceSimulation()
-// console.log(simulation)
 
 import vectorDemo from './engine/misc/demos/vector.js'
 import helperDemo from './engine/misc/demos/helpers.js'
 import graphicsDemo from './engine/misc/demos/graphics.js'
 import factoryDemo from './engine/misc/demos/factory.js'
 import crochetNodeDemo from './engine/nodes/demos/crochetNode.js'
+import crochetLinkDemo from './engine/links/demos/crochetLink.js'
+import crochetDrawDemo from './engine/links/demos/crochetDraw.js'
 
 let l = ''
 
@@ -27,7 +19,7 @@ function log (a) {
 }
 
 function header (a) {
-  l += '*** ' + a + ' ***\n'
+  l += '\n*** ' + a + ' ***\n\n'
 }
 
 header('Ved2d demo')
@@ -44,6 +36,12 @@ factoryDemo(log)
 
 header('NODE demo')
 crochetNodeDemo(log)
+
+header('LINK demo')
+crochetLinkDemo(log)
+
+header('DRAW LINK demo')
+crochetDrawDemo(log)
 
 export default {
   name: 'Demo',

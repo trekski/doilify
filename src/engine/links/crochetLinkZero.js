@@ -1,9 +1,9 @@
-import { crochetLink } from './crochetLink.js'
+import CrochetLink from './crochetLink.js'
 
-class crochetLinkZero extends crochetLink {
+class CrochetLinkZero extends CrochetLink {
   static getType () { return 'zero' }
   static getDeftLen () { return 0 }
   static getDesc () { return 'zero-lenght link' }
 }
 
-export { crochetLinkZero }
+export default CrochetLinkZero

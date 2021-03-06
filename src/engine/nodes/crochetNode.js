@@ -80,6 +80,11 @@ class CrochetNode {
     return new Vec2d(this.x, this.y)
   };
 
+  setVector (v) {
+    if (v instanceof Vec2d) { [this.x, this.y] = v.getArray() }
+    return this
+  }
+
   // Add a new link to the reference list of all links this node is connected by
   registerNeighbor (newLink) {
     if (this !== newLink.source && this !== newLink.target) return false

@@ -9,7 +9,7 @@
 import Vec2d from '../../CrochetTool/engine/misc/vector.js'
 import * as d3 from '../../CrochetTool/d3.v5.min.js'
 
-const v = new Vec2d(0, 0)
+var v = new Vec2d(0, 0)
 // alert(v)
 const simulation = d3
   .forceSimulation()

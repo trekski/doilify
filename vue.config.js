@@ -1,3 +1,6 @@
 module.exports = {
-  lintOnSave: false
+  pages: {
+    index: 'src/main.js',
+    demo: 'src/demo.js'
+  }
 }

@@ -11,6 +11,7 @@ import factoryDemo from './engine/misc/demos/factory.js'
 import crochetNodeDemo from './engine/nodes/demos/crochetNode.js'
 import crochetLinkDemo from './engine/links/demos/crochetLink.js'
 import crochetDrawDemo from './engine/links/demos/crochetDraw.js'
+import crochetOperationDemo from './engine/stitches/operations/demos/operations.js'
 
 let l = ''
 
@@ -42,6 +43,9 @@ crochetLinkDemo(log)
 
 header('DRAW LINK demo')
 crochetDrawDemo(log)
+
+header('crochet operation demo')
+crochetOperationDemo(log)
 
 export default {
   name: 'Demo',

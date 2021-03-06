@@ -99,8 +99,6 @@ function crochetOperationDemo (log) {
 
   const l = crochetLinkFactory.getNewObject('sequence', 'A', t, s)
 
-  console.log(ls1, ls2, ls3, lt1, lt2, lt3, l)
-
   log`before merge`
 
   log(`source ${s.id} : ${s.getNeighborNodes().map(e => e.id)}`)
@@ -115,6 +113,8 @@ function crochetOperationDemo (log) {
   log(`deleted link : ${r.delLink.id}`)
   log(`source ${s.id} : ${s.getNeighborNodes().map(e => e.id)}`)
   log(`target ${t.id} : ${t.getNeighborNodes().map(e => e.id)}`)
+
+  log(ls1, ls2, ls3, lt1, lt2, lt3, l)
 }
 
 export default crochetOperationDemo

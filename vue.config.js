@@ -1,6 +1,12 @@
 module.exports = {
   pages: {
-    index: 'src/main.js',
-    demo: 'src/demo.js'
+    index: {
+      entry: 'src/main.js',
+      title: 'Doilify'
+    },
+    demo: {
+      entry: 'src/demo.js',
+      title: 'Demo'
+    }
   }
 }

@@ -1,0 +1,14 @@
+<svg width="35" height="35" viewBox="0 0 35 35" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <circle
+    fill="none" stroke-width="2" stroke="#ffffff"
+    cx="17.5" cy="17.5" r="15"
+  />
+  <path
+    fill="none" stroke-width="2" stroke="#ffffff"
+    d="M 2 17.5 H 33 M 4 10 H 30 M 4 25 H 30 M 17.5 2 V 33"
+    />
+  <ellipse
+    fill="none" stroke-width="2" stroke="#ffffff"
+    cx="17.5" cy="17.5" rx="9" ry="15"
+  />
+</svg>

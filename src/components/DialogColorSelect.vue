@@ -2,12 +2,12 @@
   <div style="text-align: center">
     <div v-for="(group, i) in allowedColors" :key="i">
       <button
-        v-for="(color, j) in group" :key="j"
+        v-for="(item, j) in group" :key="j"
         class="coloricon"
-        :class="{ colorSelected: initialValue === color }"
-        :title="color"
-        @click="colorSelected(color)"
-        :style="{ background : color }"
+        :class="{ colorSelected: initialValue === item.color }"
+        :title="item.name"
+        @click="colorSelected(item.color)"
+        :style="{ background : item.color }"
       />
     </div>
   </div>
@@ -22,9 +22,21 @@ export default {
   data () {
     return {
       allowedColors: [
-        ['black', 'dimgray', 'darkgray'],
-        ['dodgerblue', 'crimson', 'gold'],
-        ['darkorange', 'darkgreen', 'darkmagenta']
+        [
+          { color: 'black', name: 'black' },
+          { color: 'dimgray', name: 'dark gray' },
+          { color: 'darkgray', name: 'light gray' }
+        ],
+        [
+          { color: 'dodgerblue', name: 'blue' },
+          { color: 'crimson', name: 'red' },
+          { color: 'gold', name: 'yello' }
+        ],
+        [
+          { color: '#ff9900', name: 'orange' },
+          { color: 'forestgreen', name: 'green' },
+          { color: 'mediumorchid', name: 'purple' }
+        ]
       ]
     }
   },
@@ -41,13 +53,14 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style>
   .coloricon {
-    height: 45px;
-    width: 45px;
+    height: 50px;
+    width: 50px;
     font-size: 0px;
     border-radius: 50%;
     padding: 0px;
     min-width: 0px;
     transition: all 0.2s;
+    margin: 7px;
   }
   .coloricon:hover {
     -box-shadow: 0px 0px 0px 6px var(--main-accent);
@@ -58,9 +71,9 @@ export default {
     margin: 5px;
   }
   .colorSelected {
-    box-shadow: 0px 0px 0px 6px white, 0px 0px 0px 12px var(--main-accent-highlight);
+    box-shadow: 0px 0px 0px 4px white, 0px 0px 0px 8px var(--main-accent-highlight);
   }
   .colorSelected:hover {
-    box-shadow: 0px 0px 0px 6px white, 0px 0px 0px 12px #fff0;
+    box-shadow: 0px 0px 0px 4px white, 0px 0px 0px 8px #fff0;
   }
 </style>

@@ -54,9 +54,9 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style>
   .toolicon {
-    height: 45px;
-    width: 45px;
-    margin: 5px;
+    height: 50px;
+    width: 50px;
+    margin: 7px;
     min-width: 0px;
     font-size: 0px;
     padding: 5px;

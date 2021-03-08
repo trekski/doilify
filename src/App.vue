@@ -3,8 +3,8 @@
     <!-- where the doily graph will be displayed -->
     <div id="graph">
       modal: <strong>{{ ModalWindowParams.outputParamName }}</strong><br>
-      edit: <strong>{{ appState.mainStitchColor }}</strong><br>
-      color: <strong>{{ appState.editingMode }}</strong><br>
+      color: <strong>{{ appState.mainStitchColor }}</strong><br>
+      tool: <strong>{{ appState.editingMode }}</strong><br>
       menu: <strong>{{ menuOpen }}</strong><br>
       menu selection: <strong>{{ menuSelection }}</strong><br>
     </div>

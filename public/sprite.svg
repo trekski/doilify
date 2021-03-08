@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg">
+  <symbol id="icon-1" viewBox="0 0 100 100">
+    <path class="path-1" d="M 0 0 L 100 100" stroke="black" stroke-width="30" />
+  </symbol>
+  <use href="#icon-1"></use>
+</svg>

@@ -1,20 +1,15 @@
 <template>
   <div style="text-align: center">
-    <div class="description">please select a tool</div>
-    <div>
-      <button class="toolicon" title="crochet"><img src="/icons/toolCrochet.svg"></button>
-      <button class="toolicon" title="pan and zoom"><img src="/icons/toolPanZoom.svg"></button>
-      <button class="toolicon" title="map"><img src="/icons/toolMap.svg"></button>
-    </div>
-    <div>
-      <button class="toolicon" title="move stitch"><img src="/icons/toolMove.svg"></button>
-      <button class="toolicon" title="change stitch color"><img src="/icons/toolReColor.svg"></button>
-      <button class="toolicon" title="change stitch type"><img src="/icons/toolReType.svg"></button>
-    </div>
-    <div>
-      <button class="toolicon" title="delete stitches"><img src="/icons/toolDelete.svg"></button>
-      <button class="toolicon" title="insert stitches"><img src="/icons/toolInsert.svg"></button>
-      <button class="toolicon" title="duplicate stitches"><img src="/icons/toolDuplicate.svg"></button>
+    <div v-for="(group, i) in allowedTools" :key="i">
+      <button
+        v-for="(btn, j) in group" :key="j"
+        class="toolicon"
+        :class="{ toolSelected: initialValue === btn.tool }"
+        :title="btn.name"
+        @click="toolSelected(btn.tool)"
+      >
+        <img :src="btn.icon">
+      </button>
     </div>
   </div>
 </template>
@@ -23,13 +18,35 @@
 
 export default {
   name: 'DialogToolSelect',
-  emits: ['dialogPayload'],
+  props: ['initialValue'],
+  emits: ['toolSelected'],
   data () {
-    return 0
-  },
-  methods: {
+    return {
+      allowedTools: [
+        [
+          { tool: 'crochet', name: 'crochet', icon: '/icons/toolCrochet.svg' },
+          { tool: 'pan_n_zoom', name: 'pan and zoom', icon: '/icons/toolPanZoom.svg' },
+          { tool: 'map', name: 'navigate map', icon: '/icons/toolMap.svg' }
+        ],
+        [
+          { tool: 'move', name: 'move stitch', icon: '/icons/toolMove.svg' },
+          { tool: 'recolor', name: 'change stitch color', icon: '/icons/toolReColor.svg' },
+          { tool: 'retype', name: 'change stitch type', icon: '/icons/toolReType.svg' }
+        ],
+        [
+          { tool: 'delete', name: 'delete stitch', icon: '/icons/toolDelete.svg' },
+          { tool: 'insert', name: 'insert new stitch', icon: '/icons/toolInsert.svg' },
+          { tool: 'duplicate', name: 'duplicate stitch', icon: '/icons/toolDuplicate.svg' }
+        ]
+      ]
+    }
   },
   computed: {
+  },
+  methods: {
+    toolSelected (tool) {
+      this.$emit('toolSelected', tool)
+    }
   }
 }
 </script>
@@ -51,5 +68,11 @@ export default {
   }
   .description {
     margin: 5px;
+  }
+  .toolSelected {
+    box-shadow: 0px 0px 0px 3px var(--main-accent-highlight), inset 0px 0px 0px 2px var(--main-accent-highlight);
+  }
+  .toolSelected:hover {
+    box-shadow: 0px 0px 0px 5px var(--main-accent), inset 0px 0px 0px 2px var(--main-accent);
   }
 </style>

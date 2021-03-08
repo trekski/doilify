@@ -1,5 +1,10 @@
 <template>
-  <div><pre v-for="(e, i) in log" :key="i" >{{ e }}</pre></div>
+  <div>
+    <pre
+      v-for="(e, i) in log"
+      :key="i"
+    >{{ e }}</pre>
+  </div>
 </template>
 
 <script>

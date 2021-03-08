@@ -2,32 +2,64 @@
   <div id="wrapper">
     <!-- where the doily graph will be displayed -->
     <div id="graph">
-      modal: <strong>{{ modalWindow }}</strong><br />
-      edit: <strong>{{ editingMode }}</strong><br />
-      menu: <strong>{{ menuOpen }}</strong><br />
-      menu selection: <strong>{{ menuSelection }}</strong><br />
+      modal: <strong>{{ ModalWindowParams.outputParamName }}</strong><br>
+      edit: <strong>{{ appState.mainStitchColor }}</strong><br>
+      color: <strong>{{ appState.editingMode }}</strong><br>
+      menu: <strong>{{ menuOpen }}</strong><br>
+      menu selection: <strong>{{ menuSelection }}</strong><br>
     </div>
     <!-- placeholder for key app icons -->
     <transition name="fade">
-      <div id="mainIcons" v-if="!menuOpen">
-        <button id="openMenu" class="icon img" @click="toggleMenu(true)">
-          <img src="icons/menu_burger_white.svg" />
+      <div
+        v-if="!menuOpen"
+        id="mainIcons"
+      >
+        <button
+          id="openMenu"
+          class="icon img shadow2px"
+          @click="toggleMenu(true)"
+        >
+          <img src="icons/menu_burger_white.svg">
         </button>
-        <button id="selectTool" class="icon img" @click="changeModal('tool_select')">
-          <img src="icons/select_tool_white.svg" />
+        <button
+          id="selectTool"
+          class="icon img shadow2px"
+          @click="changeModal('edit_mode', appState.editingMode, 'tool_type', 'NONE', 'Pick a tool', 'Toolbox' )"
+        >
+          <img src="icons/select_tool_white.svg">
+        </button>
+        <button
+          id="selectColor"
+          class="icon img shadow2px"
+          @click="changeModal('main_color', appState.mainStitchColor, 'color', 'NONE', 'Pick main stitch color', 'Select Color' )"
+        >
+          <img src="icons/select_tool_white.svg">
         </button>
       </div>
     </transition>
     <!-- placeholder for menu -->
     <transition name="fade">
-      <div id="menuWrapper" class="layer" v-if="menuOpen" @click.self="toggleMenu(false)">
-        <MainMenu @menu-selected="menuAction"/>
+      <div
+        v-if="menuOpen"
+        id="menuWrapper"
+        class="layer"
+        @click.self="toggleMenu(false)"
+      >
+        <MainMenu @menu-selected="menuAction" />
       </div>
     </transition>
     <!-- placeholder for modal dialog windows -->
     <transition name="fade">
-      <div id="modalWrapper" class="layer" v-if="modalWindow" @click.self="changeModal(false)">
-        <ModalWindow @modal-result="changeOption" :modalType="modalWindow" modalButtons="OK_CANCEL"/>
+      <div
+        v-if="ModalWindowParams.show"
+        id="modalWrapper"
+        class="layer"
+        @click.self="changeModal()"
+      >
+        <ModalWindow
+          v-bind="ModalWindowParams"
+          @modal-result="processModalResponse"
+        />
       </div>
     </transition>
   </div>
@@ -45,19 +77,55 @@ export default {
   },
   data () {
     return {
-      modalWindow: false,
-      editingMode: 'crochet',
+      ModalWindowParams: {
+        outputParamName: null,
+        initialValue: null,
+        valueType: null,
+        message: null,
+        title: null,
+        buttons: 'OK',
+        show: false
+      },
+      appState: {
+        editingMode: 'crochet',
+        mainStitchColor: 'black'
+      },
       menuOpen: false,
       menuSelection: false
     }
   },
   methods: {
+
     changeEditingMode (a) {
       this.editingMode = a
     },
-    changeModal (a) {
-      this.modalWindow = a
+
+    changeModal (output = null, initval = null, valtype = null, buttons = null, msg = null, title = null) {
+      // hide the modal
+      if (!output && !msg) {
+        this.ModalWindowParams = {
+          outputParamName: null,
+          initialValue: null,
+          valueType: null,
+          message: null,
+          title: null,
+          buttons: 'OK',
+          show: false
+        }
+      // open a new modal
+      } else {
+        this.ModalWindowParams = {
+          outputParamName: output,
+          initialValue: initval,
+          valueType: valtype,
+          message: msg,
+          title: title,
+          buttons: buttons,
+          show: true
+        }
+      }
     },
+
     toggleMenu (a) {
       if (typeof a === 'undefined') {
         this.menuOpen = !this.menuOpen
@@ -69,10 +137,14 @@ export default {
       this.menuOpen = false
       this.menuSelection = event
     },
-    changeOption (event) {
-      console.log('received')
-      console.log(event)
-      this.modalWindow = false
+
+    processModalResponse (event) {
+      this.changeModal()
+      switch (event.param) {
+        case 'edit_mode' : this.appState.editingMode = event.value; break
+        case 'main_color' : this.appState.mainStitchColor = event.value; break
+        default: this.appState.editingMode = 'crochet'
+      }
     }
   }
 }
@@ -108,6 +180,7 @@ button {
   font-weight: bold;
   outline: none;
   min-width: 50px;
+  transition: background 0.2s, color 0.2s, box-shadow 0.2s;
 }
 
 button:hover {
@@ -152,6 +225,14 @@ button.img{
   position: absolute;
   top: 0px;
   right: 0px;
+}
+
+.shadow5px{
+  box-shadow: 5px 5px 5px gray;
+}
+
+.shadow2px{
+  box-shadow: 2px 2px 5px gray;
 }
 
 .fade-enter-active{

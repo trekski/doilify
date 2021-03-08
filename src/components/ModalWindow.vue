@@ -4,60 +4,99 @@
       {{ title }}
     </div>
     <div class="windowContent">
-      <DialogToolSelect v-if="modalType==='tool_select'" />
-      <div v-if="modalType==='color_select'">whoa!</div>
+      <div class="windowMessage">{{ message }}</div>
+      <DialogToolSelect
+        v-if="valueType==='tool_type'"
+        :initial-value="dialogValue"
+        @toolSelected="processNewValue"
+      />
+      <DialogColorSelect
+        v-if="valueType==='color'"
+        :initial-value="dialogValue"
+        @colorSelected="processNewValue"
+      />
     </div>
-    <div class="windowButtons" v-if="OKvisible||CANCELvisible">
-      <button class="icon" @click="modalOK" v-if="OKvisible">OK</button>
-      <button class="icon" @click="modalCancel" v-if="CANCELvisible">CANCEL</button>
+    <div
+      v-if="buttonsVisible"
+      class="windowButtons"
+    >
+      <button
+        v-if="OKvisible"
+        class="icon"
+        @click="modalOK"
+      >
+        OK
+      </button>
+      <button
+        v-if="CANCELvisible"
+        class="icon"
+        @click="modalCancel"
+      >
+        CANCEL
+      </button>
     </div>
   </div>
 </template>
 
 <script>
 import DialogToolSelect from './DialogToolSelect.vue'
+import DialogColorSelect from './DialogColorSelect.vue'
 export default {
   name: 'ModalWindow',
-  emits: ['modalResult'],
   components: {
-    DialogToolSelect: DialogToolSelect
+    DialogToolSelect: DialogToolSelect,
+    DialogColorSelect: DialogColorSelect
   },
+  props: {
+    outputParamName: String, // what is the parameter this modal is supposed to update
+    initialValue: [String, Number, Boolean, Object], // what was the initial vlaue upon modal opened
+    valueType: String, // type of the initial value determines what dialog is shown
+    message: String, // UX
+    title: String, // UX
+    buttons: String // how does the modal behave
+  },
+  emits: ['modalResult'],
   data () {
     return {
-      text: 'modal clicked something',
-      parameterName: '',
-      parameterValue: ''
-    }
-  },
-  props: ['modalType', 'modalButtons'],
-  methods: {
-    modalCancel () {
-      this.$emit('modalResult', false)
-    },
-    modalOK () {
-      this.$emit(
-        'modalResult',
-        {
-          parameterName: this.parameterName,
-          parameterValue: this.parameterValue
-        }
-      )
+      dialogValue: this.initialValue
     }
   },
   computed: {
-    title () {
-      switch (this.modalType) {
-        case 'tool_select':
-          return 'Select editing tool'
-        default:
-          return 'Dialog window'
-      }
-    },
     OKvisible () {
-      return (this.modalButtons === 'OK' || this.modalButtons === 'OK_CANCEL')
+      return (this.buttons === 'OK' || this.buttons === 'OK_CANCEL')
     },
     CANCELvisible () {
-      return (this.modalButtons === 'CANCEL' || this.modalButtons === 'OK_CANCEL')
+      return (this.buttons === 'CANCEL' || this.buttons === 'OK_CANCEL')
+    },
+    buttonsVisible () {
+      return (this.buttons !== 'NONE')
+    }
+  },
+  methods: {
+    // CANCEL was clicked => clsoe modal without returning anything
+    modalCancel () {
+      this.$emit('modalResult', false)
+    },
+    // OK was clicked => send response (=latest selected value)
+    modalOK () {
+      this.sendResponse()
+    },
+    // vlaue was selected => store it and (if no OK button) emit it instantly
+    processNewValue (event) {
+      this.dialogValue = event
+      if (this.buttons === 'NONE') {
+        this.sendResponse()
+      }
+    },
+    // communicate selected vzlaue to parent(s)
+    sendResponse () {
+      this.$emit(
+        'modalResult',
+        {
+          param: this.outputParamName,
+          value: this.dialogValue
+        }
+      )
     }
   }
 }
@@ -68,7 +107,6 @@ export default {
 .modalWindow {
   min-width: 300px;
   max-width: 80%;
-  min-height: 200px;
   max-height: 80%;
   background: white;
   color: var(--text-accent-highlight);
@@ -78,6 +116,7 @@ export default {
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
+  box-shadow: 5px 5px 5px gray;
 }
 
 .windowTitle {
@@ -87,16 +126,22 @@ export default {
   background: var(--main-accent);
   border-radius: 10px 10px 0px 0px;
   color: var(--text-accent);
+  min-height: 10px;
+}
+.windowMessage {
+  text-align: center;
 }
 
 .windowContent {
-  margin: 10px;
+  padding: 10px;
+  min-height: 180px;
 }
 
 .windowButtons {
   text-align: center;
+  min-height: 10px;
   width: 100%;
-  margin: 0px;
+  padding: 0px;
 }
 
 </style>

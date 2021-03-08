@@ -50,17 +50,17 @@ export default {
     transition: all 0.2s;
   }
   .coloricon:hover {
-    -box-shadow: 0px 0px 0px 8px var(--main-accent);
-    transform: scale(1.2);
+    -box-shadow: 0px 0px 0px 6px var(--main-accent);
+    transform: scale(1.3);
   }
 
   .description {
     margin: 5px;
   }
   .colorSelected {
-    box-shadow: 0px 0px 0px 0px white, 0px 0px 0px 5px var(--main-accent-highlight), inset 0px 0px 0px 3px white;
+    box-shadow: 0px 0px 0px 6px white, 0px 0px 0px 12px var(--main-accent-highlight);
   }
   .colorSelected:hover {
-    box-shadow: 0px 0px 0px 3px white, 0px 0px 0px 5px var(--main-accent-highlight);
+    box-shadow: 0px 0px 0px 6px white, 0px 0px 0px 12px #fff0;
   }
 </style>

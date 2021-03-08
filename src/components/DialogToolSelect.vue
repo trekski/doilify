@@ -70,7 +70,7 @@ export default {
     margin: 5px;
   }
   .toolSelected {
-    box-shadow: 0px 0px 0px 3px var(--main-accent-highlight), inset 0px 0px 0px 2px var(--main-accent-highlight);
+    box-shadow: 0px 0px 0px 2px var(--main-accent-highlight), inset 0px 0px 0px 2px var(--main-accent-highlight);
   }
   .toolSelected:hover {
     box-shadow: 0px 0px 0px 5px var(--main-accent), inset 0px 0px 0px 2px var(--main-accent);

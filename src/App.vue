@@ -35,6 +35,12 @@
         >
           <img src="icons/select_tool_white.svg">
         </button>
+        <button
+          id="selectStitchType"
+          class="icon img shadow2px"
+          @click="changeModal('main_stitch', appState.mainStitchType, 'stitch_type', 'NONE', '', 'Select Stitch' )"
+        >
+        </button>
       </div>
     </transition>
     <!-- placeholder for menu -->
@@ -88,7 +94,8 @@ export default {
       },
       appState: {
         editingMode: 'crochet',
-        mainStitchColor: 'black'
+        mainStitchColor: 'black',
+        mainStitchType: 'ch'
       },
       menuOpen: false,
       menuSelection: false
@@ -143,6 +150,7 @@ export default {
       switch (event.param) {
         case 'edit_mode' : this.appState.editingMode = event.value; break
         case 'main_color' : this.appState.mainStitchColor = event.value; break
+        case 'main_stitch' : this.appState.mainStitchType = event.value; break
         default: this.appState.editingMode = 'crochet'
       }
     }

@@ -1,8 +1,12 @@
 <template>
   <div style="text-align: center">
-    <div v-for="(group, i) in allowedTools" :key="i">
+    <div
+      v-for="(group, i) in allowedTools"
+      :key="i"
+    >
       <button
-        v-for="(btn, j) in group" :key="j"
+        v-for="(btn, j) in group"
+        :key="j"
         class="toolicon"
         :class="{ toolSelected: initialValue === btn.tool }"
         :title="btn.name"

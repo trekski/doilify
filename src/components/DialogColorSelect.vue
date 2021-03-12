@@ -1,13 +1,17 @@
 <template>
   <div style="text-align: center">
-    <div v-for="(group, i) in allowedColors" :key="i">
+    <div
+      v-for="(group, i) in allowedColors"
+      :key="i"
+    >
       <button
-        v-for="(item, j) in group" :key="j"
+        v-for="(item, j) in group"
+        :key="j"
         class="coloricon"
         :class="{ colorSelected: initialValue === item.color }"
         :title="item.name"
-        @click="colorSelected(item.color)"
         :style="{ background : item.color }"
+        @click="colorSelected(item.color)"
       />
     </div>
   </div>

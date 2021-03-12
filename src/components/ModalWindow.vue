@@ -4,7 +4,9 @@
       {{ title }}
     </div>
     <div class="windowContent">
-      <div class="windowMessage">{{ message }}</div>
+      <div class="windowMessage">
+        {{ message }}
+      </div>
       <DialogToolSelect
         v-if="valueType==='tool_type'"
         :initial-value="dialogValue"
@@ -14,6 +16,11 @@
         v-if="valueType==='color'"
         :initial-value="dialogValue"
         @colorSelected="processNewValue"
+      />
+      <DialogStitchTypeSelect
+        v-if="valueType==='stitch_type'"
+        :initial-value="dialogValue"
+        @stitchTypeSelected="processNewValue"
       />
     </div>
     <div
@@ -41,11 +48,14 @@
 <script>
 import DialogToolSelect from './DialogToolSelect.vue'
 import DialogColorSelect from './DialogColorSelect.vue'
+import DialogStitchTypeSelect from './DialogStitchTypeSelect.vue'
+
 export default {
   name: 'ModalWindow',
   components: {
     DialogToolSelect: DialogToolSelect,
-    DialogColorSelect: DialogColorSelect
+    DialogColorSelect: DialogColorSelect,
+    DialogStitchTypeSelect: DialogStitchTypeSelect
   },
   props: {
     outputParamName: String, // what is the parameter this modal is supposed to update
@@ -108,6 +118,8 @@ export default {
   min-width: 300px;
   max-width: 80%;
   max-height: 80%;
+  display: flex;
+  flex-direction: column;
   background: white;
   color: var(--text-accent-highlight);
   font-weight: normal;
@@ -129,12 +141,30 @@ export default {
   min-height: 10px;
 }
 .windowMessage {
+  display: flex;
+  flex-direction: column;
   text-align: center;
 }
 
 .windowContent {
   padding: 10px;
   min-height: 180px;
+  display: flex;
+  flex-direction: column;
+  overflow: scroll;
+}
+
+.windowContent::-webkit-scrollbar {
+    width: 8px;
+}
+
+.windowContent::-webkit-scrollbar-corner {
+    visibility: hidden;
+}
+
+.windowContent::-webkit-scrollbar-thumb {
+    border-radius: 4px;
+    background: lightgray;
 }
 
 .windowButtons {

@@ -205,7 +205,6 @@ button.img{
 
 #wrapper {
   position: relative;
-  outline: solid 1px red;
   outline-offset: -1px;
   height: 100%;
 }
@@ -214,7 +213,6 @@ button.img{
   position: absolute;
   top: 0px;
   left: 0px;
-  outline: yellow solid 1px;
   outline-offset: -5px;
   width: 100%;
   height: 100%;

@@ -48,10 +48,8 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  transition: all var(--transition-time);
+  transition: max-height var(--transition-time);
   transition-delay: 0s;
-}
-.groupName {
 }
 .groupArrow {
   border: solid transparent;
@@ -60,21 +58,26 @@
   margin: 0px;
   width: 0px;
   height: 0px;
-  transition: all var(--transition-time);
+  transition: max-height var(--transition-time);
   transition-delay: 0s;
 }
 .groupSelected .groupHeader {
-  transition-delay: var(--transition-delay);
+  -transition-delay: max-height var(--transition-delay);
 }
 .groupSelected .groupHeader .groupArrow {
   transform: rotate(90deg);
 }
 .groupHighlighted .groupHeader {
-  background: var(--main-accent-highlight);
-  color: var(--text-accent-highlight);
+  box-shadow: 0px 0px 0px 2px var(--main-accent-highlight), inset 0px 0px 0px 2px var(--main-accent-highlight);
+}
+.groupHighlighted .groupHeader:hover {
+  box-shadow: 0px 0px 0px 5px var(--main-accent), inset 0px 0px 0px 2px var(--main-accent);
+}
+.groupHeader:hover {
+  background: var(--main-accent-highlight)
 }
 .groupHighlighted .groupArrow {
-  border-left-color: var(--text-accent-highlight);
+  -border-left-color: var(--text-accent-highlight);
 }
 .groupList {
   overflow: hidden;
@@ -109,7 +112,6 @@
 }
 .listItem.stitchSelected:hover .stitchIcon {
   box-shadow: 0px 0px 0px 5px var(--main-accent), inset 0px 0px 0px 2px var(--main-accent);
-
 }
 
 </style>

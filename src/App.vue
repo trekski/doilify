@@ -41,6 +41,7 @@
           class="icon img shadow2px"
           @click="changeModal('main_stitch', appState.mainStitchType, 'stitch_type', 'NONE', '', 'Select Stitch' )"
         >
+          <img src="icons/select_tool_white.svg">
         </button>
       </div>
     </transition>

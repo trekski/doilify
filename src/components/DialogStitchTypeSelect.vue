@@ -48,24 +48,13 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  transition: max-height var(--transition-time);
-  transition-delay: 0s;
+  transition: max-height var(--transition-time), background 0.2s;
+  transition: color 0.2s;
+  transition-delay: height 0s;
 }
-.groupArrow {
-  border: solid transparent;
-  border-left-color: var(--text-accent);
-  border-width: 7px 0px 7px 11px;
-  margin: 0px;
-  width: 0px;
-  height: 0px;
-  transition: max-height var(--transition-time);
-  transition-delay: 0s;
-}
-.groupSelected .groupHeader {
-  -transition-delay: max-height var(--transition-delay);
-}
-.groupSelected .groupHeader .groupArrow {
-  transform: rotate(90deg);
+.groupHeader:hover {
+  background: var(--main-accent-highlight);
+  color: var(--text-accent-highlight);
 }
 .groupHighlighted .groupHeader {
   box-shadow: 0px 0px 0px 2px var(--main-accent-highlight), inset 0px 0px 0px 2px var(--main-accent-highlight);
@@ -73,12 +62,26 @@
 .groupHighlighted .groupHeader:hover {
   box-shadow: 0px 0px 0px 5px var(--main-accent), inset 0px 0px 0px 2px var(--main-accent);
 }
-.groupHeader:hover {
-  background: var(--main-accent-highlight)
+
+.groupArrow {
+  border: solid transparent;
+  border-left-color: var(--text-accent);
+  border-width: 7px 0px 7px 11px;
+  margin: 0px;
+  width: 0px;
+  height: 0px;
+  transition: transform var(--transition-time), border-left-color 0.2s;
+  transition-delay: 0s;
 }
-.groupHighlighted .groupArrow {
-  -border-left-color: var(--text-accent-highlight);
+
+.groupArrow {
+  border-left-color: var(--text-accent-highlighted);
 }
+
+.groupSelected .groupHeader .groupArrow {
+  transform: rotate(90deg);
+}
+
 .groupList {
   overflow: hidden;
   transition: all var(--transition-time) ease-in;

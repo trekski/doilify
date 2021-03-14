@@ -5,6 +5,7 @@
       modal: <strong>{{ ModalWindowParams.outputParamName }}</strong><br>
       color: <strong>{{ appState.mainStitchColor }}</strong><br>
       tool: <strong>{{ appState.editingMode }}</strong><br>
+      stitch: <strong>{{ appState.mainStitchType }}</strong><br>
       menu: <strong>{{ menuOpen }}</strong><br>
       menu selection: <strong>{{ menuSelection }}</strong><br>
     </div>

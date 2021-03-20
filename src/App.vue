@@ -1,14 +1,16 @@
 <template>
   <div id="wrapper">
-    <!-- where the doily graph will be displayed -->
-    <div id="graph">
-      modal: <strong>{{ ModalWindowParams.outputParamName }}</strong><br>
+    <!-- test -->
+    <div style="padding: 50px; background: #08F5; display: inline-block; position: absolute;">
+      modal av2ev3rvw3rb: <strong>{{ ModalWindowParams.outputParamName }}</strong><br>
       color: <strong>{{ appState.mainStitchColor }}</strong><br>
       tool: <strong>{{ appState.editingMode }}</strong><br>
       stitch: <strong>{{ appState.mainStitchType }}</strong><br>
       menu: <strong>{{ menuOpen }}</strong><br>
       menu selection: <strong>{{ menuSelection }}</strong><br>
     </div>
+    <!-- where the doily graph will be displayed -->
+    <MockGraph />
     <!-- placeholder for key app icons -->
     <transition name="fade">
       <div
@@ -76,12 +78,14 @@
 <script>
 import MainMenu from './components/MainMenu.vue'
 import ModalWindow from './components/ModalWindow.vue'
+import MockGraph from './components/MockGraph.vue'
 
 export default {
   name: 'App',
   components: {
     MainMenu: MainMenu,
-    ModalWindow: ModalWindow
+    ModalWindow: ModalWindow,
+    MockGraph: MockGraph
   },
   data () {
     return {
@@ -162,7 +166,6 @@ export default {
 
 <style>
 #app {
-  outline: 1px solid red;
   outline-offset: -1px;
   margin: 0px;
   padding: 0px;
@@ -219,10 +222,6 @@ button.img{
   background: #0005;
 }
 
-#graph {
-  padding: 50px;
-}
-
 #openMenu {
   position: absolute;
   top: 0px;
@@ -233,6 +232,16 @@ button.img{
   position: absolute;
   top: 0px;
   right: 0px;
+}
+#selectStitchType {
+  position: absolute;
+  bottom: 0px;
+  left: 0px;
+}
+#selectColor {
+  position: absolute;
+  bottom: 0px;
+  left: 50px;
 }
 
 .shadow5px{

@@ -8,7 +8,7 @@
   >
     <g
       id="graphMover"
-      :transform="`translate(${this.baseShiftX} ${this.baseShiftY}), translate(${this.shiftX} ${this.shiftY}), scale(${this.graphScale}), rotate(${this.graphRotate})`"
+      :transform="`translate(${this.baseShiftX} ${this.baseShiftY}), scale(${this.graphScale}), rotate(${this.graphRotate}), translate(${this.shiftX} ${this.shiftY})`"
     >
       <g v-for="row in 9" :key="row">
         <text
@@ -22,6 +22,7 @@
       </g>
       <circle cx="0" cy="0" r="10" fill="red" />
     </g>
+    <circle :cx="this.baseShiftX" :cy="this.baseShiftY" r="5" fill="blue" />
   </svg>
 </template>
 
@@ -70,8 +71,11 @@ export default {
     dragDo (e) {
       if (this.isDragged) {
         if (!e.shiftKey) {
-          this.shiftX += e.movementX
-          this.shiftY += e.movementY
+          const deltaX = e.movementX / this.graphScale
+          const deltaY = e.movementY / this.graphScale
+          const rads = this.graphRotate / 360 * 2 * Math.PI
+          this.shiftX += deltaX * Math.cos(rads) + deltaY * Math.sin(rads)
+          this.shiftY += -deltaX * Math.sin(rads) + deltaY * Math.cos(rads)
         } else {
           this.scaleFactor += e.movementY
           this.rotateFactor += e.movementX

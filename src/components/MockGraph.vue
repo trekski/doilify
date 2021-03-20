@@ -71,6 +71,8 @@ export default {
     dragDo (e) {
       if (this.isDragged) {
         if (!e.shiftKey) {
+          // to apply correct shifts, we need to transfortm pointer coords
+          // into the SVG-after-transformation coords.
           const deltaX = e.movementX / this.graphScale
           const deltaY = e.movementY / this.graphScale
           const rads = this.graphRotate / 360 * 2 * Math.PI

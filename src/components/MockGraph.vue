@@ -162,10 +162,18 @@ export default {
         case 'Equal':
           this.executeZoom(50)
           break
-        case 'KeyH':
+        case 'Digit0':
           this.scaleFactor = 0
+          break
+        case 'Period':
           this.rotateFactor = 0
           break
+        case 'KeyH':
+          this.shiftX = 0
+          this.shiftY = 0
+          break
+        default:
+          console.log(e.code)
       }
     },
     touchChangePoints (e) {

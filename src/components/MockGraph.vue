@@ -2,6 +2,7 @@
   <svg
     id="graph"
     tabindex="0"
+    ref="defaultFocus"
     @mousedown="dragStart"
     @mouseup="dragStop"
     @mouseleave="dragStop"
@@ -73,6 +74,9 @@ export default {
   },
   created () {
     window.addEventListener('resize', this.adjsutBase)
+  },
+  mounted () {
+    this.$refs.defaultFocus.focus()
   },
   unmounted () {
     window.removeEventListener('resize', this.adjsutBase)

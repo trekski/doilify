@@ -2,7 +2,8 @@
   <div id="wrapper">
     <!-- test -->
     <div style="padding: 50px; background: #08F5; display: inline-block; position: absolute;">
-      modal av2ev3rvw3rb: <strong>{{ ModalWindowParams.outputParamName }}</strong><br>
+      modal output: <strong>{{ ModalWindowParams.outputParamName }}</strong><br>
+      modal valtype: <strong>{{ ModalWindowParams.valueType }}</strong><br>
       color: <strong>{{ appState.mainStitchColor }}</strong><br>
       tool: <strong>{{ appState.editingMode }}</strong><br>
       stitch: <strong>{{ appState.mainStitchType }}</strong><br>
@@ -149,6 +150,7 @@ export default {
     menuAction (event) {
       this.menuOpen = false
       this.menuSelection = event
+      if (event === 'panHelp') this.changeModal('none', null, 'pan_help', 'OK', null, 'help on navigation')
     },
 
     processModalResponse (event) {

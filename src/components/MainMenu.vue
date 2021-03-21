@@ -12,6 +12,12 @@
     <div class="menuList">
       <div
         class="menuItem"
+        @click="menuSelected('panHelp')"
+      >
+        help with Zoom/Pan
+      </div>
+      <div
+        class="menuItem"
         @click="menuSelected('foo')"
       >
         foo

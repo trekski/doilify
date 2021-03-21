@@ -22,6 +22,9 @@
         :initial-value="dialogValue"
         @stitchTypeSelected="processNewValue"
       />
+      <DialogPanHelp
+        v-if="valueType==='pan_help'"
+      />
     </div>
     <div
       v-if="buttonsVisible"
@@ -49,13 +52,15 @@
 import DialogToolSelect from './DialogToolSelect.vue'
 import DialogColorSelect from './DialogColorSelect.vue'
 import DialogStitchTypeSelect from './DialogStitchTypeSelect.vue'
+import DialogPanHelp from './DialogPanHelp.vue'
 
 export default {
   name: 'ModalWindow',
   components: {
     DialogToolSelect: DialogToolSelect,
     DialogColorSelect: DialogColorSelect,
-    DialogStitchTypeSelect: DialogStitchTypeSelect
+    DialogStitchTypeSelect: DialogStitchTypeSelect,
+    DialogPanHelp: DialogPanHelp
   },
   props: {
     outputParamName: String, // what is the parameter this modal is supposed to update

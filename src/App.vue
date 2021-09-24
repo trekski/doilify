@@ -1,17 +1,10 @@
 <template>
   <div id="wrapper">
-    <!-- test -->
-    <div style="padding: 50px; background: #08F5; display: inline-block; position: absolute;">
-      modal output: <strong>{{ ModalWindowParams.outputParamName }}</strong><br>
-      modal valtype: <strong>{{ ModalWindowParams.valueType }}</strong><br>
-      color: <strong>{{ appState.mainStitchColor }}</strong><br>
-      tool: <strong>{{ appState.editingMode }}</strong><br>
-      stitch: <strong>{{ appState.mainStitchType }}</strong><br>
-      menu: <strong>{{ menuOpen }}</strong><br>
-      menu selection: <strong>{{ menuSelection }}</strong><br>
-    </div>
     <!-- where the doily graph will be displayed -->
-    <MainGraph />
+    <MainGraph
+      ref="MainGraph"
+      :app-state="appState"
+    />
     <!-- placeholder for key app icons - (almost) const. visible -->
     <transition name="fade">
       <div
@@ -39,6 +32,14 @@
           class="icon img shadow2px"
           title="select stitch color"
           @click="changeModal('main_color', appState.mainStitchColor, 'color', 'NONE', 'Pick main stitch color', 'Select Color' )"
+        >
+          <img src="icons/select_tool_white.svg">
+        </button>
+        <button
+          id="testGraph"
+          class="icon img shadow2px"
+          title="select stitch color"
+          @click="testGraph()"
         >
           <img src="icons/select_tool_white.svg">
         </button>
@@ -118,6 +119,10 @@ export default {
     }
   },
   methods: {
+    // testGraph
+    testGraph () {
+      alert('a')
+    },
     // show/hide the main menu
     toggleMenu (a) {
       if (typeof a === 'undefined') {
@@ -250,6 +255,11 @@ button.img{
   position: absolute;
   bottom: 0px;
   left: 50px;
+}
+#testGraph {
+  position: absolute;
+  bottom: 0px;
+  left: 100px;
 }
 
 .shadow5px{

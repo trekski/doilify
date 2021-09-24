@@ -26,8 +26,8 @@
         cx="0"
         cy="0"
         r="10"
-        fill="red"
-        title="transforms with the graph"
+        :fill=" appState.editingMode == 'crochet' ? 'red' : 'green'"
+        title="moves with graph"
       />
     </g>
     <circle
@@ -35,12 +35,11 @@
       :cy="baseShiftY"
       r="5"
       fill="blue"
-      title="staus centerd"
+      title="always centerd"
     />
     <text
       x="100"
       y="100"
-      style=" fill: #F00"
     >
       {{ touchData.info }}
     </text>
@@ -49,13 +48,20 @@
 
 <script>
 import Vec2d from '../engine/misc/vector.js'
+import * as d3 from 'd3'
 
 export default {
-  name: 'MockGraph',
+  name: 'MainGraph',
   components: {},
-  props: {},
+  props: {
+    appState: {
+      type: Object,
+      default: Object
+    }
+  },
   data () {
     return {
+      // variables to keep track of how the users interacts with the graph
       isDragged: false,
       touchData: {
         from: null,
@@ -67,7 +73,12 @@ export default {
       scaleFactor: 0,
       rotateFactor: 0,
       baseShiftX: document.documentElement.clientWidth / 2,
-      baseShiftY: document.documentElement.clientHeight / 2
+      baseShiftY: document.documentElement.clientHeight / 2,
+      // main elements of the graph simulation
+      nodes: [],
+      links: [],
+      stitches: [],
+      simulation: d3.forceSimulation()
     }
   },
   computed: {
@@ -167,12 +178,18 @@ export default {
         case 'Digit0':
           this.scaleFactor = 0
           break
-        case 'Period':
+        case 'Slash':
           this.rotateFactor = 0
           break
         case 'KeyH':
           this.shiftX = 0
           this.shiftY = 0
+          break
+        case 'Comma':
+          this.executeRotation(-150)
+          break
+        case 'Period':
+          this.executeRotation(150)
           break
         default:
           console.log(e.code)

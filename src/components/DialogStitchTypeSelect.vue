@@ -42,7 +42,7 @@ export default {
   props: {
     initialValue: {
       type: String,
-      default: 'sc'
+      default: 'ch'
     }
   },
   emits: ['stitchTypeSelected'],

@@ -11,8 +11,8 @@
       menu selection: <strong>{{ menuSelection }}</strong><br>
     </div>
     <!-- where the doily graph will be displayed -->
-    <MockGraph />
-    <!-- placeholder for key app icons -->
+    <MainGraph />
+    <!-- placeholder for key app icons - (almost) const. visible -->
     <transition name="fade">
       <div
         v-if="!menuOpen"
@@ -21,6 +21,7 @@
         <button
           id="openMenu"
           class="icon img shadow2px"
+          title="open the main menu"
           @click="toggleMenu(true)"
         >
           <img src="icons/menu_burger_white.svg">
@@ -28,6 +29,7 @@
         <button
           id="selectTool"
           class="icon img shadow2px"
+          title="select the tool you wANt to use"
           @click="changeModal('edit_mode', appState.editingMode, 'tool_type', 'NONE', 'Pick a tool', 'Toolbox' )"
         >
           <img src="icons/select_tool_white.svg">
@@ -35,6 +37,7 @@
         <button
           id="selectColor"
           class="icon img shadow2px"
+          title="select stitch color"
           @click="changeModal('main_color', appState.mainStitchColor, 'color', 'NONE', 'Pick main stitch color', 'Select Color' )"
         >
           <img src="icons/select_tool_white.svg">
@@ -42,6 +45,7 @@
         <button
           id="selectStitchType"
           class="icon img shadow2px"
+          title="select stitch type"
           @click="changeModal('main_stitch', appState.mainStitchType, 'stitch_type', 'NONE', '', 'Select Stitch' )"
         >
           <img src="icons/select_tool_white.svg">
@@ -79,17 +83,20 @@
 <script>
 import MainMenu from './components/MainMenu.vue'
 import ModalWindow from './components/ModalWindow.vue'
-import MockGraph from './components/MockGraph.vue'
+// import MockGraph from './components/MockGraph.vue'
+import MainGraph from './components/MainGraph.vue'
 
 export default {
   name: 'App',
   components: {
     MainMenu: MainMenu,
     ModalWindow: ModalWindow,
-    MockGraph: MockGraph
+    // MockGraph: MockGraph
+    MainGraph: MainGraph
   },
   data () {
     return {
+      // is there a modal dialog window open, and if so, what is it
       ModalWindowParams: {
         outputParamName: null,
         initialValue: null,
@@ -99,21 +106,33 @@ export default {
         buttons: 'OK',
         show: false
       },
+      // what is the user doing a.t.m.
       appState: {
         editingMode: 'crochet',
         mainStitchColor: 'black',
         mainStitchType: 'ch'
       },
+      // is the main menu currently open
       menuOpen: false,
       menuSelection: false
     }
   },
   methods: {
-
-    changeEditingMode (a) {
-      this.editingMode = a
+    // show/hide the main menu
+    toggleMenu (a) {
+      if (typeof a === 'undefined') {
+        this.menuOpen = !this.menuOpen
+      } else {
+        this.menuOpen = Boolean(a)
+      }
     },
-
+    // react to selected menu action
+    menuAction (event) {
+      this.menuOpen = false
+      this.menuSelection = event
+      if (event === 'panHelp') this.changeModal('none', null, 'pan_help', 'OK', null, 'help on navigation')
+    },
+    // manage display of modal dialog windows
     changeModal (output = null, initval = null, valtype = null, buttons = null, msg = null, title = null) {
       // hide the modal
       if (!output && !msg) {
@@ -139,20 +158,7 @@ export default {
         }
       }
     },
-
-    toggleMenu (a) {
-      if (typeof a === 'undefined') {
-        this.menuOpen = !this.menuOpen
-      } else {
-        this.menuOpen = Boolean(a)
-      }
-    },
-    menuAction (event) {
-      this.menuOpen = false
-      this.menuSelection = event
-      if (event === 'panHelp') this.changeModal('none', null, 'pan_help', 'OK', null, 'help on navigation')
-    },
-
+    // react to evetns emitted by the modal window
     processModalResponse (event) {
       this.changeModal()
       switch (event.param) {

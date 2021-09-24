@@ -1,8 +1,8 @@
 <template>
   <svg
     id="graph"
-    tabindex="0"
     ref="defaultFocus"
+    tabindex="0"
     @mousedown="dragStart"
     @mouseup="dragStop"
     @mouseleave="dragStop"
@@ -19,10 +19,14 @@
   >
     <g
       id="graphMover"
-      :transform="`translate(${this.baseShiftX} ${this.baseShiftY}), scale(${this.graphScale}), rotate(${this.graphRotate}), translate(${this.shiftX} ${this.shiftY})`"
+      :transform="`translate(${baseShiftX} ${baseShiftY}), scale(${graphScale}), rotate(${graphRotate}), translate(${shiftX} ${shiftY})`"
       @keydown="k"
     >
-      <g v-for="row in 9" :key="row" @keydown="k">
+      <g
+        v-for="row in 9"
+        :key="row"
+        @keydown="k"
+      >
         <text
           v-for="(col, index) in columns"
           :key="index"
@@ -33,10 +37,24 @@
           {{ col }}:{{ row }}
         </text>
       </g>
-      <circle cx="0" cy="0" r="10" fill="red" />
+      <circle
+        cx="0"
+        cy="0"
+        r="10"
+        fill="red"
+      />
     </g>
-    <circle :cx="this.baseShiftX" :cy="this.baseShiftY" r="5" fill="blue" />
-    <text x="100" y="100" style=" fill: #F00">
+    <circle
+      :cx="baseShiftX"
+      :cy="baseShiftY"
+      r="5"
+      fill="blue"
+    />
+    <text
+      x="100"
+      y="100"
+      style=" fill: #F00"
+    >
       {{ touchData.info }}
     </text>
   </svg>

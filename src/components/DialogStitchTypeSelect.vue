@@ -10,8 +10,10 @@
         class="groupHeader"
         @click="selectGroup(group.name)"
       >
-        <div class="groupName">{{ group.name }}</div>
-        <div class="groupArrow"></div>
+        <div class="groupName">
+          {{ group.name }}
+        </div>
+        <div class="groupArrow" />
       </div>
       <div class="groupList">
         <div
@@ -25,104 +27,24 @@
             class="stitchIcon"
             :title="item.code"
           />
-          <div class="stitchLabel">{{ item.desc }}</div>
+          <div class="stitchLabel">
+            {{ item.desc }}
+          </div>
         </div>
       </div>
     </div>
   </div>
 </template>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style>
-.stitchGroup {
-  margin-bottom: 7px;
-  --transition-time: 0.5s;
-  --transition-delay: 0.6s;
-}
-.groupHeader {
-  background: var(--main-accent);
-  color: var(--text-accent);
-  font-weight: bold;
-  padding: 5px;
-  border-radius: 5px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  transition: max-height var(--transition-time), background 0.2s;
-  transition: color 0.2s;
-  transition-delay: height 0s;
-}
-.groupHeader:hover {
-  background: var(--main-accent-highlight);
-  color: var(--text-accent-highlight);
-}
-.groupHighlighted .groupHeader {
-  box-shadow: 0px 0px 0px 2px var(--main-accent-highlight), inset 0px 0px 0px 2px var(--main-accent-highlight);
-}
-.groupHighlighted .groupHeader:hover {
-  box-shadow: 0px 0px 0px 5px var(--main-accent), inset 0px 0px 0px 2px var(--main-accent);
-}
-
-.groupArrow {
-  border: solid transparent;
-  border-left-color: var(--text-accent);
-  border-width: 7px 0px 7px 11px;
-  margin: 0px;
-  width: 0px;
-  height: 0px;
-  transition: transform var(--transition-time), border-left-color 0.2s;
-  transition-delay: 0s;
-}
-
-.groupArrow {
-  border-left-color: var(--text-accent-highlighted);
-}
-
-.groupSelected .groupHeader .groupArrow {
-  transform: rotate(90deg);
-}
-
-.groupList {
-  overflow: hidden;
-  transition: all var(--transition-time) ease-in;
-  transition-delay: 0s;
-  max-height: 0px;
-}
-.groupSelected  .groupList{
-  transition: all var(--transition-time) ease-out;
-  transition-delay: var(--transition-delay);
-  max-height: 500px;
-}
-
-.stitchIcon {
-  height: 30px;
-  min-width: 30px;
-  width: 30px
-}
-.listItem {
-  display: flex;
-  align-items: center;
-  justify-content: left;
-}
-.listItem:hover .stitchIcon {
-  background: var(--main-accent-highlight);
-}
-.stitchLabel {transition: all 0.2s}
-.listItem.stitchSelected .stitchLabel { color: var(--main-accent-highlight);}
-.listItem:hover .stitchLabel { color: var(--main-accent-highlight);}
-.listItem.stitchSelected .stitchIcon {
-  box-shadow: 0px 0px 0px 2px var(--main-accent-highlight), inset 0px 0px 0px 2px var(--main-accent-highlight);
-}
-.listItem.stitchSelected:hover .stitchIcon {
-  box-shadow: 0px 0px 0px 5px var(--main-accent), inset 0px 0px 0px 2px var(--main-accent);
-}
-
-</style>
-
 <script>
 export default {
   name: 'DialogStitchTypeSelect',
-  props: ['initialValue'],
+  props: {
+    initialValue: {
+      type: String,
+      default: 'sc'
+    }
+  },
   emits: ['stitchTypeSelected'],
   data () {
     return {
@@ -195,3 +117,85 @@ export default {
   }
 }
 </script>
+
+<!-- Add "scoped" attribute to limit CSS to this component only -->
+<style>
+.stitchGroup {
+  margin-bottom: 7px;
+  --transition-time: 0.5s;
+  --transition-delay: 0.6s;
+}
+.groupHeader {
+  background: var(--main-accent);
+  color: var(--text-accent);
+  font-weight: bold;
+  padding: 5px;
+  border-radius: 5px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: max-height var(--transition-time), background 0.2s;
+  transition: color 0.2s;
+  transition-delay: height 0s;
+}
+.groupHeader:hover {
+  background: var(--main-accent-highlight);
+  color: var(--text-accent-highlight);
+}
+.groupHighlighted .groupHeader {
+  box-shadow: 0px 0px 0px 2px var(--main-accent-highlight), inset 0px 0px 0px 2px var(--main-accent-highlight);
+}
+.groupHighlighted .groupHeader:hover {
+  box-shadow: 0px 0px 0px 5px var(--main-accent), inset 0px 0px 0px 2px var(--main-accent);
+}
+.groupArrow {
+  border: solid transparent;
+  border-left-color: var(--text-accent);
+  border-width: 7px 0px 7px 11px;
+  margin: 0px;
+  width: 0px;
+  height: 0px;
+  transition: transform var(--transition-time), border-left-color 0.2s;
+  transition-delay: 0s;
+}
+.groupArrow {
+  border-left-color: var(--text-accent-highlighted);
+}
+.groupSelected .groupHeader .groupArrow {
+  transform: rotate(90deg);
+}
+.groupList {
+  overflow: hidden;
+  transition: all var(--transition-time) ease-in;
+  transition-delay: 0s;
+  max-height: 0px;
+}
+.groupSelected  .groupList{
+  transition: all var(--transition-time) ease-out;
+  transition-delay: var(--transition-delay);
+  max-height: 500px;
+}
+.stitchIcon {
+  height: 30px;
+  min-width: 30px;
+  width: 30px
+}
+.listItem {
+  display: flex;
+  align-items: center;
+  justify-content: left;
+}
+.listItem:hover .stitchIcon {
+  background: var(--main-accent-highlight);
+}
+.stitchLabel {transition: all 0.2s}
+.listItem.stitchSelected .stitchLabel { color: var(--main-accent-highlight);}
+.listItem:hover .stitchLabel { color: var(--main-accent-highlight);}
+.listItem.stitchSelected .stitchIcon {
+  box-shadow: 0px 0px 0px 2px var(--main-accent-highlight), inset 0px 0px 0px 2px var(--main-accent-highlight);
+}
+.listItem.stitchSelected:hover .stitchIcon {
+  box-shadow: 0px 0px 0px 5px var(--main-accent), inset 0px 0px 0px 2px var(--main-accent);
+}
+
+</style>

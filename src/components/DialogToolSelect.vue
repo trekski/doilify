@@ -22,7 +22,12 @@
 
 export default {
   name: 'DialogToolSelect',
-  props: ['initialValue'],
+  props: {
+    initialValue: {
+      type: String,
+      default: 'crochet'
+    }
+  },
   emits: ['toolSelected'],
   data () {
     return {

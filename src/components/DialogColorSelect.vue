@@ -21,7 +21,12 @@
 
 export default {
   name: 'DialogColorSelect',
-  props: ['initialValue'],
+  props: {
+    initialValue: {
+      type: String,
+      default: 'black'
+    }
+  },
   emits: ['colorSelected'],
   data () {
     return {

@@ -63,12 +63,30 @@ export default {
     DialogPanHelp: DialogPanHelp
   },
   props: {
-    outputParamName: String, // what is the parameter this modal is supposed to update
-    initialValue: [String, Number, Boolean, Object], // what was the initial vlaue upon modal opened
-    valueType: String, // type of the initial value determines what dialog is shown
-    message: String, // UX
-    title: String, // UX
-    buttons: String // how does the modal behave
+    outputParamName: { // what is the parameter this modal is supposed to update
+      type: String,
+      default: ''
+    },
+    initialValue: { // what was the initial value upon modal opened
+      type: [String, Number, Boolean, Object],
+      default: ''
+    },
+    valueType: { // type of the  value determines what dialog is shown
+      type: String,
+      default: ''
+    },
+    message: { // UX
+      type: String,
+      default: 'message'
+    },
+    title: { // UX
+      type: String,
+      default: 'title'
+    },
+    buttons: { // how does the modal behave
+      type: String,
+      default: ''
+    }
   },
   emits: ['modalResult'],
   data () {

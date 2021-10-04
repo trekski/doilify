@@ -1,6 +1,6 @@
 import IdGenerator from '../misc/helpers.js'
 import CrochetNode from '../nodes/crochetNode.js'
-import crochetOperationFactory from './operations/operationFactory.js'
+import CrochetOperationFactory from './operations/operationFactory.js'
 import OperationSubject from './operations/operationSubject.js'
 
 class CrochetStitch {

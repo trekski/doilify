@@ -29,7 +29,7 @@ function header (a) {
   l.push(`\n*** ${a} ***\n\n`)
 }
 
-header('Ved2d demo')
+header('Vec2d demo')
 vectorDemo(log)
 header('idGenerator demo')
 helperDemo(log)

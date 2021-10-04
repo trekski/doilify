@@ -48,7 +48,7 @@
 
 <script>
 import Vec2d from '../engine/misc/vector.js'
-import * as d3 from 'd3'
+// import * as d3 from 'd3'
 
 export default {
   name: 'MainGraph',

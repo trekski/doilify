@@ -1,58 +1,65 @@
 <template>
-  <svg
-    id="graph"
-    ref="defaultFocus"
-    tabindex="0"
-    @mousedown="dragStart"
-    @mouseup="dragStop"
-    @mouseleave="dragStop"
-    @mousemove.exact="dragPan"
-    @mousemove.shift.exact="dragZoom"
-    @mousemove.ctrl.exact="dragPivot"
-    @mousemove.meta.exact="dragPivot"
-    @mousewheel="mouseWheelUsed"
-    @keydown.shift.exact="keyPressedShifted"
-    @touchstart="touchChangePoints"
-    @touchend="touchChangePoints"
-    @touchcancel="touchChangePoints"
-    @touchmove="touchUsed"
+  <div
+    id="graph_div"
   >
-    <g
-      id="graphMover"
-      :transform="`translate(${baseShiftX} ${baseShiftY}), scale(${graphScale}), rotate(${graphRotate}), translate(${shiftX} ${shiftY})`"
-      @keydown="k"
+    <Doily />
+    <svg
+      id="graph"
+      ref="defaultFocus"
+      tabindex="0"
+      @mousedown="dragStart"
+      @mouseup="dragStop"
+      @mouseleave="dragStop"
+      @mousemove.exact="dragPan"
+      @mousemove.shift.exact="dragZoom"
+      @mousemove.ctrl.exact="dragPivot"
+      @mousemove.meta.exact="dragPivot"
+      @mousewheel="mouseWheelUsed"
+      @keydown.shift.exact="keyPressedShifted"
+      @touchstart="touchChangePoints"
+      @touchend="touchChangePoints"
+      @touchcancel="touchChangePoints"
+      @touchmove="touchUsed"
     >
+      <g
+        id="graphMover"
+        :transform="`translate(${baseShiftX} ${baseShiftY}), scale(${graphScale}), rotate(${graphRotate}), translate(${shiftX} ${shiftY})`"
+        @keydown="k"
+      >
+        <circle
+          cx="0"
+          cy="0"
+          r="10"
+          :fill=" appState.editingMode == 'crochet' ? 'red' : 'green'"
+          title="moves with graph"
+        />
+      </g>
       <circle
-        cx="0"
-        cy="0"
-        r="10"
-        :fill=" appState.editingMode == 'crochet' ? 'red' : 'green'"
-        title="moves with graph"
+        :cx="baseShiftX"
+        :cy="baseShiftY"
+        r="5"
+        fill="blue"
+        title="always centerd"
       />
-    </g>
-    <circle
-      :cx="baseShiftX"
-      :cy="baseShiftY"
-      r="5"
-      fill="blue"
-      title="always centerd"
-    />
-    <text
-      x="100"
-      y="100"
-    >
-      {{ touchData.info }}
-    </text>
-  </svg>
+      <text
+        x="100"
+        y="100"
+      >
+        {{ touchData.info }}
+      </text>
+    </svg>
+  </div>
 </template>
 
 <script>
 import Vec2d from '../engine/misc/vector.js'
-// import * as d3 from 'd3'
+import Doily from './Doily.vue'
 
 export default {
   name: 'MainGraph',
-  components: {},
+  components: {
+    Doily: Doily
+  },
   props: {
     appState: {
       type: Object,
@@ -73,12 +80,7 @@ export default {
       scaleFactor: 0,
       rotateFactor: 0,
       baseShiftX: document.documentElement.clientWidth / 2,
-      baseShiftY: document.documentElement.clientHeight / 2,
-      // main elements of the graph simulation
-      nodes: [],
-      links: [],
-      stitches: [],
-      simulation: d3.forceSimulation()
+      baseShiftY: document.documentElement.clientHeight / 2
     }
   },
   computed: {
@@ -286,6 +288,17 @@ export default {
   height: 100%;
   position: absolute;
   touch-action: none;
+  visibility: hidden;
+}
+
+#graph_div {
+  outline: solid 1px red;
+  outline-offset: -1px;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  touch-action: none;
+  _visibility: hidden;
 }
 
 #graph text {

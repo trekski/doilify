@@ -35,8 +35,8 @@ class CrochetStitch {
     // *** PRIVATE ATTRIBUTES ***
 
     this._context = context
-    this._nodes = new Map()
-    this._links = new Map()
+    this._nodes = []
+    this._links = []
     this.id = CrochetStitch.COUNTER.next()
 
     // validate call parameters
@@ -57,22 +57,27 @@ class CrochetStitch {
     while (instr) {
       const tokens = instr.split(':').map(e => e.trim())
       const action = tokens.shift()
-      const op = crochetOperationFactory.getNewObject(action, subject, tokens)
+      const op = CrochetOperationFactory.getNewObject(action, subject, tokens)
       const res = op.exec()
-      subject = res.subject
 
-      if (res.newNode) this._nodes.set(res.newNode)
-      if (res.newLink) this._links.set(res.newLink)
+      subject = res.subject
+      if (res.newNode) this._nodes.push(res.newNode)
+      if (res.newLink) this._links.push(res.newLink)
       if (res.delNode) {
         res.delNode
           .getNeighborLinks()
           .forEach(e => {
             e.apoptose()
-            this._links.delete(e)
+            var p = this._nodes.indexOf(e)
+            if (p > -1) this._nodes.splice(p, 1)
           })
-        this._nodes.delete(res.delNode)
       }
-      if (res.delLink) this._links.delete(res.delLink)
+
+      if (res.delLink) {
+        var p = this._links.indexOf(res.delLink)
+        if (p > -1) this._links.splice(p, 1)
+      }
+
       instr = seq.shift()
     }
   }
@@ -85,17 +90,15 @@ class CrochetStitch {
   }
 
   getNodes (nodeType = null) {
-    const nodes = Array
-      .from(this._nodes.keys())
-      .filter(e => (nodeType === null || e.getType() === nodeType))
-    return nodes
+    return this._nodes.filter(
+      node => (nodeType === null || node.getType() === nodeType)
+    )
   };
 
   getLinks (linkType = null) {
-    const links = Array
-      .from(this._links.keys())
-      .filter(e => (linkType === null || e.getType() === linkType))
-    return links
+    return this._links.filter(
+      link => (linkType === null || link.getType() === linkType)
+    )
   };
 
   getStartNode () {

@@ -41,7 +41,6 @@ class CrochetOperationBasic extends CrochetOperation {
     const [newLinkType, newNodeType] = this.params
     const newSubject = this.subject.copy()
     const sourceNode = newSubject.needleStack.pop()
-
     const newPos = CrochetOperationBasic.CALC_DEF_NEW_POS(sourceNode, newLinkType) // ??? where to put this function best ???
     const newNode = CrochetOperation.nodeFactory.getNewObject(newNodeType, this.subject.contextStitch, newPos)
     const newLink = CrochetOperation.linkFactory.getNewObject(newLinkType, this.subject.contextStitch, sourceNode, newNode)

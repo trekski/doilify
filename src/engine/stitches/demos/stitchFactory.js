@@ -11,11 +11,12 @@ function crochetStitchDemo (log) {
   log(`${s.id}`)
   log(`${s.getSequence()}`)
   log(`nodes : ${s.getNodes()}`)
-  log(`nodes : ${s.getLinks()}`)
+  log(`links : ${s.getLinks()}`)
   log(`start : ${s.getStartNode()}`)
   log(`end : ${s.getEndNode()}`)
 
   log`*** origin stitch ***`
+
   s = crochetStitchFactory.getNewObject('origin', 'doily')
   log(`nodes : ${s.getNodes()}`)
   log(`links : ${s.getLinks()}`)
@@ -23,7 +24,10 @@ function crochetStitchDemo (log) {
   log`*** chain stitch ***`
 
   n = s.getLastLoop()
+  log(`${n._links}`)
+
   s = crochetStitchFactory.getNewObject('ch', 'doily', n)
+
   log(`nodes : ${s.getNodes()}`)
   log(`links : ${s.getLinks()}`)
   log(`links : ${s.getLinks().map(e => (e.source.id + ' -> ' + e.target.id + '(' + e.getType() + ')'))}`)

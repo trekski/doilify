@@ -50,8 +50,7 @@ class CrochetNode {
     this.fy = null
 
     // based on created links, we will keep tracck of nearest neighboring nodes on graph
-    this._out_neighbors = new Map()
-    this._in_neighbors = new Map()
+    this._links = []
 
     // other references
     this.id = CrochetNode.COUNTER.next()
@@ -63,8 +62,7 @@ class CrochetNode {
   // - have all links removed (they self-unregister themselves from their start/end nodes)
   // - be un-registered form all contexts
   apoptose () {
-    this._out_neighbors = undefined
-    this._to_neighbors = undefined
+    this._links.splice(0)
     this._context = undefined
   }
 
@@ -88,18 +86,14 @@ class CrochetNode {
   // Add a new link to the reference list of all links this node is connected by
   registerNeighbor (newLink) {
     if (this !== newLink.source && this !== newLink.target) return false
-    if (this === newLink.source) {
-      this._out_neighbors.set(newLink, newLink.target)
-    } else {
-      this._in_neighbors.set(newLink, newLink.source)
-    }
+    this._links.push(newLink)
     return this
   }
 
   // Removes an existing link from the reference list
   unRegisterNeighbor (oldLink) {
-    this._in_neighbors.delete(oldLink)
-    this._out_neighbors.delete(oldLink)
+    var pos = this._links.indexOf(oldLink)
+    if (pos > -1) this._links.splice(pos, 1)
     return this
   }
 
@@ -107,24 +101,22 @@ class CrochetNode {
   // possible call arguments: linkType, linkDir
   getNeighborLinks (dir = '', type = '') {
     // where the temp results will be stored
-    const links = []
+    var links = []
 
     // The filtering link direction must be either empty, "IN" or "OUT"
     if (dir !== '' && dir !== 'in' && dir !== 'out') throw new Error('crochetNode.getNeighborLinks: invalid direction')
 
     // Get the required links
-    if (dir === '' || dir === 'in') {
-      this._in_neighbors.forEach(
-        (val, key, map) => ((key.getType() === type || type === '') ? links.push(key) : undefined),
-        links
+    links = this._links.filter(
+      (link) => (
+        (type === '' || link.getType() === type) &&
+        (
+          dir === '' ||
+          (dir === 'in' && this === link.target) ||
+          (dir === 'out' && this === link.source)
+        )
       )
-    }
-    if (dir === '' || dir === 'out') {
-      this._out_neighbors.forEach(
-        (val, key, map) => ((key.getType() === type || type === '') ? links.push(key) : undefined),
-        links
-      )
-    }
+    )
 
     return links
   }
@@ -132,29 +124,32 @@ class CrochetNode {
   // Returns all neighbor nodes of this node, filtered by node type and direction of their link
   getNeighborNodes (dir = '', type = '') {
     // where the temp results will be stored
-    const nodes = []
+    var nodes = []
 
     // The filtering link direction must be either empty, "IN" or "OUT"
     if (dir !== '' && dir !== 'in' && dir !== 'out') throw new Error('crochetNode.getNeighborNodes: invalid direction')
 
-    // Get the required nodes
-    if (dir === '' || dir === 'in') {
-      this._in_neighbors.forEach(
-        (val, key, map) => ((val.getType() === type || type === '') ? nodes.push(val) : undefined),
-        nodes
+    nodes = this._links.filter(
+      (link) => (
+        (
+          this === link.source &&
+          (dir === '' || dir === 'out') &&
+          (type === '' || type === link.target.getType())
+        ) || (
+          this === link.target &&
+          (dir === '' || dir === 'in') &&
+          (type === '' || type === link.source.getType())
+        )
       )
-    }
-    if (dir === '' || dir === 'out') {
-      this._out_neighbors.forEach(
-        (val, key, map) => ((val.getType() === type || type === '') ? nodes.push(val) : undefined),
-        nodes
-      )
-    }
+    ).map(
+      link => ((link.target === this) ? link.source : link.target)
+    )
+
     return nodes
   }
 
   getNeighborCount () {
-    return this._in_neighbors.size + this._out_neighbors.size
+    return this._links.length
   }
 
   getArray () { return [this.x, this.y] }

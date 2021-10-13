@@ -5,17 +5,13 @@ class CrochetNode {
 // *** CLASS STATIC METHODS ***
   // and their wrappers to use them in instances
 
-  static getType () { return 'default' } // unambiguous string for each subclass
-  getType () { return this.constructor.getType() }
+  get type () { return 'default' } // unambiguous string for each subclass
 
-  static getDesc () { return 'default node class' } // human freindlz class desc.
-  getDesc () { return this.constructor.getDesc() }
+  get desc () { return 'default node class' } // human freindlz class desc.
 
-  static isLoopable () { return false } // can the node serve as a "loop" node other stitches conenct to
-  isLoopable () { return this.constructor.isLoopable() }
+  get isLoopable () { return false } // can the node serve as a "loop" node other stitches conenct to
 
-  static getColor () { return 'black' } // how to draw the node
-  getColor () { return this.constructor.getColor() }
+  get color () { return 'black' } // how to draw the node
 
   constructor (argContext, argCoordinates) {
     //  STATIC ATTRIBUTES
@@ -70,7 +66,7 @@ class CrochetNode {
 
   // overrides the default .toString()
   toString () {
-    return `[node : ${this.getType()} ${this.id}]`
+    return `[${this.id} (${this.type}) : ${this.y.toFixed(1)}; ${this.x.toFixed(1)}]`
   }
 
   // Returns the (x,y) position of the node as a Vector object
@@ -109,7 +105,7 @@ class CrochetNode {
     // Get the required links
     links = this._links.filter(
       (link) => (
-        (type === '' || link.getType() === type) &&
+        (type === '' || link.type === type) &&
         (
           dir === '' ||
           (dir === 'in' && this === link.target) ||
@@ -134,11 +130,11 @@ class CrochetNode {
         (
           this === link.source &&
           (dir === '' || dir === 'out') &&
-          (type === '' || type === link.target.getType())
+          (type === '' || type === link.target.type)
         ) || (
           this === link.target &&
           (dir === '' || dir === 'in') &&
-          (type === '' || type === link.source.getType())
+          (type === '' || type === link.source.type)
         )
       )
     ).map(

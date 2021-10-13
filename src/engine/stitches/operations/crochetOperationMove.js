@@ -2,7 +2,7 @@ import CrochetOperation from './crochetOperation.js'
 // import Vec2d from '../../misc/vector.js'
 
 class CrochetOperationMove extends CrochetOperation {
-  static getCommandName () { return 'mv' }
+  get commandName () { return 'mv' }
 
   exec () {
     const cmd = this.params[0]

@@ -5,20 +5,15 @@ class CrochetLink {
   // *** CLASS STATIC METHODS ***
   // and their wrappers to use them in instances
 
-  static getDefLen () { return 10 } // link lenght for ForceLayout simulation
-  getDefLen () { return this.constructor.getDefLen() }
+  get defLen () { return 10 } // link lenght for ForceLayout simulation
 
-  static getType () { return 'default' } // unambiguous string for each subclass
-  getType () { return this.constructor.getType() }
+  get type () { return 'default' } // unambiguous string for each subclass
 
-  static getDesc () { return 'default link class' } // human friendly desc.
-  getDesc () { return this.constructor.getDesc() }
+  get desc () { return 'default link class' } // human friendly desc.
 
-  static isPrintable () { return false } // should it be drawn in documents
-  isPrintable () { return this.constructor.isPrintable() }
+  get isPrintable () { return false } // should it be drawn in documents
 
-  static getColor () { return 'lightgray' } // how to draw it
-  getColor () { return this.constructor.getColor() }
+  get color () { return 'lightgray' } // how to draw it
 
   // *** CONSTRUCTOR ***
 
@@ -41,7 +36,7 @@ class CrochetLink {
 
     // physics
     if (length === undefined) {
-      this._length = this.constructor.getDefLen()
+      this._length = this.constructor.defLen
     } else {
       if (typeof length !== 'number') throw new Error('length must be a number')
       this._length = length
@@ -78,7 +73,7 @@ class CrochetLink {
 
   // overrides the default .toString()
   toString () {
-    return `[link : ${this.getType()} ${this.id}]`
+    return `[${this.id} (${this.type}): ${this.source.id} > ${this.target.id} ]`
   }
 
   getOtherEnd (node) {
@@ -99,7 +94,7 @@ class CrochetLink {
   // wrapper for the getRealLen that can return derivatives, that depend on neighborhood
   // will be used in "chainspace" stitches
   getLen () {
-    return this.getDefLen()
+    return this.defLen
   }
 
   // get all neighbouring nodes of the two connected nodes

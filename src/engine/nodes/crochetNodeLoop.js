@@ -2,10 +2,10 @@ import CrochetNode from './crochetNode.js'
 
 class CrochetNodeLoop extends CrochetNode {
   // constructor(context, position){super(context, position)}
-  static getType () { return 'loop' }
-  static getDesc () { return "a node that other stitches' hooks can attach to" }
-  static isLoopable () { return true }
-  static getColor () { return 'blue' }
+  get type () { return 'loop' }
+  get desc () { return "a node that other stitches' hooks can attach to" }
+  get isLoopable () { return true }
+  get color () { return 'blue' }
 }
 
 export default CrochetNodeLoop

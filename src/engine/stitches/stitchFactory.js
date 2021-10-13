@@ -7,7 +7,7 @@ import CrochetStitchSingle from './crochetStitchSingle.js'
 import CrochetStitchDouble from './crochetStitchDouble.js'
 import CrochetStitchSlip from './crochetStitchSlip.js'
 
-const CrochetStitchFactory = new FactoryClass(CrochetStitch, 'getType')
+const CrochetStitchFactory = new FactoryClass(CrochetStitch, 'type')
 
 CrochetStitchFactory
   .registerClass(CrochetStitchOrigin)

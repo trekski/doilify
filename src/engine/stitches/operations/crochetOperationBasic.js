@@ -2,12 +2,12 @@ import CrochetOperation from './crochetOperation.js'
 import Vec2d from '../../misc/vector.js'
 
 class CrochetOperationBasic extends CrochetOperation {
-  static getCommandName () { return 'mk' }
-  static minParams () { return 2 }
+  get commandName () { return 'mk' }
+  get minParams () { return 2 }
 
   static CALC_DEF_NEW_POS (fromNode, byLinkType) {
     // setup
-    const len = CrochetOperation.linkFactory.getClass(byLinkType).getDefLen()
+    const len = CrochetOperation.getLinkDefLen(byLinkType)
     const start = fromNode.getVector()
 
     // initial direction of the new position is relative to fromNode

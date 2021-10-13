@@ -1,10 +1,10 @@
 import CrochetLink from './crochetLink.js'
 
 class CrochetLinkSequential extends CrochetLink {
-  static getType () { return 'sequence' }
-  static getDeftLen () { return 10 }
-  static getDesc () { return 'connects nodes from the main sequence' }
-  static getColor () { return '#333' }
+  get type () { return 'sequence' }
+  get defLen () { return 10 }
+  get desc () { return 'connects nodes from the main sequence' }
+  get color () { return '#333' }
 }
 
 export default CrochetLinkSequential

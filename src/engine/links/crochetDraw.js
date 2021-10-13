@@ -4,21 +4,18 @@ import { Plotter, GraphCommand, TransformationTwoVector } from '../misc/graphics
 
 class CrochetDraw extends CrochetLink {
   // override crochetLink dfaults
-  static getType () { return 'draw' }
-  static getDeftLen () { return 10 }
-  static getDesc () { return 'no-strength link used for drawing' }
-  static isPrintable () { return true } // this means it can have its getPath() method used properly!
+  get type () { return 'draw' }
+  get defLen () { return 10 }
+  get desc () { return 'no-strength link used for drawing' }
+  get isPrintable () { return true } // this means it can have its getPath()  used properly!
   strenght () { return 0 }
 
   // add more stuff, specifically needed for displaying
-  static getPathDef () {
+  get pathDef () {
     return 'l:100,0%'
   }
 
-  getPathDef () { return this.constructor.getPathDef() }
-
-  static getColor () { return 'black' }
-  getColor () { return this.constructor.getColor() }
+  get color () { return 'black' }
 
     // what a valid path definition string looks like
     static commandRegEx = /[a-zA-Z_]+( *: *-?[0-9]+,-?[0-9]+(% *(-?[0-9]+,-?[0-9]+)?)?)+$/
@@ -89,7 +86,7 @@ class CrochetDraw extends CrochetLink {
     }
 
     setNewPath (p = '') {
-      const pahtDefString = (p === '') ? this.getPathDef() : p
+      const pahtDefString = (p === '') ? this.pathDef : p
       const pathCmds = this.constructor.tokenizeDrawingCommands(pahtDefString)
       this.pathDefVectors = this.constructor.parseDrawingCmds(pathCmds)
     }

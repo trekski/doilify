@@ -1,9 +1,9 @@
 import CrochetLink from './crochetLink.js'
 
 class CrochetLinkExternal extends CrochetLink {
-  static getType () { return 'external' }
-  static getDeftLen () { return 10 }
-  static getDesc () { return 'connects a nodes from two distinct stitches' }
+  get type () { return 'external' }
+  get defLen () { return 10 }
+  get desc () { return 'connects a nodes from two distinct stitches' }
 }
 
 export default CrochetLinkExternal

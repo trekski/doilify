@@ -18,18 +18,19 @@ function crochetOperationDemo (log) {
 
   x = crochetOperationFactory.getNewObject('makeorigin', sub, [])
   r = x.exec()
-  log(`${r.newNode.getType()} : ${r.newNode.id}`)
+
+  log(`${r.newNode.type} : ${r.newNode.id}`)
 
   const n1 = r.subject.needleStack[0]
 
   log('make simple')
 
   sub = r.subject
-
   x = crochetOperationFactory.getNewObject('mk', sub, ['external', 'struct'])
   r = x.exec()
-  log(`new node : ${r.newNode.getType()} : ${r.newNode.id}`)
-  log(`new link : ${r.newLink.getType()} : ${r.newLink.id}`)
+
+  log(`new node : ${r.newNode.type} : ${r.newNode.id}`)
+  log(`new link : ${r.newLink.type} : ${r.newLink.id}`)
   log(`del node : ${x.delNode}`)
   log(`del link: ${x.delLink}`)
   log(`subject : ${x.subject}`)
@@ -37,6 +38,7 @@ function crochetOperationDemo (log) {
   const n2 = r.subject.needleStack[0]
 
   log('copy from needle ')
+  log(n2)
 
   sub = new OperationSubject([n1], st, [n2])
   log('before')

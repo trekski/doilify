@@ -5,7 +5,7 @@ function crochetDrawDemo (log) {
   const n2 = { x: -1, y: 3, registerNeighbor: () => {} }
 
   const l = new CrochetDraw('A', n1, n2)
-  log(l.getPathDef())
+  log(l.pathDef)
   l.pathDefVectors.forEach((command, i) => {
     log(`cmd : ${command.cmd}`)
     command.params.forEach((twovector, j) => {

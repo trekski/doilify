@@ -1,7 +1,7 @@
 import CrochetOperation from './crochetOperation.js'
 
 class CrochetOperationMakeOrigin extends CrochetOperation {
-  static getCommandName () { return 'makeorigin' }
+  get commandName () { return 'makeorigin' }
 
   exec () {
     const newSubject = this.subject.copy()

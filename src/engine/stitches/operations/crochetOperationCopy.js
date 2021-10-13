@@ -1,7 +1,7 @@
 import CrochetOperation from './crochetOperation.js'
 
 class CrochetOperationCopy extends CrochetOperation {
-  static getCommandName () { return 'cp' }
+  get commandName () { return 'cp' }
 
   exec () {
     const cmd = this.params[0]

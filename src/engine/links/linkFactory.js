@@ -7,7 +7,7 @@ import CrochetLinkCHSpace from './crochetLinkCHSpace.js'
 import CrochetLinkZero from './crochetLinkZero.js'
 import CrochetDraw from './crochetDraw.js'
 
-const crochetLinkFactory = new FactoryClass(CrochetLink, 'getType')
+const crochetLinkFactory = new FactoryClass(CrochetLink, 'type')
 
 crochetLinkFactory
   .registerClass(CrochetLinkSequential)

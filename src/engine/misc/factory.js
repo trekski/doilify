@@ -1,10 +1,12 @@
 class FactoryClass {
-  constructor (exampleClass, func, argumentNames = []) {
+  constructor (exampleClass, attr, argumentNames = []) {
     this.className = exampleClass.name
-    if (typeof (exampleClass[func]) === 'function') {
-      this.getTypeFunc = func
+    console.log(exampleClass)
+    if (exampleClass.prototype[attr]) {
+      this.getKeyType = (typeof exampleClass.prototype[attr])
+      this.getKeyAttr = attr
     } else {
-      throw new Error(`facotryCLass : class '${exampleClass.name}' does not have the method '${func}'`)
+      throw new Error(`facotryCLass : class '${exampleClass.name}' does not have the attribute/method '${attr}'`)
     }
     this.argumentNames = argumentNames
     this.items = new Map()
@@ -13,9 +15,15 @@ class FactoryClass {
 
   registerClass (newClass) {
     try {
-      this.items.set(newClass[this.getTypeFunc](), newClass)
+      let key
+      if (this.getKeyType === 'function') {
+        key = newClass.prototype[this.getKeyAttr]()
+      } else {
+        key = newClass.prototype[this.getKeyAttr]
+      }
+      this.items.set(key, newClass)
     } catch (error) {
-      throw new Error(`${this.className} factory : class ${newClass.name} must expose the '${this.getTypeFunc}' method`)
+      throw new Error(`${this.className} factory : class ${newClass.name} must expose the '${this.getTypeFunc}' method or attribute`)
     }
     return this
   }

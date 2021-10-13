@@ -7,10 +7,11 @@ import CrochetNodeHook from '../crochetNodeHook.js'
 import CrochetNodeStruct from '../crochetNodeStruct.js'
 import CrochetNodeCHSpaceStart from '../crochetNodeCHSpaceStart.js'
 import CrochetNodeCHSpaceCont from '../crochetNodeCHSpaceCont.js'
+import crochetNodeFactory from '../nodeFactory.js'
 
 function crocehtNodeDemo (log) {
   let n = new CrochetNode('A', [1, 2])
-  log(`${n} : type ${n.getType()}`)
+  log(`${n} : type ${n.type}`)
 
   n = new CrochetNode('B', [2, 3])
   log(`${n} : array ${n.getArray()} `)
@@ -43,16 +44,18 @@ function crocehtNodeDemo (log) {
   log(`${n} : links ${n.getNeighborLinks()[0].source.getVector()} `)
 
   n = new CrochetNodeLoop('Y', [9, 9])
-  log(`${n} : loopable ${n.isLoopable()} `)
+  log(`${n} : loopable ${n.isLoopable} `)
 
   n = new CrochetNodeStruct('Y', [9, 9])
   log(`${n} : string ${n.toString()} `)
 
   n = new CrochetNodeCHSpaceStart('Y', [9, 9])
-  log(`${n} : string ${n.getColor()} `)
+  log(`${n} : string ${n.color} `)
 
   n = new CrochetNodeCHSpaceCont('Y', [9, 9])
-  log(`${n} : string ${n.getDesc()} `)
+  log(`${n} : string ${n.desc} `)
+
+  log(crochetNodeFactory.items.get('origin').name)
 }
 
 export default crocehtNodeDemo

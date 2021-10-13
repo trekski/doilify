@@ -1,9 +1,9 @@
 import CrochetNode from './crochetNode.js'
 
 class CrochetNodeOrigin extends CrochetNode {
-  static getType () { return 'origin' }
-  static getDesc () { return 'the first node in the crochet project' }
-  static isLoopable () { return true }
+  get type () { return 'origin' }
+  get desc () { return 'the first node in the crochet project' }
+  get isLoopable () { return true }
 
   constructor (argContext, argCoordinates) {
     super(argContext, argCoordinates)

@@ -3,6 +3,7 @@ import CrochetLinkExternal from '../crochetLinkExternal.js'
 import CrochetLinkSequential from '../crochetLinkSequential.js'
 import CrochetLinkZero from '../crochetLinkZero.js'
 import CrochetLinkCHSpace from '../crochetLinkCHSpace.js'
+import crochetLinkFactory from '../linkFactory.js'
 
 function crochetLinkDemo (log) {
   const n1 = { x: 1, y: 2, registerNeighbor: () => {} }
@@ -10,20 +11,22 @@ function crochetLinkDemo (log) {
   const n3 = { x: -5, y: -5, registerNeighbor: () => {} }
 
   let l = new CrochetLink('A', n1, n2)
-  log(`${l} : type ${l.getType()}`)
+  log(`${l} : type ${l.type}`)
 
   l = new CrochetLinkExternal('A', n1, n3)
-  log(`${l} : len ${l.getDefLen()} `)
+  log(`${l} : len ${l.defLen} `)
 
   l = new CrochetLinkSequential('A', n2, n3)
-  log(`${l} : color ${l.getColor()} `)
+  log(`${l} : color ${l.color} `)
 
   l = new CrochetLinkZero('A', n3, n1)
   log(`${l} : ends n3 ${l.getOtherEnd(n3)} `)
   log(`${l} : ends n2 ${l.getOtherEnd(n2)} `)
 
   l = new CrochetLinkCHSpace('A', n3, n2)
-  log(`${l} : desc ${l.getDesc()} `)
+  log(`${l} : desc ${l.desc} `)
+
+  log(crochetLinkFactory.items.get('chain_space').name)
 }
 
 export default crochetLinkDemo

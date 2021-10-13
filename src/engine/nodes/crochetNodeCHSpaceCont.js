@@ -1,9 +1,9 @@
 import CrochetNode from './crochetNode.js'
 
 class CrochetNodeCHSpaceCont extends CrochetNode {
-  static getType () { return 'ch_sp_cont' }
-  static getDesc () { return "any subsequent node of a 'chain space'" }
-  static getColor () { return 'violet' }
+  get type () { return 'ch_sp_cont' }
+  get desc () { return "any subsequent node of a 'chain space'" }
+  get color () { return 'violet' }
 }
 
 export default CrochetNodeCHSpaceCont

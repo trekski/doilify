@@ -1,9 +1,9 @@
 import CrochetNode from './crochetNode.js'
 
 class CrochetNodeStruct extends CrochetNode {
-  static getType () { return 'struct' }
-  static getDesc () { 'a node that is only there for structure modeling (neither LOOP, nor HOOK)' }
-  static getColor () { return 'darkgray' }
+  get type () { return 'struct' }
+  get desc () { 'a node that is only there for structure modeling (neither LOOP, nor HOOK)' }
+  get color () { return 'darkgray' }
 }
 
 export default CrochetNodeStruct

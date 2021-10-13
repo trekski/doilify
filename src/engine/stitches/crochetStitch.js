@@ -7,20 +7,15 @@ class CrochetStitch {
   // *** CLASS STATIC METHODS ***
   // and their wrappers to use them in instances
 
-  static getSequence () { return 'mk:default:default' } // reciupe how to create stitches internal graph
-  getSequence () { return this.constructor.getSequence() }
+  get sequence () { return 'mk:default:default' } // reciupe how to create stitches internal graph
 
-  static getType () { return 'default' } // unambiguous string for each subclass
-  getType () { return this.constructor.getType() }
+  get type () { return 'default' } // unambiguous string for each subclass
 
-  static getDesc () { return 'default stitch class' } // human friendlz description
-  getDesc () { return this.constructor.getDesc() }
+  get desc () { return 'default stitch class' } // human friendlz description
 
-  static requiresPrevious () { return true } // true if the stitch requires prev. sittches last loop to hook into
-  requiresPrevious () { return this.constructor.requiresPrevious() }
+  get requiresPrevious () { return true } // true if the stitch requires prev. sittches last loop to hook into
 
-  static requiredLoops () { return 0 } // how manz other loops are needed to construct the stitch
-  requiredLoops () { return this.constructor.requiredLoops() }
+  get requiredLoops () { return 0 } // how manz other loops are needed to construct the stitch
 
   // *** CONSTRUCTOR ***
 
@@ -40,13 +35,13 @@ class CrochetStitch {
     this.id = CrochetStitch.COUNTER.next()
 
     // validate call parameters
-    if (this.requiresPrevious() && attachToNode === null) throw new Error('crochetStitch : prev. stitch was required, but not provided')
+    if (this.requiresPrevious && attachToNode === null) throw new Error('crochetStitch : prev. stitch was required, but not provided')
     if (attachToNode !== null && !(attachToNode instanceof CrochetNode)) throw new Error(`crochetStitch : attachToNode must be an instance o crochetNode. Got: ${attachToNode.constructor.name}`)
     const loops = otherLoops.filter(e => (e instanceof CrochetNode)) // also a shallow copy
-    if (loops.length < this.requiredLoops()) throw new Error('crochetStitch: not enough other loops')
+    if (loops.length < this.requiredLoops) throw new Error('crochetStitch: not enough other loops')
 
     // setup stitch creation parameters
-    const seq = this.getSequence().split(';').map(e => e.trim())
+    const seq = this.sequence.split(';').map(e => e.trim())
     const needle = []
     needle.push(attachToNode)
     let instr = ''
@@ -58,6 +53,7 @@ class CrochetStitch {
       const tokens = instr.split(':').map(e => e.trim())
       const action = tokens.shift()
       const op = CrochetOperationFactory.getNewObject(action, subject, tokens)
+
       const res = op.exec()
 
       subject = res.subject
@@ -91,22 +87,22 @@ class CrochetStitch {
 
   getNodes (nodeType = null) {
     return this._nodes.filter(
-      node => (nodeType === null || node.getType() === nodeType)
+      node => (nodeType === null || node.type === nodeType)
     )
   };
 
   getLinks (linkType = null) {
     return this._links.filter(
-      link => (linkType === null || link.getType() === linkType)
+      link => (linkType === null || link.type === linkType)
     )
   };
 
   getStartNode () {
-    return (this.getType() === 'origin') ? this.getNodes()[0] : this.getNodes('start')[0]
+    return (this.typet === 'origin') ? this.getNodes()[0] : this.getNodes('start')[0]
   };
 
   getEndNode () {
-    return (this.getType() === 'origin') ? this.getNodes()[0] : this.getNodes('finish')[0]
+    return (this.type === 'origin') ? this.getNodes()[0] : this.getNodes('finish')[0]
   };
 
   getPreviousStitch () {
@@ -123,7 +119,7 @@ class CrochetStitch {
 
     while (wrkNode.getContext() === sameStitch) {
       // if possible,  return a "loop" node
-      if (wrkNode.isLoopable()) return wrkNode
+      if (wrkNode.isLoopable) return wrkNode
       // otherwise, proceed to next node in main sequence
       const nextStchs = wrkNode.getNeighborLinks('out', 'sequence')
       if (nextStchs.length > 0) {
@@ -142,7 +138,7 @@ class CrochetStitch {
 
     while (wrkNode.getContext() === sameStitch) {
       // if possible,  return a "loop" node
-      if (wrkNode.isLoopable()) return wrkNode
+      if (wrkNode.isLoopable) return wrkNode
       // otherwise, proceed to next node in main sequence
       const nextStchs = wrkNode.getNeighborLinks('in', 'sequence')
       if (nextStchs.length > 0) {

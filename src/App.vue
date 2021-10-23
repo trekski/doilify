@@ -5,6 +5,7 @@
       ref="MainGraph"
       :app-state="appState"
     />
+
     <!-- placeholder for key app icons - (almost) const. visible -->
     <transition name="fade">
       <div
@@ -53,6 +54,7 @@
         </button>
       </div>
     </transition>
+
     <!-- placeholder for menu -->
     <transition name="fade">
       <div
@@ -64,6 +66,7 @@
         <MainMenu @menu-selected="menuAction" />
       </div>
     </transition>
+
     <!-- placeholder for modal dialog windows -->
     <transition name="fade">
       <div

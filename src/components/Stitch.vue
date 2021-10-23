@@ -1,17 +1,22 @@
 <template>
   <div class="stitch">
-    stitch : {{ stitch.id }} <br />
+    stitch : {{ stitch.toString() }} <br />
     <u>nodes</u>
     <ul>
       <li
-        v-for="(n, i) in  stitch.nodes"
+        v-for="(n, i) in  stitch._nodes"
         :key="i"
       >
+        {{ n.toString() }}
       </li>
     </ul>
     <u>links</u>
     <ul>
-      <li>
+      <li
+        v-for="(l, i) in  stitch._links"
+        :key="i"
+      >
+        {{ l.toString() }}
       </li>
     </ul>
   </div>

@@ -27,7 +27,18 @@ export default {
   },
   mounted () {
     var s = CrochetStitchFactory.getNewObject('origin', 'doily')
-    console.log(s)
+    this.stitches.push(s)
+    var n = s.getLastLoop()
+    console.log(n)
+    s = CrochetStitchFactory.getNewObject('ch', 'doily', n)
+    this.stitches.push(s)
+    var n2 = s.getLastLoop()
+    console.log(n2)
+    s = CrochetStitchFactory.getNewObject('sc', 'doily', n2, [n])
+    this.stitches.push(s)
+    s = CrochetStitchFactory.getNewObject('dc', 'doily', n2, [n])
+    this.stitches.push(s)
+    s = CrochetStitchFactory.getNewObject('slst', 'doily', n2, [n])
     this.stitches.push(s)
   }
 }

@@ -82,7 +82,7 @@ class CrochetStitch {
 
   // overrides the default .toString()
   toString () {
-    return '[CrochetStitch ' + this._id + ']'
+    return `[${this.id} (${this.type})]`
   }
 
   getNodes (nodeType = null) {

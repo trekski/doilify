@@ -9,6 +9,9 @@
     >
     {{ n.toString() }}
     </div>
+    <div>
+    {{ this.simulation.alpha() }}
+    </div>
     <Stitch
       v-for="(s, index) in stitches"
       :key="index"

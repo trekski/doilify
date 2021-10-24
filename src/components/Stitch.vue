@@ -1,6 +1,7 @@
 <template>
   <div class="stitch">
     stitch : {{ stitch.toString() }} <br />
+    {{ stitch.sequence }}<br />
     <u>nodes</u>
     <ul>
       <li
@@ -42,6 +43,7 @@ export default {
     }
   },
   data () {
+    return {}
   },
   mounted () {
   }

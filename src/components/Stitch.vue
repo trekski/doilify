@@ -1,11 +1,11 @@
 <template>
   <div class="stitch">
-    stitch : {{ stitch.toString() }} <br />
-    {{ stitch.sequence }}<br />
+    stitch : {{ stitch.toString() }} <br>
+    {{ stitch.sequence }}<br>
     <u>nodes</u>
     <ul>
       <li
-        v-for="(n, i) in  stitch._nodes"
+        v-for="(n, i) in stitch._nodes"
         :key="i"
       >
         {{ n.toString() }}
@@ -14,7 +14,7 @@
     <u>links</u>
     <ul>
       <li
-        v-for="(l, i) in  stitch._links"
+        v-for="(l, i) in stitch._links"
         :key="i"
       >
         {{ l.toString() }}
@@ -37,13 +37,13 @@ export default {
       default: Object
     }
   },
+  data () {
+    return {}
+  },
   computed: {
     nodes () {
       return Array.from(this.stitch._nodes.keys())
     }
-  },
-  data () {
-    return {}
   },
   mounted () {
   }

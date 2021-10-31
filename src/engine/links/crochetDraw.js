@@ -1,5 +1,5 @@
 import CrochetLink from './crochetLink.js'
-import { tokenizeDrawingCommands, parseDrawingCmds } from '../misc/graphics.js'
+import { PathLookupReigstry } from '../misc/graphics.js'
 
 class CrochetDraw extends CrochetLink {
   // override crochetLink dfaults
@@ -14,7 +14,7 @@ class CrochetDraw extends CrochetLink {
     return 'l:100,0%'
   }
 
-  get color () { return 'black' }s
+  get color () { return 'black' }
 
   constructor () {
     super(...arguments)
@@ -23,8 +23,9 @@ class CrochetDraw extends CrochetLink {
 
   setNewPath (p = '') {
     const pahtDefString = (p === '') ? this.pathDef : p
-    const pathCmds = tokenizeDrawingCommands(pahtDefString)
-    this.pathDefVectors = parseDrawingCmds(pathCmds)
+    // const pathCmds = tokenizeDrawingCommands(pahtDefString)
+    this.pathDefVectors = PathLookupReigstry.getParsedPath(pahtDefString)
+    // this.pathDefVectors = parseDrawingCmds(pathCmds)
   }
 }
 

@@ -2,7 +2,7 @@ import Vec2d from './vector.js'
 
 // *** these classes are just to make sure that the objects we parse are of proper format ***
 
-// jsut a convenience object : isntead of keepint 2 vectors all the time, reduce them to what is important.
+// just a convenience object : isntead of keeping 2 vectors all the time, reduce them to what is important.
 class PlotBaseVector {
   constructor (from = new Vec2d(0, 0), to = new Vec2d(1, 0)) {
     const v = to.sub(from)
@@ -58,7 +58,7 @@ class GraphCommand {
 // given a path definition (string), transform it into an array of two-vectors used for drawing
 function tokenizeDrawingCommands (pathStr = '') {
   // what a valid path definition string looks like
-  const f = /-?([0-9]+\.)?[0-9]+/ // floating point number
+  const f = '-?([0-9]+\\.)?[0-9]+' // floating point number
   const commandRegEx = new RegExp(`[a-zA-Z_]+( *: *${f},${f}(% *(${f},${f})?)?)+$`)
 
   // transform path definition string to an array of tokens
@@ -93,11 +93,11 @@ function parseDrawingCmds (tokenizedCommands = []) {
     .map(token => {
       const paramTwoVectors = token.params
         .map(param => { // "a,a" | "p,p%" | "p,p % a,a"
-          param = '%' + param // "%a,a" | "%p,p%" "| "%p,p % a,a"
+          param = '%' + param // "%a,a" | "%p,p%" | "%p,p % a,a"
 
           const twoVecArray = param
             .split('%')
-            .map(e => e.trim()) // [ "", "a,a"] | ["", "p,p". ""] | ["", "p,p", "a,a"]
+            .map(e => e.trim()) // [ "", "a,a"] | ["", "p,p", ""] | ["", "p,p", "a,a"]
             .reverse() // ["a,a", ""] | ["", "p,p". ""] | ["a,a", "p,p", ""]
             .slice(0, 2) // ["a,a", ""] | ["", "p,p"] | ["a,a", "p,p"]
             .map(f => (f === '' ? '0,0' : f)) // ["a,a", "0,0"] | ["0,0", "p,p"] | ["a,a", "p,p"]
@@ -118,6 +118,17 @@ function parseDrawingCmds (tokenizedCommands = []) {
     })
 
   return parsedCmds
+}
+
+class PathLookupReigstry {
+  static knownPaths = new Map()
+  static getParsedPath (pathString) {
+    if (!this.knownPaths.has(pathString)) {
+      const parserdPath = parseDrawingCmds(tokenizeDrawingCommands(pathString))
+      this.knownPaths.set(pathString, parserdPath)
+    }
+    return this.knownPaths.get(pathString)
+  }
 }
 
 class Plotter {
@@ -215,4 +226,12 @@ class Plotter {
   }
 }
 
-export { PlotBaseVector, TransformationTwoVector, GraphCommand, Plotter, tokenizeDrawingCommands, parseDrawingCmds }
+export {
+  PlotBaseVector,
+  TransformationTwoVector,
+  GraphCommand,
+  Plotter,
+  PathLookupReigstry,
+  tokenizeDrawingCommands,
+  parseDrawingCmds
+}

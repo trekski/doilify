@@ -12,11 +12,10 @@ function crochetDrawDemo (log) {
   var l = new CrochetDraw('A', n1, n2)
   log(l.pathDef)
 
-  l.pathDefVectors.forEach((command, i) => {
+  l.pathCommands.forEach((command, i) => {
     log(`cmd : ${command.cmd}`)
     command.params.forEach((twovector, j) => {
       log(` - ${twovector.vPerc.scale(100)} % ${twovector.vAbs} u`)
-      // console.log(`${twovector.calcPathPoint()}`)
     })
   })
   log('CH')

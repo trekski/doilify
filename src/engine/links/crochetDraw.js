@@ -23,9 +23,7 @@ class CrochetDraw extends CrochetLink {
 
   setNewPath (p = '') {
     const pahtDefString = (p === '') ? this.pathDef : p
-    // const pathCmds = tokenizeDrawingCommands(pahtDefString)
-    this.pathDefVectors = PathLookupReigstry.getParsedPath(pahtDefString)
-    // this.pathDefVectors = parseDrawingCmds(pathCmds)
+    this.pathCommands = PathLookupReigstry.getParsedPath(pahtDefString)
   }
 }
 

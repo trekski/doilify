@@ -1,5 +1,4 @@
 import { PlotBaseVector, Plotter, TransformationTwoVector, GraphCommand } from '../graphics.js'
-// import { PlotBaseVector, Plotter, TransformationTwoVector } from '../graphics.js'
 import Vec2d from '../vector.js'
 
 function graphicsDemo (log) {

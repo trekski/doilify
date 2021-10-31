@@ -31,7 +31,7 @@ command : {
 colon : { ":" }
 
 transformation_vector : {
-  number [ perc_sign [ number ] ] comma number [ perc_sign [ number ] ]
+  number comma number [ perc_sign [ number comma number ] ]
 }
 
 comma : { "," }
@@ -69,7 +69,7 @@ let `from` be (0,1) and `to` be (2,0). then:
    - coordinates are ordered: first one is for translations along the base axis, second for translations normal to that (rotated clockwise)
 
 _example_
-a `transformation_vector` 10%2,50%3 means: translate `2 + 10% of BASE.length` in `BASE` direction and `3 + 50% of BASE.length` in direction normal to `BASE`
+a `transformation_vector` 10,50%2,3 means: translate `10% of BASE.length + 2` in `BASE` direction and `50% of BASE.length + 3` in direction normal to `BASE`
 
 3. each resulting point (actual translation vector) is then used as a coordinate point for the selected SVG d command, which are:
    - M or m - move pen by given translation
@@ -90,3 +90,8 @@ a `transformation_vector` 10%2,50%3 means: translate `2 + 10% of BASE.length` in
  * x3 - should be set only to either `0` or `1` and is equivalent to the `large-arc-flag` parameter of the SVG arc (1 = large)
  * y3 - should be set only to either `0` or `1` and is equivalent to the `sweep-flag` parameter of the SVG arc (1 = clock-wise)
  * x4 and y4 - represent the point where the arc should end. Setting it to `(0,0)` means the arc finishes where it started (back at `(x1,y1)`)
+
+## examples
+
+1. draw a simple line from start to end
+`L:100,0%`

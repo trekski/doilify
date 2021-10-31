@@ -37,8 +37,6 @@ class TransformationTwoVector {
 
   // given base vector (axis along which we draw) and two-vector parameter, returns the actual point to draw
   calcPathPoint (base = new PlotBaseVector()) {
-    console.log(base)
-    console.log('-------------')
     const v = this.vAbs.rot(base.phi)
     const u = this.vPerc.scale(base.len).rot(base.phi)
     return v.add(u)
@@ -60,7 +58,8 @@ class GraphCommand {
 // given a path definition (string), transform it into an array of two-vectors used for drawing
 function tokenizeDrawingCommands (pathStr = '') {
   // what a valid path definition string looks like
-  const commandRegEx = /[a-zA-Z_]+( *: *-?[0-9]+,-?[0-9]+(% *(-?[0-9]+,-?[0-9]+)?)?)+$/
+  const f = /-?([0-9]+\.)?[0-9]+/ // floating point number
+  const commandRegEx = new RegExp(`[a-zA-Z_]+( *: *${f},${f}(% *(${f},${f})?)?)+$`)
 
   // transform path definition string to an array of tokens
   // each token is an array sonsisting of: one stirng for command name,

@@ -63,7 +63,7 @@ function tokenizeDrawingCommands (pathStr = '') {
 
   // transform path definition string to an array of tokens
   // each token is an array sonsisting of: one stirng for command name,
-  // and arbitrarily manz strigns representing the Transformation vectors
+  // and arbitrarily manys strigns representing the Transformation vectors
   let commands = pathStr
     .split(';') // str -> array
     .map(e => e.trim()) // remove extra spaces

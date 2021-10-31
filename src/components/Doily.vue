@@ -7,7 +7,7 @@
       v-for="(n, index) in all_nodes"
       :key="index"
     >
-    {{ n.toString() }}
+    {{ n.getVector().getTxt(2)}}
     </div>
     <div>
     {{ this.simulation.alpha() }}

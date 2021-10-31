@@ -6,7 +6,7 @@ class CrochetDraw extends CrochetLink {
   get type () { return 'draw' }
   get defLen () { return 10 }
   get desc () { return 'no-strength link used for drawing' }
-  get isPrintable () { return true } // this means it can have its getPath()  used properly!
+  get isPrintable () { return true }
   strenght () { return 0 }
 
   // add more stuff, specifically needed for displaying

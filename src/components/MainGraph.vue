@@ -61,7 +61,7 @@ export default {
       },
       shiftX: 0,
       shiftY: 0,
-      scaleFactor: 0,
+      scaleFactor: 200,
       rotateFactor: 0,
       baseShiftX: document.documentElement.clientWidth / 2,
       baseShiftY: document.documentElement.clientHeight / 2

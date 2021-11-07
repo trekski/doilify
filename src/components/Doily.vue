@@ -55,25 +55,48 @@ export default {
   mounted () {
     var s = CrochetStitchFactory.getNewObject('origin', 'doily')
     this.stitches.push(s)
-    var n = s.getLastLoop()
-    s = CrochetStitchFactory.getNewObject('ch', 'doily', n)
-    this.stitches.push(s)
-    var n2 = s.getLastLoop()
-    s = CrochetStitchFactory.getNewObject('sc', 'doily', n2, [n])
-    this.stitches.push(s)
-    n2 = s.getLastLoop()
-    s = CrochetStitchFactory.getNewObject('dc', 'doily', n2, [n])
-    this.stitches.push(s)
-    n2 = s.getLastLoop()
-    s = CrochetStitchFactory.getNewObject('slst', 'doily', n2, [n])
-    this.stitches.push(s)
-    this.simulation
-      .nodes(this.all_nodes)
-      .force(
-        'link',
-        d3.forceLink(this.all_links)
-          .distance(d => d.getLen())
-      )
+    this.refresh_simulation()
+    var n, n2
+    this.sleep(2000).then(() => {
+      n = s.getLastLoop()
+      s = CrochetStitchFactory.getNewObject('ch', 'doily', n)
+      this.stitches.push(s)
+      this.refresh_simulation()
+      this.sleep(2000).then(() => {
+        n2 = s.getLastLoop()
+        s = CrochetStitchFactory.getNewObject('sc', 'doily', n2, [n])
+        this.stitches.push(s)
+        this.refresh_simulation()
+        this.sleep(2000).then(() => {
+          n2 = s.getLastLoop()
+          s = CrochetStitchFactory.getNewObject('dc', 'doily', n2, [n])
+          this.stitches.push(s)
+          this.refresh_simulation()
+          this.sleep(2000).then(() => {
+            n2 = s.getLastLoop()
+            s = CrochetStitchFactory.getNewObject('slst', 'doily', n2, [n])
+            this.stitches.push(s)
+            this.refresh_simulation()
+          })
+        })
+      })
+    })
+  },
+  methods: {
+    sleep (ms) {
+      return new Promise(resolve => setTimeout(resolve, ms))
+    },
+    refresh_simulation () {
+      this.simulation
+        .nodes(this.all_nodes)
+        .force(
+          'link',
+          d3.forceLink(this.all_links)
+            .distance(d => d.getLen())
+        )
+        .alpha(1)
+        .restart()
+    }
   }
 }
 </script>

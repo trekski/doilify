@@ -2,7 +2,6 @@
   <div
     id="graph_div"
   >
-    <Doily />
     <svg
       id="graph"
       ref="defaultFocus"
@@ -26,27 +25,12 @@
         :transform="`translate(${baseShiftX} ${baseShiftY}), scale(${graphScale}), rotate(${graphRotate}), translate(${shiftX} ${shiftY})`"
         @keydown="k"
       >
-        <circle
-          cx="0"
-          cy="0"
-          r="10"
-          :fill=" appState.editingMode == 'crochet' ? 'red' : 'green'"
-          title="moves with graph"
-        />
+        <g title="origin crosshair">
+          <line x1 ="-30" y1 ="0" x2="30" y2="0" stroke-widht="1" stroke="red"/>
+          <line x1 ="0" y1 ="-30" x2="0" y2="30" stroke-widht="1" stroke="red"/>
+        </g>
+        <Doily />
       </g>
-      <circle
-        :cx="baseShiftX"
-        :cy="baseShiftY"
-        r="5"
-        fill="blue"
-        title="always centerd"
-      />
-      <text
-        x="100"
-        y="100"
-      >
-        {{ touchData.info }}
-      </text>
     </svg>
   </div>
 </template>
@@ -288,7 +272,7 @@ export default {
   height: 100%;
   position: absolute;
   touch-action: none;
-  visibility: hidden;
+  _visibility: hidden;
 }
 
 #graph_div {

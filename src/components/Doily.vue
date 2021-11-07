@@ -1,23 +1,11 @@
 <template>
-  <div>
-    <br>
-    <br>
-    <br>
-    <div
-      v-for="(n, index) in all_nodes"
-      :key="index"
-    >
-    {{ n.getVector().getTxt(2)}}
-    </div>
-    <div>
-    {{ this.simulation.alpha() }}
-    </div>
+  <g>
     <Stitch
       v-for="(s, index) in stitches"
       :key="index"
       :stitch="s"
     />
-  </div>
+  </g>
 </template>
 
 <script>

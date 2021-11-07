@@ -1,26 +1,26 @@
 <template>
-  <div class="stitch">
-    stitch : {{ stitch.toString() }} <br>
-    {{ stitch.sequence }}<br>
-    <u>nodes</u>
-    <ul>
-      <li
-        v-for="(n, i) in stitch._nodes"
-        :key="i"
-      >
-        {{ n.toString() }}
-      </li>
-    </ul>
-    <u>links</u>
-    <ul>
-      <li
-        v-for="(l, i) in stitch._links"
-        :key="i"
-      >
-        {{ l.toString() }}
-      </li>
-    </ul>
-  </div>
+  <g class="stitch">
+    <line
+      v-for="(link, index) in stitch._links"
+      :key="index"
+      :x1 = "link.source.x"
+      :y1 = "link.source.y"
+      :x2 = "link.target.x"
+      :y2 = "link.target.y"
+      stroke="lightgray"
+      stroke-width="2px"
+
+    />
+    <circle
+      v-for="(node, index) in stitch._nodes"
+      :key="index"
+      :cx = "node.x"
+      :cy = "node.y"
+      r = "1.5"
+      fill="gray"
+      stroke="0"
+    />
+  </g>
 </template>
 
 <script>

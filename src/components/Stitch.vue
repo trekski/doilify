@@ -9,7 +9,6 @@
       :y2 = "link.target.y"
       stroke="lightgray"
       stroke-width="2px"
-
     />
     <circle
       v-for="(node, index) in stitch._nodes"
@@ -19,6 +18,7 @@
       r = "1.5"
       fill="gray"
       stroke="0"
+
     />
   </g>
 </template>

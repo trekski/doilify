@@ -9,7 +9,9 @@
       :y2="link.target.y"
       stroke="lightgray"
       stroke-width="2px"
-    />
+    >
+      <title>{{ link.toString() }}</title>
+    </line>
     <circle
       v-for="(node, index) in stitch._nodes"
       :key="index"
@@ -18,7 +20,9 @@
       r="1.5"
       fill="gray"
       stroke="0"
-    />
+    >
+      <title>{{ node.toString() }}</title>
+    </circle>
   </g>
 </template>
 
@@ -50,9 +54,10 @@ export default {
 </script>
 
 <style>
-  .stitch {
-    border: 1px green solid;
-    margin: 5px;
-    padding: 5px;
+  .stitch circle:hover{
+    fill: gold
+  }
+  .stitch line:hover{
+    stroke: lime
   }
 </style>

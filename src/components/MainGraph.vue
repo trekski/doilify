@@ -26,8 +26,22 @@
         @keydown="k"
       >
         <g title="origin crosshair">
-          <line x1 ="-30" y1 ="0" x2="30" y2="0" stroke-widht="1" stroke="red"/>
-          <line x1 ="0" y1 ="-30" x2="0" y2="30" stroke-widht="1" stroke="red"/>
+          <line
+            x1="-30"
+            y1="0"
+            x2="30"
+            y2="0"
+            stroke-widht="1"
+            stroke="red"
+          />
+          <line
+            x1="0"
+            y1="-30"
+            x2="0"
+            y2="30"
+            stroke-widht="1"
+            stroke="red"
+          />
         </g>
         <Doily />
       </g>

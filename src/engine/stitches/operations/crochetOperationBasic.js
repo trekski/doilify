@@ -22,13 +22,14 @@ class CrochetOperationBasic extends CrochetOperation {
     if (delta.len() > 0) {
       // delta<>(0,0) => neighbors' CoM is not same as fromNode => go in opposite dir to it
       delta = delta.len(len)
-      // CoM same as fromNode => extend the fromnode position outwards but turn by PI/20
-      if (neighbors[0] === fromNode) { delta = delta.rot(Math.PI / 20) };
+      // onlz one neighbor => extend the fromnode position outwards but turn by PI/20
+      // if (neighbors[0] === fromNode) { delta = delta.rot(Math.PI / 20) };
+      if (neighbors.length === 1) { delta = delta.rot(Math.PI / 10) };
     } else {
       // delta == (0,0), then
       // default direction is UP
       // unless start node was off-center by a enough, then follow that
-      const dir = (start.len() < 0.01) ? new Vec2d(0, -1) : start.unit().rot(Math.PI / 20)
+      const dir = (start.len() < 0.01) ? new Vec2d(-1, 0) : start.unit().rot(Math.PI / 10)
       delta = dir.len(len)
     }
 

@@ -34,6 +34,11 @@ class CrochetStitch {
     this._links = []
     this.id = CrochetStitch.COUNTER.next()
 
+    // temporary variables, used onlz when new Stitch is being created
+    // to avoid immediate reactivity from Vue
+    const newNodes = []
+    const newLinks = []
+
     // validate call parameters
     if (this.requiresPrevious && attachToNode === null) throw new Error('crochetStitch : prev. stitch was required, but not provided')
     if (attachToNode !== null && !(attachToNode instanceof CrochetNode)) throw new Error(`crochetStitch : attachToNode must be an instance o crochetNode. Got: ${attachToNode.constructor.name}`)
@@ -55,27 +60,33 @@ class CrochetStitch {
       const op = CrochetOperationFactory.getNewObject(action, subject, tokens)
 
       const res = op.exec()
+      console.log(res.delNode)
 
       subject = res.subject
-      if (res.newNode) this._nodes.push(res.newNode)
-      if (res.newLink) this._links.push(res.newLink)
+      if (res.newNode) newNodes.push(res.newNode)
+      if (res.newLink) newLinks.push(res.newLink)
       if (res.delNode) {
+        console.log('uuu')
         res.delNode
           .getNeighborLinks()
           .forEach(e => {
             e.apoptose()
-            var p = this._nodes.indexOf(e)
-            if (p > -1) this._nodes.splice(p, 1)
           })
+        const p = newNodes.indexOf(res.delNode)
+        if (p > -1) newNodes.splice(p, 1)
       }
 
       if (res.delLink) {
-        var p = this._links.indexOf(res.delLink)
-        if (p > -1) this._links.splice(p, 1)
+        const p = newLinks.indexOf(res.delLink)
+        if (p > -1) newLinks.splice(p, 1)
       }
 
       instr = seq.shift()
     }
+    // here you can finally assign all newly created links and nodes
+    // to the stitch object's attributes
+    this._nodes.splice(0, 0, ...newNodes)
+    this._links.splice(0, 0, ...newLinks)
   }
 
   // *** PUBLIC METHODS ***

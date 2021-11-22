@@ -56,25 +56,27 @@ export default {
     var s = CrochetStitchFactory.getNewObject('origin', 'doily')
     this.stitches.push(s)
     this.refresh_simulation()
+
     var n, n2
-    this.sleep(2000).then(() => {
+
+    this.sleep(200).then(() => {
       n = s.getLastLoop()
       s = CrochetStitchFactory.getNewObject('ch', 'doily', n)
       this.stitches.push(s)
       this.refresh_simulation()
-      this.sleep(2000).then(() => {
+      this.sleep(200).then(() => {
         n2 = s.getLastLoop()
-        s = CrochetStitchFactory.getNewObject('sc', 'doily', n2, [n])
+        s = CrochetStitchFactory.getNewObject('ch', 'doily', n2)
         this.stitches.push(s)
         this.refresh_simulation()
-        this.sleep(2000).then(() => {
+        this.sleep(200).then(() => {
           n2 = s.getLastLoop()
-          s = CrochetStitchFactory.getNewObject('dc', 'doily', n2, [n])
+          s = CrochetStitchFactory.getNewObject('ch', 'doily', n2)
           this.stitches.push(s)
           this.refresh_simulation()
-          this.sleep(2000).then(() => {
+          this.sleep(200).then(() => {
             n2 = s.getLastLoop()
-            s = CrochetStitchFactory.getNewObject('slst', 'doily', n2, [n])
+            s = CrochetStitchFactory.getNewObject('sc', 'doily', n2, [n])
             this.stitches.push(s)
             this.refresh_simulation()
           })

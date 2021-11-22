@@ -18,7 +18,6 @@ class CrochetOperation {
     }
 
     getBasicResult (newSubject, newNode = false, newLink = false, delNode = false, delLink = false) {
-      console.log(delNode.id)
       return {
         subject: newSubject,
         newNode: newNode,

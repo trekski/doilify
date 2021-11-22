@@ -41,8 +41,6 @@ class CrochetOperationMerge extends CrochetOperation {
         if (!existingNeighbors.includes(e.getOtherEnd(sourceNode))) { e.replaceNode(sourceNode, targetNode) }
       }
     })
-    console.clear()
-    console.log(sourceNode)
     const res = this.getBasicResult(newSubject, false, false, sourceNode, deletedLink)
 
     return res

@@ -60,13 +60,12 @@ class CrochetStitch {
       const op = CrochetOperationFactory.getNewObject(action, subject, tokens)
 
       const res = op.exec()
-      console.log(res.delNode)
-
       subject = res.subject
+
       if (res.newNode) newNodes.push(res.newNode)
       if (res.newLink) newLinks.push(res.newLink)
+      
       if (res.delNode) {
-        console.log('uuu')
         res.delNode
           .getNeighborLinks()
           .forEach(e => {

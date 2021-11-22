@@ -79,6 +79,9 @@ export default {
             s = CrochetStitchFactory.getNewObject('sc', 'doily', n2, [n])
             this.stitches.push(s)
             this.refresh_simulation()
+            this.sleep(200).then(() => {
+              this.reheat_simulation()
+            })
           })
         })
       })
@@ -98,6 +101,9 @@ export default {
         )
         .alpha(1)
         .restart()
+    },
+    reheat_simulation () {
+      this.simulation.alpha(1).restart()
     }
   }
 }

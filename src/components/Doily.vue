@@ -4,6 +4,7 @@
       v-for="(s, index) in stitches"
       :key="index"
       :stitch="s"
+      @click="this.reheat_simulation()"
     />
   </g>
 </template>
@@ -18,16 +19,23 @@ export default {
   components: {
     Stitch: Stitch
   },
-  props: {},
+  props: {
+    appState: {
+      type: Object,
+      default: Object
+    }
+  },
   data () {
     return {
       stitches: [],
       simulation: d3
         .forceSimulation()
         .velocityDecay(0.05)
-        // .alphaMin(0.00000001)
+        .alphaMin(0.00000001)
         // .nodes(nds)
-        .force('charge', d3.forceManyBody().strength(-0.2))
+        .force('charge', d3.forceManyBody().strength(-0.2)),
+      live_node: Object,
+      selected_nodes: []
     }
   },
   computed: {
@@ -56,9 +64,10 @@ export default {
     var s = CrochetStitchFactory.getNewObject('origin', 'doily')
     this.stitches.push(s)
     this.refresh_simulation()
-
-    var n, n2
-
+    this.live_node = s.getLastLoop()
+    this.selected_nodes.push(s.getLastLoop())
+    // var n, n2
+    /*
     this.sleep(200).then(() => {
       n = s.getLastLoop()
       s = CrochetStitchFactory.getNewObject('ch', 'doily', n)
@@ -76,16 +85,20 @@ export default {
           this.refresh_simulation()
           this.sleep(200).then(() => {
             n2 = s.getLastLoop()
-            s = CrochetStitchFactory.getNewObject('sc', 'doily', n2, [n])
+            s = CrochetStitchFactory.getNewObject('dc', 'doily', n2, [n])
             this.stitches.push(s)
             this.refresh_simulation()
             this.sleep(200).then(() => {
-              this.reheat_simulation()
+              this.refresh_simulation()
+              this.sleep(200).then(() => {
+                this.refresh_simulation()
+              })
             })
           })
         })
       })
     })
+    */
   },
   methods: {
     sleep (ms) {
@@ -104,6 +117,17 @@ export default {
     },
     reheat_simulation () {
       this.simulation.alpha(1).restart()
+    },
+    makeStitch () {
+      const s = CrochetStitchFactory.getNewObject(
+        this.appState.mainStitchType,
+        'doily',
+        this.live_node,
+        this.selected_nodes
+      )
+      this.stitches.push(s)
+      this.live_node = s.getLastLoop()
+      this.refresh_simulation()
     }
   }
 }

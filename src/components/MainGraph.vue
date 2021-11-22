@@ -15,6 +15,7 @@
       @mousemove.meta.exact="dragPivot"
       @mousewheel="mouseWheelUsed"
       @keydown.shift.exact="keyPressedShifted"
+      @keydown.exact="keyPressed"
       @touchstart="touchChangePoints"
       @touchend="touchChangePoints"
       @touchcancel="touchChangePoints"
@@ -43,7 +44,10 @@
             stroke="red"
           />
         </g>
-        <Doily />
+        <Doily
+          ref="graphDoily"
+          :app-state="appState"
+        />
       </g>
     </svg>
   </div>
@@ -89,12 +93,15 @@ export default {
     window.addEventListener('resize', this.adjsutBase)
   },
   mounted () {
-    this.$refs.defaultFocus.focus()
+    this.refocus()
   },
   unmounted () {
     window.removeEventListener('resize', this.adjsutBase)
   },
   methods: {
+    refocus () {
+      this.$refs.defaultFocus.focus()
+    },
     adjsutBase () {
       this.baseShiftX = document.documentElement.clientWidth / 2
       this.baseShiftY = document.documentElement.clientHeight / 2
@@ -190,6 +197,13 @@ export default {
           break
         case 'Period':
           this.executeRotation(150)
+          break
+      }
+    },
+    keyPressed (e) {
+      switch (e.code) {
+        case 'KeyM':
+          this.$refs.graphDoily.makeStitch()
           break
       }
     },

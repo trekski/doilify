@@ -139,6 +139,7 @@ export default {
       this.menuOpen = false
       this.menuSelection = event
       if (event === 'panHelp') this.changeModal('none', null, 'pan_help', 'OK', null, 'help on navigation')
+      this.$refs.MainGraph.refocus()
     },
     // manage display of modal dialog windows
     changeModal (output = null, initval = null, valtype = null, buttons = null, msg = null, title = null) {
@@ -175,6 +176,7 @@ export default {
         case 'main_stitch' : this.appState.mainStitchType = event.value; break
         default: this.appState.editingMode = 'crochet'
       }
+      this.$refs.MainGraph.refocus()
     }
   }
 }

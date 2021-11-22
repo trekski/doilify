@@ -1,7 +1,6 @@
 class FactoryClass {
   constructor (exampleClass, attr, argumentNames = []) {
     this.className = exampleClass.name
-    console.log(exampleClass)
     if (exampleClass.prototype[attr]) {
       this.getKeyType = (typeof exampleClass.prototype[attr])
       this.getKeyAttr = attr

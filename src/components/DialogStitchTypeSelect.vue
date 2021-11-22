@@ -96,7 +96,6 @@ export default {
       return this.allowedStitches
         .filter(
           g => {
-            // console.log(g.members.filter(s => s.code === this.initialValue).length)
             return g.members
               .filter(s => s.code === this.initialValue)
               .length > 0

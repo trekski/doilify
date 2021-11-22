@@ -191,8 +191,6 @@ export default {
         case 'Period':
           this.executeRotation(150)
           break
-        default:
-          console.log(e.code)
       }
     },
     touchChangePoints (e) {
@@ -220,7 +218,6 @@ export default {
       this.touchData.to = null
     },
     touchUsed (e) {
-      console.log('move')
       if (e.touches.length === 1) {
         const newFrom = new Vec2d(e.touches[0].clientX, e.touches[0].clientY)
         const deltaTransl = newFrom.sub(this.touchData.from)
@@ -245,7 +242,6 @@ export default {
         // // zoom that happened
         var newFactor = 0
         var newScale = 1
-        console.log(curLen, newLen)
         if (curLen > 0 && newLen > 0) {
           newScale = newLen / curLen
           newFactor = Math.log(newScale) / Math.log(2) * 100

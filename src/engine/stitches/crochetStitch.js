@@ -64,7 +64,7 @@ class CrochetStitch {
 
       if (res.newNode) newNodes.push(res.newNode)
       if (res.newLink) newLinks.push(res.newLink)
-      
+
       if (res.delNode) {
         res.delNode
           .getNeighborLinks()

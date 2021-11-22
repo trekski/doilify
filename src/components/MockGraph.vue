@@ -219,7 +219,6 @@ export default {
       this.touchData.to = null
     },
     touchUsed (e) {
-      console.log('move')
       if (e.touches.length === 1) {
         const newFrom = new Vec2d(e.touches[0].clientX, e.touches[0].clientY)
         const deltaTransl = newFrom.sub(this.touchData.from)

@@ -108,7 +108,7 @@ class CrochetStitch {
   };
 
   getStartNode () {
-    return (this.typet === 'origin') ? this.getNodes()[0] : this.getNodes('start')[0]
+    return (this.type === 'origin') ? this.getNodes()[0] : this.getNodes('start')[0]
   };
 
   getEndNode () {

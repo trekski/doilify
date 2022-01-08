@@ -123,6 +123,7 @@ function parseDrawingCmds (tokenizedCommands = []) {
   return parsedCmds
 }
 
+// cahce pahts taht we already know - we don't need to tokenize and parse them again
 class PathLookupReigstry {
   static knownPaths = new Map()
   static getParsedPath (pathString) {
@@ -137,9 +138,12 @@ class PathLookupReigstry {
 class Plotter {
   // *** primitive SVG path (attr. d) command generators ****
 
+  // draw resolution: how precis ewe wanthte SVG path points to be
+  static D_RES = 2
+
   // generates SVG path to move pen to links Source point
   static SVGpathResetPen (base) {
-    return 'M ' + base.origin.getTxt(2)
+    return 'M ' + base.origin.getTxt(this.D_RES)
   }
 
   // generate typical SVG command from several (Vec2d) points
@@ -150,7 +154,7 @@ class Plotter {
     const dPoints = vecArr
       .slice(0, numPts)
       .filter(e => (e instanceof Vec2d))
-      .map(e => e.getTxt(2))
+      .map(e => e.getTxt(this.D_RES))
       .join(' ')
     return `${cmd} ${dPoints}`
   }
@@ -160,11 +164,11 @@ class Plotter {
       throw new Error('getSVGcmd : not enough vectors in vecArr for command \'a\'. Expected 4')
     }
     let dCmd = 'a '
-    dCmd += vecArr[0].rot(-base.phi).getTxt(2) + ' ' // arc radii
-    dCmd += (-vecArr[1].phi() / Math.PI * 180).toFixed(2) + ' ' // arc major axis rotation
+    dCmd += vecArr[0].rot(-base.phi).getTxt(this.D_RES) + ' ' // arc radii
+    dCmd += (-vecArr[1].phi() / Math.PI * 180).toFixed(this.D_RES) + ' ' // arc major axis rotation
     // dCmd += vecArr[2]._x + ' ' + vecArr[2]._y + ' ' // arc draw flags
     dCmd += params[2].vAbs._x + ',' + params[2].vAbs._y + ','
-    dCmd += vecArr[3].getTxt(2) // arc end
+    dCmd += vecArr[3].getTxt(this.D_RES) // arc end
     return dCmd
   }
 

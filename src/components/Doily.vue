@@ -8,16 +8,11 @@
       />
     </g>
     <g id="diagram_layer">
-      <g
-        v-for="(l, index) in all_links"
+      <PrintableLink
+        v-for="(l, index) in printable_links"
         :key="index"
         :link="l"
-      >
-        <path
-          v-if="l.isPrintable"
-          :d="1"
-        />
-      </g>
+      />
     </g>
   </g>
 </template>
@@ -25,12 +20,14 @@
 <script>
 import CrochetStitchFactory from '../engine/stitches/stitchFactory.js'
 import Stitch from './Stitch.vue'
+import PrintableLink from './PrintableLink.vue'
 import * as d3 from 'd3'
 
 export default {
   name: 'Doily',
   components: {
-    Stitch: Stitch
+    Stitch: Stitch,
+    PrintableLink: PrintableLink
   },
   props: {
     appState: {
@@ -75,6 +72,7 @@ export default {
     printable_links () {
       let l = []
       l = this.all_links.filter(e => (e.isPrintable & !e.isDeleted))
+      return l
     }
   },
   mounted () {

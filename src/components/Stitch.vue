@@ -32,7 +32,6 @@
 export default {
   name: 'Stitch',
   components: {
-    // Stitch: Stitch
   },
   props: {
     stitch: {

@@ -13,7 +13,7 @@ class CrochetLink {
 
   get isPrintable () { return false } // should it be drawn in documents
 
-  get isDeleted () {return this.is_deleted}
+  get isDeleted () { return this.is_deleted }
 
   get color () { return 'lightgray' } // how to draw it
 
@@ -101,7 +101,6 @@ class CrochetLink {
   }
 
   setLen (l) {
-    console.log(typeof l)
     if (typeof l !== 'number') return
     this._length = l
   }

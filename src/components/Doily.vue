@@ -1,11 +1,24 @@
 <template>
   <g>
-    <Stitch
-      v-for="(s, index) in stitches"
-      :key="index"
-      :stitch="s"
-      @click="this.reheat_simulation()"
-    />
+    <g id="technical_layer">
+      <Stitch
+        v-for="(s, index) in stitches"
+        :key="index"
+        :stitch="s"
+      />
+    </g>
+    <g id="diagram_layer">
+      <g
+        v-for="(l, index) in all_links"
+        :key="index"
+        :link="l"
+      >
+        <path
+          v-if="l.isPrintable"
+          :d="1"
+        />
+      </g>
+    </g>
   </g>
 </template>
 
@@ -58,6 +71,10 @@ export default {
         []
       )
       return l
+    },
+    printable_links () {
+      let l = []
+      l = this.all_links.filter(e => (e.isPrintable & !e.isDeleted))
     }
   },
   mounted () {

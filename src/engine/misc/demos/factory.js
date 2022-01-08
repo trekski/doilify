@@ -1,18 +1,19 @@
 import FactoryClass from '../factory.js'
 
 function factoryDemo (log) {
-  class n {static getType () { return 'x' }}
+  class n { getType () { return 'x' }}
   const x = new FactoryClass(n, 'getType')
 
-  class n1 {static getType () { return 'a' }}
+  class n1 { getType () { return 'a' }}
 
   x.registerClass(n1)
+
   log(x.getClass('a').name)
   log(x.getNewObject('a').constructor.name)
   log(x.getClass('a').name)
 
-  class n2 {static getType () { return 'b' }}
-  class n3 {static getType () { return 'a' }}
+  class n2 { getType () { return 'b' }}
+  class n3 { getType () { return 'a' }}
 
   x.registerClass(n2)
   x.registerClass(n3)
@@ -26,6 +27,10 @@ function factoryDemo (log) {
   try {
     log(x.getClass('c').name)
   } catch (e) { log(e) }
+
+  class u { get Type () { return 1 } }
+  const y = new FactoryClass(u, 'Type')
+  log(y.items.get(1).name)
 }
 
 export default factoryDemo

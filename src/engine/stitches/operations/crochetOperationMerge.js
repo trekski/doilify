@@ -2,7 +2,7 @@ import CrochetOperation from './crochetOperation.js'
 // import Vec2d from '../../misc/vector.js'
 
 class CrochetOperationMerge extends CrochetOperation {
-  static getCommandName () { return 'merge' }
+  get commandName () { return 'merge' }
 
   exec () {
     const cmd = this.params[0]
@@ -41,8 +41,8 @@ class CrochetOperationMerge extends CrochetOperation {
         if (!existingNeighbors.includes(e.getOtherEnd(sourceNode))) { e.replaceNode(sourceNode, targetNode) }
       }
     })
-
     const res = this.getBasicResult(newSubject, false, false, sourceNode, deletedLink)
+
     return res
   }
 }

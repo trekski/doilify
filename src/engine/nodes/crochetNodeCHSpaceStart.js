@@ -1,9 +1,9 @@
 import CrochetNode from './crochetNode.js'
 
 class CrochetNodeCHSpaceStart extends CrochetNode {
-  static getType () { return 'ch_sp_start' }
-  static getDesc () { return "first (not removable) loop of a 'chain space'. It carries ch.sp. total len." }
-  static getColor () { return 'yellow' }
+  get type () { return 'ch_sp_start' }
+  get desc () { return "first (not removable) loop of a 'chain space'. It carries ch.sp. total len." }
+  get color () { return 'yellow' }
 }
 
 export default CrochetNodeCHSpaceStart

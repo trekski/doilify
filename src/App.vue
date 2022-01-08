@@ -5,6 +5,7 @@
       ref="MainGraph"
       :app-state="appState"
     />
+
     <!-- placeholder for key app icons - (almost) const. visible -->
     <transition name="fade">
       <div
@@ -53,6 +54,7 @@
         </button>
       </div>
     </transition>
+
     <!-- placeholder for menu -->
     <transition name="fade">
       <div
@@ -64,6 +66,7 @@
         <MainMenu @menu-selected="menuAction" />
       </div>
     </transition>
+
     <!-- placeholder for modal dialog windows -->
     <transition name="fade">
       <div
@@ -136,6 +139,7 @@ export default {
       this.menuOpen = false
       this.menuSelection = event
       if (event === 'panHelp') this.changeModal('none', null, 'pan_help', 'OK', null, 'help on navigation')
+      this.$refs.MainGraph.refocus()
     },
     // manage display of modal dialog windows
     changeModal (output = null, initval = null, valtype = null, buttons = null, msg = null, title = null) {
@@ -172,6 +176,7 @@ export default {
         case 'main_stitch' : this.appState.mainStitchType = event.value; break
         default: this.appState.editingMode = 'crochet'
       }
+      this.$refs.MainGraph.refocus()
     }
   }
 }

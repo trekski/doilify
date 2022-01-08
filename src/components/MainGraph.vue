@@ -1,58 +1,67 @@
 <template>
-  <svg
-    id="graph"
-    ref="defaultFocus"
-    tabindex="0"
-    @mousedown="dragStart"
-    @mouseup="dragStop"
-    @mouseleave="dragStop"
-    @mousemove.exact="dragPan"
-    @mousemove.shift.exact="dragZoom"
-    @mousemove.ctrl.exact="dragPivot"
-    @mousemove.meta.exact="dragPivot"
-    @mousewheel="mouseWheelUsed"
-    @keydown.shift.exact="keyPressedShifted"
-    @touchstart="touchChangePoints"
-    @touchend="touchChangePoints"
-    @touchcancel="touchChangePoints"
-    @touchmove="touchUsed"
+  <div
+    id="graph_div"
   >
-    <g
-      id="graphMover"
-      :transform="`translate(${baseShiftX} ${baseShiftY}), scale(${graphScale}), rotate(${graphRotate}), translate(${shiftX} ${shiftY})`"
-      @keydown="k"
+    <svg
+      id="graph"
+      ref="defaultFocus"
+      tabindex="0"
+      @mousedown="dragStart"
+      @mouseup="dragStop"
+      @mouseleave="dragStop"
+      @mousemove.exact="dragPan"
+      @mousemove.shift.exact="dragZoom"
+      @mousemove.ctrl.exact="dragPivot"
+      @mousemove.meta.exact="dragPivot"
+      @mousewheel="mouseWheelUsed"
+      @keydown.shift.exact="keyPressedShifted"
+      @keydown.exact="keyPressed"
+      @touchstart="touchChangePoints"
+      @touchend="touchChangePoints"
+      @touchcancel="touchChangePoints"
+      @touchmove="touchUsed"
     >
-      <circle
-        cx="0"
-        cy="0"
-        r="10"
-        :fill=" appState.editingMode == 'crochet' ? 'red' : 'green'"
-        title="moves with graph"
-      />
-    </g>
-    <circle
-      :cx="baseShiftX"
-      :cy="baseShiftY"
-      r="5"
-      fill="blue"
-      title="always centerd"
-    />
-    <text
-      x="100"
-      y="100"
-    >
-      {{ touchData.info }}
-    </text>
-  </svg>
+      <g
+        id="graphMover"
+        :transform="`translate(${baseShiftX} ${baseShiftY}), scale(${graphScale}), rotate(${graphRotate}), translate(${shiftX} ${shiftY})`"
+        @keydown="k"
+      >
+        <g title="origin crosshair">
+          <line
+            x1="-30"
+            y1="0"
+            x2="30"
+            y2="0"
+            stroke-widht="1"
+            stroke="red"
+          />
+          <line
+            x1="0"
+            y1="-30"
+            x2="0"
+            y2="30"
+            stroke-widht="1"
+            stroke="red"
+          />
+        </g>
+        <Doily
+          ref="graphDoily"
+          :app-state="appState"
+        />
+      </g>
+    </svg>
+  </div>
 </template>
 
 <script>
 import Vec2d from '../engine/misc/vector.js'
-// import * as d3 from 'd3'
+import Doily from './Doily.vue'
 
 export default {
   name: 'MainGraph',
-  components: {},
+  components: {
+    Doily: Doily
+  },
   props: {
     appState: {
       type: Object,
@@ -70,15 +79,10 @@ export default {
       },
       shiftX: 0,
       shiftY: 0,
-      scaleFactor: 0,
+      scaleFactor: 200,
       rotateFactor: 0,
       baseShiftX: document.documentElement.clientWidth / 2,
-      baseShiftY: document.documentElement.clientHeight / 2,
-      // main elements of the graph simulation
-      nodes: [],
-      links: [],
-      stitches: [],
-      simulation: d3.forceSimulation()
+      baseShiftY: document.documentElement.clientHeight / 2
     }
   },
   computed: {
@@ -89,12 +93,15 @@ export default {
     window.addEventListener('resize', this.adjsutBase)
   },
   mounted () {
-    this.$refs.defaultFocus.focus()
+    this.refocus()
   },
   unmounted () {
     window.removeEventListener('resize', this.adjsutBase)
   },
   methods: {
+    refocus () {
+      this.$refs.defaultFocus.focus()
+    },
     adjsutBase () {
       this.baseShiftX = document.documentElement.clientWidth / 2
       this.baseShiftY = document.documentElement.clientHeight / 2
@@ -191,8 +198,13 @@ export default {
         case 'Period':
           this.executeRotation(150)
           break
-        default:
-          console.log(e.code)
+      }
+    },
+    keyPressed (e) {
+      switch (e.code) {
+        case 'KeyM':
+          this.$refs.graphDoily.makeStitch()
+          break
       }
     },
     touchChangePoints (e) {
@@ -220,7 +232,6 @@ export default {
       this.touchData.to = null
     },
     touchUsed (e) {
-      console.log('move')
       if (e.touches.length === 1) {
         const newFrom = new Vec2d(e.touches[0].clientX, e.touches[0].clientY)
         const deltaTransl = newFrom.sub(this.touchData.from)
@@ -245,7 +256,6 @@ export default {
         // // zoom that happened
         var newFactor = 0
         var newScale = 1
-        console.log(curLen, newLen)
         if (curLen > 0 && newLen > 0) {
           newScale = newLen / curLen
           newFactor = Math.log(newScale) / Math.log(2) * 100
@@ -286,6 +296,17 @@ export default {
   height: 100%;
   position: absolute;
   touch-action: none;
+  _visibility: hidden;
+}
+
+#graph_div {
+  outline: solid 1px red;
+  outline-offset: -1px;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  touch-action: none;
+  _visibility: hidden;
 }
 
 #graph text {

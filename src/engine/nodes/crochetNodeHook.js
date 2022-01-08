@@ -1,9 +1,9 @@
 import CrochetNode from './crochetNode.js'
 
 class CrochetNodeHook extends CrochetNode {
-  static getType () { return 'hook' }
-  static getDesc () { return "a node that must attach to other stitches' loops" }
-  static getColor () { return 'brown' }
+  get type () { return 'hook' }
+  get desc () { return "a node that must attach to other stitches' loops" }
+  get color () { return 'brown' }
 }
 
 export default CrochetNodeHook

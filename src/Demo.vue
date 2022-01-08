@@ -31,20 +31,28 @@ function header (a) {
 
 header('Vec2d demo')
 vectorDemo(log)
+
 header('idGenerator demo')
 helperDemo(log)
+
 header('graphics demo')
 graphicsDemo(log)
+
 header('factory demo')
 factoryDemo(log)
+
 header('NODE demo')
 crochetNodeDemo(log)
+
 header('LINK demo')
 crochetLinkDemo(log)
+
 header('DRAW LINK demo')
 crochetDrawDemo(log)
+
 header('crochet operation demo')
 crochetOperationDemo(log)
+
 header('STITCH demo')
 crochetStitchDemo(log)
 

@@ -7,7 +7,7 @@ import CrochetOperationCopy from './crochetOperationCopy.js'
 import CrochetOperationMove from './crochetOperationMove.js'
 import CrochetOperationMerge from './crochetOperationMerge.js'
 
-const CrochetOperationFactory = new FactoryClass(CrochetOperation, 'getCommandName')
+const CrochetOperationFactory = new FactoryClass(CrochetOperation, 'commandName')
 
 CrochetOperationFactory
   .registerClass(CrochetOperationMakeOrigin)

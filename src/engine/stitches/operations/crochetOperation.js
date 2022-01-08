@@ -3,11 +3,8 @@ import crochetNodeFactory from '../../nodes/nodeFactory.js'
 import crochetLinkFactory from '../../links/linkFactory.js'
 
 class CrochetOperation {
-  static getCommandName () { return 'default' }
-  getCommandName () { return this.constructor.getCommandName() }
-
-  static minParams () { return 0 }
-  minParams () { return this.constructor.minParams() }
+  get commandName () { return 'default' }
+  get minParams () { return 0 }
 
     static nodeFactory = crochetNodeFactory
     static linkFactory = crochetLinkFactory
@@ -16,7 +13,7 @@ class CrochetOperation {
       if (!(subject instanceof OperationSubject)) throw new Error('crochetOperation : needs a valid operationSubject')
       if (!(cmds instanceof Array)) throw new Error('crochetOperation : params must be an array [string]')
       this.params = cmds.filter(e => (typeof e === 'string')) // first argument will be an Array of the operation parameters
-      if (this.params.length < this.minParams()) throw new Error(`crochetOperation : not enough parameters for '${this.getCommandName()}'. Expected : ${this.minParams()}`)
+      if (this.params.length < this.minParams) throw new Error(`crochetOperation : not enough parameters for '${this.commandName}'. Expected : ${this.minParams}`)
       this.subject = subject // rest is the subject of the operation - components of the W.I.P. crochetStitch
     }
 
@@ -28,6 +25,11 @@ class CrochetOperation {
         delNode: delNode,
         delLink: delLink
       }
+    }
+
+    // just a small helper
+    static getLinkDefLen (byLinkType) {
+      return this.linkFactory.getClass(byLinkType).prototype.defLen
     }
 
     exec () {

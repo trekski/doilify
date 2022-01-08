@@ -7,20 +7,15 @@ class CrochetStitch {
   // *** CLASS STATIC METHODS ***
   // and their wrappers to use them in instances
 
-  static getSequence () { return 'mk:default:default' } // reciupe how to create stitches internal graph
-  getSequence () { return this.constructor.getSequence() }
+  get sequence () { return 'mk:default:default' } // reciupe how to create stitches internal graph
 
-  static getType () { return 'default' } // unambiguous string for each subclass
-  getType () { return this.constructor.getType() }
+  get type () { return 'default' } // unambiguous string for each subclass
 
-  static getDesc () { return 'default stitch class' } // human friendlz description
-  getDesc () { return this.constructor.getDesc() }
+  get desc () { return 'default stitch class' } // human friendlz description
 
-  static requiresPrevious () { return true } // true if the stitch requires prev. sittches last loop to hook into
-  requiresPrevious () { return this.constructor.requiresPrevious() }
+  get requiresPrevious () { return true } // true if the stitch requires prev. sittches last loop to hook into
 
-  static requiredLoops () { return 0 } // how manz other loops are needed to construct the stitch
-  requiredLoops () { return this.constructor.requiredLoops() }
+  get requiredLoops () { return 0 } // how manz other loops are needed to construct the stitch
 
   // *** CONSTRUCTOR ***
 
@@ -35,18 +30,23 @@ class CrochetStitch {
     // *** PRIVATE ATTRIBUTES ***
 
     this._context = context
-    this._nodes = new Map()
-    this._links = new Map()
+    this._nodes = []
+    this._links = []
     this.id = CrochetStitch.COUNTER.next()
 
+    // temporary variables, used onlz when new Stitch is being created
+    // to avoid immediate reactivity from Vue
+    const newNodes = []
+    const newLinks = []
+
     // validate call parameters
-    if (this.requiresPrevious() && attachToNode === null) throw new Error('crochetStitch : prev. stitch was required, but not provided')
+    if (this.requiresPrevious && attachToNode === null) throw new Error('crochetStitch : prev. stitch was required, but not provided')
     if (attachToNode !== null && !(attachToNode instanceof CrochetNode)) throw new Error(`crochetStitch : attachToNode must be an instance o crochetNode. Got: ${attachToNode.constructor.name}`)
     const loops = otherLoops.filter(e => (e instanceof CrochetNode)) // also a shallow copy
-    if (loops.length < this.requiredLoops()) throw new Error('crochetStitch: not enough other loops')
+    if (loops.length < this.requiredLoops) throw new Error('crochetStitch: not enough other loops')
 
     // setup stitch creation parameters
-    const seq = this.getSequence().split(';').map(e => e.trim())
+    const seq = this.sequence.split(';').map(e => e.trim())
     const needle = []
     needle.push(attachToNode)
     let instr = ''
@@ -57,53 +57,62 @@ class CrochetStitch {
     while (instr) {
       const tokens = instr.split(':').map(e => e.trim())
       const action = tokens.shift()
-      const op = crochetOperationFactory.getNewObject(action, subject, tokens)
+      const op = CrochetOperationFactory.getNewObject(action, subject, tokens)
+
       const res = op.exec()
       subject = res.subject
 
-      if (res.newNode) this._nodes.set(res.newNode)
-      if (res.newLink) this._links.set(res.newLink)
+      if (res.newNode) newNodes.push(res.newNode)
+      if (res.newLink) newLinks.push(res.newLink)
+
       if (res.delNode) {
         res.delNode
           .getNeighborLinks()
           .forEach(e => {
             e.apoptose()
-            this._links.delete(e)
           })
-        this._nodes.delete(res.delNode)
+        const p = newNodes.indexOf(res.delNode)
+        if (p > -1) newNodes.splice(p, 1)
       }
-      if (res.delLink) this._links.delete(res.delLink)
+
+      if (res.delLink) {
+        const p = newLinks.indexOf(res.delLink)
+        if (p > -1) newLinks.splice(p, 1)
+      }
+
       instr = seq.shift()
     }
+    // here you can finally assign all newly created links and nodes
+    // to the stitch object's attributes
+    this._nodes.splice(0, 0, ...newNodes)
+    this._links.splice(0, 0, ...newLinks)
   }
 
   // *** PUBLIC METHODS ***
 
   // overrides the default .toString()
   toString () {
-    return '[CrochetStitch ' + this._id + ']'
+    return `[${this.id} (${this.type})]`
   }
 
   getNodes (nodeType = null) {
-    const nodes = Array
-      .from(this._nodes.keys())
-      .filter(e => (nodeType === null || e.getType() === nodeType))
-    return nodes
+    return this._nodes.filter(
+      node => (nodeType === null || node.type === nodeType)
+    )
   };
 
   getLinks (linkType = null) {
-    const links = Array
-      .from(this._links.keys())
-      .filter(e => (linkType === null || e.getType() === linkType))
-    return links
+    return this._links.filter(
+      link => (linkType === null || link.type === linkType)
+    )
   };
 
   getStartNode () {
-    return (this.getType() === 'origin') ? this.getNodes()[0] : this.getNodes('start')[0]
+    return (this.type === 'origin') ? this.getNodes()[0] : this.getNodes('start')[0]
   };
 
   getEndNode () {
-    return (this.getType() === 'origin') ? this.getNodes()[0] : this.getNodes('finish')[0]
+    return (this.type === 'origin') ? this.getNodes()[0] : this.getNodes('finish')[0]
   };
 
   getPreviousStitch () {
@@ -120,7 +129,7 @@ class CrochetStitch {
 
     while (wrkNode.getContext() === sameStitch) {
       // if possible,  return a "loop" node
-      if (wrkNode.isLoopable()) return wrkNode
+      if (wrkNode.isLoopable) return wrkNode
       // otherwise, proceed to next node in main sequence
       const nextStchs = wrkNode.getNeighborLinks('out', 'sequence')
       if (nextStchs.length > 0) {
@@ -139,7 +148,7 @@ class CrochetStitch {
 
     while (wrkNode.getContext() === sameStitch) {
       // if possible,  return a "loop" node
-      if (wrkNode.isLoopable()) return wrkNode
+      if (wrkNode.isLoopable) return wrkNode
       // otherwise, proceed to next node in main sequence
       const nextStchs = wrkNode.getNeighborLinks('in', 'sequence')
       if (nextStchs.length > 0) {

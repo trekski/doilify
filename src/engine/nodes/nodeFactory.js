@@ -10,7 +10,7 @@ import CrochetNodeStruct from './crochetNodeStruct.js'
 import CrochetNodeCHSpaceStart from './crochetNodeCHSpaceStart.js'
 import CrochetNodeCHSpaceCont from './crochetNodeCHSpaceCont.js'
 
-const crochetNodeFactory = new FactoryClass(CrochetNode, 'getType')
+const crochetNodeFactory = new FactoryClass(CrochetNode, 'type')
 
 crochetNodeFactory
   .registerClass(CrochetNodeOrigin)

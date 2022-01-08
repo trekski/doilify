@@ -1,11 +1,11 @@
 import CrochetStitch from './crochetStitch.js'
 
 class CrochetStitchChain extends CrochetStitch {
-  static getSequence () { return 'mk:external:start;mk:sequence:finish' }
-  static getType () { return 'ch' }
-  static getDesc () { return 'simplest chain stitch' }
-  static requiresPrevious () { return true }
-  static requiredLoops () { return 0 }
+  get sequence () { return 'mk:external:start; mk:sequence:finish' }
+  get type () { return 'ch' }
+  get desc () { return 'simplest chain stitch' }
+  get requiresPrevious () { return true }
+  get requiredLoops () { return 0 }
 }
 
 export default CrochetStitchChain

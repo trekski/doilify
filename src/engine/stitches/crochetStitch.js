@@ -38,14 +38,16 @@ class CrochetStitch {
     this._reqLoops = requiredLoops
     this._sequence = sequence
 
-    // temporary variables, used onlz when new Stitch is being created
+    // temporary variables, used only when new Stitch is being created
     // to avoid immediate reactivity from Vue
     const newNodes = []
     const newLinks = []
 
     // validate call parameters
     if (this.requiresPrevious && attachToNode === null) throw new Error('crochetStitch : prev. stitch was required, but not provided')
-    if (attachToNode !== null && !(attachToNode instanceof CrochetNode)) throw new Error(`crochetStitch : attachToNode must be an instance o crochetNode. Got: ${attachToNode.constructor.name}`)
+
+    // if (attachToNode === null || !(attachToNode instanceof CrochetNode)) throw new Error('crochetStitch : attachToNode must be an instance o crochetNode.')
+
     const loops = otherLoops.filter(e => (e instanceof CrochetNode)) // also a shallow copy
     if (loops.length < this.requiredLoops) throw new Error('crochetStitch: not enough other loops')
 
@@ -55,12 +57,19 @@ class CrochetStitch {
     needle.push(attachToNode)
     let instr = ''
     let subject = new OperationSubject(needle, this, loops)
+    console.log('the first node on the nedle')
+    if (attachToNode !== null) console.log('attatch to node: ', attachToNode)
 
     // create the stitch'es nodes and links according to the dequence
     instr = seq.shift()
     while (instr) {
+      console.log(instr)
+
       const tokens = instr.split(':').map(e => e.trim())
       const action = tokens.shift()
+      console.log(action, subject, tokens)
+      console.log(typeof subject.needleStack[0] instanceof CrochetNode)
+      console.log('perform operation')
       const op = CrochetOperationFactory.getNewObject(action, subject, tokens)
 
       const res = op.exec()

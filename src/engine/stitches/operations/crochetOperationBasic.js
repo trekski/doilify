@@ -5,9 +5,9 @@ class CrochetOperationBasic extends CrochetOperation {
   get commandName () { return 'mk' }
   get minParams () { return 2 }
 
-  static CALC_DEF_NEW_POS (fromNode, byLinkType, newLinkLength) {
+  static CALC_DEF_NEW_POS (fromNode, byLinkType, len) {
     // setup
-    const len = (newLinkLength === false) ? CrochetOperation.getLinkDefLen(byLinkType) : Number(newLinkLength)
+    // const len = newLinkLength
     const start = fromNode.getVector()
 
     // initial direction of the new position is relative to fromNode
@@ -22,7 +22,7 @@ class CrochetOperationBasic extends CrochetOperation {
     if (delta.len() > 0) {
       // delta<>(0,0) => neighbors' CoM is not same as fromNode => go in opposite dir to it
       delta = delta.len(len)
-      // onlz one neighbor => extend the fromnode position outwards but turn by PI/20
+      // only one neighbor => extend the fromnode position outwards but turn by PI/20
       // if (neighbors[0] === fromNode) { delta = delta.rot(Math.PI / 20) };
       if (neighbors.length === 1) { delta = delta.rot(Math.PI / 10) };
     } else {
@@ -40,12 +40,18 @@ class CrochetOperationBasic extends CrochetOperation {
     // const newSubject, sourceNode, newNodeType, newNode, newLinkType, newLink, newPos
 
     // const [newLinkType, newNodeType] = this.params
-    const [newLinkType, newNodeType, newLinkLength = false] = this.params // newLinkLength might be undefined!
+    const [newLinkType, newNodeType, newLinkLength = false, drawPath = ''] = this.params // newLinkLength might be undefined!
     const newSubject = this.subject.copy()
     const sourceNode = newSubject.needleStack.pop()
-    const newPos = CrochetOperationBasic.CALC_DEF_NEW_POS(sourceNode, newLinkType, newLinkLength) // ??? where to put this function best ???
-    const newNode = CrochetOperation.nodeFactory.getNewObject(newNodeType, this.subject.contextStitch, newPos)
-    const newLink = CrochetOperation.linkFactory.getNewObject(newLinkType, this.subject.contextStitch, sourceNode, newNode)
+    const newNode = CrochetOperation.nodeFactory.getNewObject(newNodeType, this.subject.contextStitch, sourceNode.getVector())
+
+    const newLink = CrochetOperation.linkFactory.getNewObject(newLinkType, this.subject.contextStitch, sourceNode, newNode, drawPath)
+
+    const linkLength = (newLinkLength !== false)
+      ? newLinkLength
+      : newLink.defLen()
+    const newPos = CrochetOperationBasic.CALC_DEF_NEW_POS(sourceNode, newLinkType, linkLength) // ??? where to put this function best ???
+    newNode.setVector(newPos)
     if (newLinkLength !== false) newLink.setLen(Number(newLinkLength))
     newSubject.needleStack.push(newNode)
 

@@ -1,5 +1,6 @@
 import CrochetLink from './crochetLink.js'
 import { PathLookupReigstry } from '../misc/graphics.js'
+import DrawableLines from './drawableLines.js'
 
 class CrochetDraw extends CrochetLink {
   // override crochetLink dfaults
@@ -18,11 +19,19 @@ class CrochetDraw extends CrochetLink {
 
   constructor () {
     super(...arguments)
-    this.x = 1
+    this.selectNewPath(arguments[5])
   }
 
   setNewPath (p = '') {
     this.pathCommands = PathLookupReigstry.getParsedPath(p)
+  }
+
+  selectNewPath (name) {
+    let path = DrawableLines.getLineDef(name)
+    path = (path == null)
+      ? DrawableLines.getLineDef('default')
+      : path
+    this.setNewPath(path)
   }
 }
 

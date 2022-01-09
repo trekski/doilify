@@ -13,7 +13,8 @@ function crochetDrawDemo (log) {
   const n1 = { x: 1, y: 2, registerNeighbor: () => {} }
   const n2 = { x: -1, y: 3, registerNeighbor: () => {} }
 
-  const link = new CrochetDraw('A', n1, n2)
+  const link = new CrochetDraw(undefined, undefined, undefined, undefined, 'A', n1, n2)
+
   link.setNewPath(line)
 
   function drawsim (link) {

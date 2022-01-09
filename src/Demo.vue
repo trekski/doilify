@@ -14,8 +14,8 @@
 // import graphicsDemo from './engine/misc/demos/graphics.js'
 // import factoryDemo from './engine/misc/demos/factory.js'
 // import crochetNodeDemo from './engine/nodes/demos/crochetNode.js'
-// import crochetLinkDemo from './engine/links/demos/crochetLink.js'
-import crochetDrawDemo from './engine/links/demos/crochetDraw.js'
+import crochetLinkDemo from './engine/links/demos/crochetLink.js'
+// import crochetDrawDemo from './engine/links/demos/crochetDraw.js'
 // import crochetOperationDemo from './engine/stitches/operations/demos/operations.js'
 // import crochetStitchDemo from './engine/stitches/demos/stitchFactory.js'
 
@@ -44,11 +44,11 @@ function header (a) {
 // header('NODE demo')
 // crochetNodeDemo(log)
 
-// header('LINK demo')
-// crochetLinkDemo(log)
+header('LINK demo')
+crochetLinkDemo(log)
 //
-header('DRAW LINK demo')
-crochetDrawDemo(log)
+// header('DRAW LINK demo')
+// crochetDrawDemo(log)
 //
 // header('crochet operation demo')
 // crochetOperationDemo(log)

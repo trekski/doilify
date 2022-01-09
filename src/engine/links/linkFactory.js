@@ -15,6 +15,7 @@ import DrawTRC from './drawTRC.js'
 const crochetLinkFactory = new FactoryClass(CrochetLink, 'type')
 
 crochetLinkFactory
+  .registerClass(CrochetLink)
   .registerClass(CrochetLinkSequential)
   .registerClass(CrochetLinkExternal)
   .registerClass(CrochetLinkCHSpace)

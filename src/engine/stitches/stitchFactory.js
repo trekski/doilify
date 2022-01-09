@@ -10,6 +10,7 @@ import CrochetStitchSlip from './crochetStitchSlip.js'
 const CrochetStitchFactory = new FactoryClass(CrochetStitch, 'type')
 
 CrochetStitchFactory
+  .registerClass(CrochetStitch)
   .registerClass(CrochetStitchOrigin)
   .registerClass(CrochetStitchChain)
   .registerClass(CrochetStitchSingle)

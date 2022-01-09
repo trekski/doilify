@@ -15,6 +15,12 @@ class CrochetOperation {
       this.params = cmds.filter(e => (typeof e === 'string')) // first argument will be an Array of the operation parameters
       if (this.params.length < this.minParams) throw new Error(`crochetOperation : not enough parameters for '${this.commandName}'. Expected : ${this.minParams}`)
       this.subject = subject // rest is the subject of the operation - components of the W.I.P. crochetStitch
+      console.groupCollapsed('CrochetOperation > constructor')
+      console.log('subject: ', subject)
+      console.log('this.subject: ', this.subject)
+      console.log('cmds: ', cmds)
+      console.log('this.params:', this.params)
+      console.groupEnd()
     }
 
     getBasicResult (newSubject, newNode = false, newLink = false, delNode = false, delLink = false) {

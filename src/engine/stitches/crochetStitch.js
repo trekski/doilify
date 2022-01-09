@@ -1,5 +1,4 @@
 import IdGenerator from '../misc/helpers.js'
-import CrochetNode from '../nodes/crochetNode.js'
 import CrochetOperationFactory from './operations/operationFactory.js'
 import OperationSubject from './operations/operationSubject.js'
 
@@ -21,6 +20,16 @@ class CrochetStitch {
 
   constructor (type, requiresPrevious, requiredLoops, sequence, context, attachToNode = null, otherLoops = []) {
     // *** STATIC ATTRIBUTES ***
+
+    console.group('Stitch > cosntructor')
+    console.log('type: ', type)
+    console.log('req. perv.: ', requiresPrevious)
+    console.log('req. loops: ', requiredLoops)
+    console.log('seq.: ', sequence)
+    console.log('context: ', context)
+    console.log('attatch to: ', attachToNode)
+    console.log('loops: ', otherLoops)
+    console.groupEnd()
 
     // Create dedicated stitch numbering sequence
     if (typeof CrochetStitch.COUNTER === 'undefined') {
@@ -45,27 +54,37 @@ class CrochetStitch {
 
     // validate call parameters
     if (this.requiresPrevious && attachToNode === null) throw new Error('crochetStitch : prev. stitch was required, but not provided')
-
-    // if (attachToNode === null || !(attachToNode instanceof CrochetNode)) throw new Error('crochetStitch : attachToNode must be an instance o crochetNode.')
-
-    const loops = otherLoops.filter(e => (e instanceof CrochetNode)) // also a shallow copy
-    if (loops.length < this.requiredLoops) throw new Error('crochetStitch: not enough other loops')
+    if (otherLoops.length < this.requiredLoops) throw new Error('crochetStitch: not enough other loops')
 
     // setup stitch creation parameters
     const seq = this.sequence.split(';').map(e => e.trim())
+    let instr = ''
+
+    console.groupCollapsed('initial subject')
+    console.log('attatch to: ', attachToNode)
     const needle = []
     needle.push(attachToNode)
-    let instr = ''
-    let subject = new OperationSubject(needle, this, loops)
+    console.log('needle: ', needle)
+    console.log('needle[0]: ', needle[0])
+    console.log('other loops:', otherLoops)
+    let subject = new OperationSubject(needle, this, otherLoops)
+    console.groupEnd()
 
     // create the stitch'es nodes and links according to the dequence
     instr = seq.shift()
     while (instr) {
+      //
+      console.group('execute the operations')
       const tokens = instr.split(':').map(e => e.trim())
       const action = tokens.shift()
       const op = CrochetOperationFactory.getNewObject(action, subject, tokens)
-
+      console.log('action: ', action)
+      console.log('tokens: ', tokens)
+      console.log('subject:', subject)
+      console.log(op)
       const res = op.exec()
+      console.log('SUCCESS!!!')
+
       subject = res.subject
 
       if (res.newNode) newNodes.push(res.newNode)
@@ -87,6 +106,7 @@ class CrochetStitch {
       }
 
       instr = seq.shift()
+      console.groupEnd()
     }
     // here you can finally assign all newly created links and nodes
     // to the stitch object's attributes

@@ -42,6 +42,10 @@ class FactoryClass {
   }
 
   getNewObject (type, ...rest) {
+    console.groupCollapsed(`factory > getNewObject > ${this.className}`)
+    console.log('type:', type)
+    console.log('rest:', rest)
+    console.groupEnd()
     const Cls = this.knownClasses.get(type).class
     const extraArgs = this.knownClasses.get(type).arguments
     if (typeof Cls === 'undefined') throw new Error(`${this.className} factory : invalid ${this.className} type '${type}'`)

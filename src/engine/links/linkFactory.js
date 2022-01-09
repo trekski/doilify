@@ -25,7 +25,7 @@ crochetLinkFactory
   // .registerClass(CrochetLinkZero)
   .registerClass(CrochetLink, 'zero', ['zero', 0, false, 'lightgray'])
   // .registerClass(CrochetDraw)
-  .registerClass(CrochetDraw, 'draw', ['zero', 5, false, 'lightgray'])
+  .registerClass(CrochetDraw, 'draw', ['sequence', 5, true, 'lightgray'])
   // .registerClass(DrawCH)
   // .registerClass(DrawSC)
   // .registerClass(DrawHDC)

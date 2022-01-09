@@ -1,6 +1,6 @@
 import CrochetNode from './crochetNode.js'
 
-class CrochetNodeOrigin extends CrochetNode {
+class CrochetNodeFixed extends CrochetNode {
   // et type () { return 'origin' }
   // get desc () { return 'the first node in the crochet project' }
   // get isLoopable () { return true }
@@ -13,4 +13,4 @@ class CrochetNodeOrigin extends CrochetNode {
   }
 }
 
-export default CrochetNodeOrigin
+export default CrochetNodeFixed

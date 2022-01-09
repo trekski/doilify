@@ -3,7 +3,7 @@ import CrochetNode from './crochetNode.js'
 
 // console.log(typeof CrochetNode.prototype['type'])
 
-import CrochetNodeOrigin from './crochetNodeOrigin.js'
+import CrochetNodeFixed from './CrochetNodeFixed.js'
 // import CrochetNodeStart from './crochetNodeStart.js'
 // import CrochetNodeFinish from './crochetNodeFinish.js'
 // import CrochetNodeHook from './crochetNodeHook.js'
@@ -16,7 +16,7 @@ const crochetNodeFactory = new FactoryClass(CrochetNode, false, 0)
 crochetNodeFactory
   .registerClass(CrochetNode, 'default', ['default', false, 'black'])
   // .registerClass(CrochetNodeOrigin)
-  .registerClass(CrochetNodeOrigin, 'origin', ['origin', true, 'black'])
+  .registerClass(CrochetNodeFixed, 'origin', ['origin', true, 'black'])
   // .registerClass(CrochetNodeStart)
   .registerClass(CrochetNode, 'start', ['start', false, 'green'])
   // .registerClass(CrochetNodeFinish)

@@ -14,6 +14,7 @@ class PlotBaseVector {
     this.origin = new Vec2d(from.getArray()) // to make a copy
     this.len = baseLen
     this.phi = basePhi
+    // console.log([this.origin._x, this.origin._y, this.len, this.phi])
   }
 }
 
@@ -33,19 +34,21 @@ class TransformationTwoVector {
     if (clean.length < 2) throw new Error('TransformationTwoVector : not enough vectors')
     this.vAbs = clean[0]
     this.vPerc = clean[1]
+    // console.log(this.vPerc)
   }
 
   // given base vector (axis along which we draw) and two-vector parameter, returns the actual point to draw
   calcPathPoint (base = new PlotBaseVector()) {
     const v = this.vAbs.rot(base.phi)
     const u = this.vPerc.scale(base.len).rot(base.phi)
+    // console.log(u)
     return v.add(u)
   }
 }
 
 class GraphCommand {
   // we need one command (to kwno what SVG path element will be drawn)
-  // and an array of transform. two-vectors (to kwno the SVG control points)
+  // and an array of transform. two-vectors (to know the SVG control points)
   constructor (cmd, params) {
     if (typeof (cmd) !== 'string') throw new Error('graphCommand : command must be a string')
     if (!(params instanceof Array)) throw new Error('graphCommand : params must be an Array of TransformationTwoVector')
@@ -120,6 +123,7 @@ function parseDrawingCmds (tokenizedCommands = []) {
   return parsedCmds
 }
 
+// cahce pahts taht we already know - we don't need to tokenize and parse them again
 class PathLookupReigstry {
   static knownPaths = new Map()
   static getParsedPath (pathString) {
@@ -134,9 +138,12 @@ class PathLookupReigstry {
 class Plotter {
   // *** primitive SVG path (attr. d) command generators ****
 
+  // draw resolution: how precis ewe wanthte SVG path points to be
+  static D_RES = 2
+
   // generates SVG path to move pen to links Source point
   static SVGpathResetPen (base) {
-    return 'M ' + base.origin.getTxt()
+    return 'M ' + base.origin.getTxt(this.D_RES)
   }
 
   // generate typical SVG command from several (Vec2d) points
@@ -147,27 +154,27 @@ class Plotter {
     const dPoints = vecArr
       .slice(0, numPts)
       .filter(e => (e instanceof Vec2d))
-      .map(e => e.getTxt())
+      .map(e => e.getTxt(this.D_RES))
       .join(' ')
     return `${cmd} ${dPoints}`
   }
 
-  static SVGpathArc (vecArr, base) {
+  static SVGpathArc (vecArr, base, params) {
     if (vecArr.filter(e => (e instanceof Vec2d)).length < 4) {
       throw new Error('getSVGcmd : not enough vectors in vecArr for command \'a\'. Expected 4')
     }
     let dCmd = 'a '
-    dCmd += vecArr[0].rot(-base.phi).getTxt() + ' ' // arc radii
-    dCmd += (-vecArr[1].phi() / Math.PI * 180) + ' ' // arc major axis rotation
-    dCmd += vecArr[2]._x + ' ' + vecArr[2]._y + ' ' // arc draw flags
-    dCmd += vecArr[3].getTxt() // arc end
+    dCmd += vecArr[0].rot(-base.phi).getTxt(this.D_RES) + ' ' // arc radii
+    dCmd += (-vecArr[1].phi() / Math.PI * 180).toFixed(this.D_RES) + ' ' // arc major axis rotation
+    dCmd += params[2].vAbs._x + ',' + params[2].vAbs._y + ',' // sweep and arc flags - espected to be 0 or 1
+    dCmd += vecArr[3].getTxt(this.D_RES) // arc end
     return dCmd
   }
 
-  static SVGpathCommandFactory (func, cmd, numPts, base, vecArr) {
+  static SVGpathCommandFactory (func, cmd, params, numPts, base, vecArr) {
     switch (func) {
       case 'reset' : return Plotter.SVGpathResetPen(base)
-      case 'arc' : return Plotter.SVGpathArc(vecArr, base)
+      case 'arc' : return Plotter.SVGpathArc(vecArr, base, params)
       case 'generic' : return Plotter.SVGpathGeneric(cmd, numPts, vecArr)
       default : return ''
     }
@@ -213,10 +220,11 @@ class Plotter {
       const pathStepParts = funcs.map(
         e => Plotter.SVGpathCommandFactory(
           e,
-          mappedCmd,
-          numPts,
-          base,
-          vectors
+          mappedCmd, // 'a'
+          pathCommand.params,
+          numPts, // 4
+          base, // origin, len, phi
+          vectors //
         )
       )
       return pathStepParts.join(' ')

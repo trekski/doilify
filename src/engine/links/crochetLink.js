@@ -5,13 +5,15 @@ class CrochetLink {
   // *** CLASS STATIC METHODS ***
   // and their wrappers to use them in instances
 
-  get defLen () { return 10 } // link lenght for ForceLayout simulation
+  get defLen () { return 5 } // link lenght for ForceLayout simulation
 
   get type () { return 'default' } // unambiguous string for each subclass
 
   get desc () { return 'default link class' } // human friendly desc.
 
   get isPrintable () { return false } // should it be drawn in documents
+
+  get isDeleted () { return this.is_deleted }
 
   get color () { return 'lightgray' } // how to draw it
 
@@ -36,7 +38,7 @@ class CrochetLink {
 
     // physics
     if (length === undefined) {
-      this._length = this.constructor.defLen
+      this._length = this.defLen
     } else {
       if (typeof length !== 'number') throw new Error('length must be a number')
       this._length = length
@@ -91,10 +93,16 @@ class CrochetLink {
     return this.source.getVector().sub(this.target.getVector()).len()
   };
 
-  // wrapper for the getRealLen that can return derivatives, that depend on neighborhood
+  // wrapper for the _length that can return derivatives, that depend on neighborhood
   // will be used in "chainspace" stitches
+  // intended as the default accessor of link lenght for D3JS
   getLen () {
-    return this.defLen
+    return this._length
+  }
+
+  setLen (l) {
+    if (typeof l !== 'number') return
+    this._length = l
   }
 
   // get all neighbouring nodes of the two connected nodes

@@ -57,19 +57,12 @@ class CrochetStitch {
     needle.push(attachToNode)
     let instr = ''
     let subject = new OperationSubject(needle, this, loops)
-    console.log('the first node on the nedle')
-    if (attachToNode !== null) console.log('attatch to node: ', attachToNode)
 
     // create the stitch'es nodes and links according to the dequence
     instr = seq.shift()
     while (instr) {
-      console.log(instr)
-
       const tokens = instr.split(':').map(e => e.trim())
       const action = tokens.shift()
-      console.log(action, subject, tokens)
-      console.log(typeof subject.needleStack[0] instanceof CrochetNode)
-      console.log('perform operation')
       const op = CrochetOperationFactory.getNewObject(action, subject, tokens)
 
       const res = op.exec()

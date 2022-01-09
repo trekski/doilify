@@ -166,8 +166,7 @@ class Plotter {
     let dCmd = 'a '
     dCmd += vecArr[0].rot(-base.phi).getTxt(this.D_RES) + ' ' // arc radii
     dCmd += (-vecArr[1].phi() / Math.PI * 180).toFixed(this.D_RES) + ' ' // arc major axis rotation
-    // dCmd += vecArr[2]._x + ' ' + vecArr[2]._y + ' ' // arc draw flags
-    dCmd += params[2].vAbs._x + ',' + params[2].vAbs._y + ','
+    dCmd += params[2].vAbs._x + ',' + params[2].vAbs._y + ',' // sweep and arc flags - espected to be 0 or 1
     dCmd += vecArr[3].getTxt(this.D_RES) // arc end
     return dCmd
   }

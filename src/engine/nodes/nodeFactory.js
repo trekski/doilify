@@ -12,7 +12,7 @@ import CrochetNodeOrigin from './crochetNodeOrigin.js'
 // import CrochetNodeCHSpaceStart from './crochetNodeCHSpaceStart.js'
 // import CrochetNodeCHSpaceCont from './crochetNodeCHSpaceCont.js'
 
-const crochetNodeFactory = new FactoryClass(CrochetNode)
+const crochetNodeFactory = new FactoryClass(CrochetNode, false, 0)
 crochetNodeFactory
   .registerClass(CrochetNode, 'default', ['default', false, 'black'])
   // .registerClass(CrochetNodeOrigin)

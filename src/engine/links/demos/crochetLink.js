@@ -26,7 +26,7 @@ function crochetLinkDemo (log) {
   l = new CrochetLinkCHSpace('A', n3, n2)
   log(`${l} : desc ${l.desc} `)
 
-  log(crochetLinkFactory.items.get('chain_space').name)
+  log(crochetLinkFactory.knownClasses.get('chain_space').class.name)
 }
 
 export default crochetLinkDemo

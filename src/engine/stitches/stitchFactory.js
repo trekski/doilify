@@ -1,20 +1,25 @@
 import FactoryClass from '../misc/factory.js'
 import CrochetStitch from './crochetStitch.js'
 
-import CrochetStitchOrigin from './crochetStitchOrigin.js'
-import CrochetStitchChain from './crochetStitchChain.js'
-import CrochetStitchSingle from './crochetStitchSingle.js'
-import CrochetStitchDouble from './crochetStitchDouble.js'
-import CrochetStitchSlip from './crochetStitchSlip.js'
+// import CrochetStitchOrigin from './crochetStitchOrigin.js'
+// import CrochetStitchChain from './crochetStitchChain.js'
+// import CrochetStitchSingle from './crochetStitchSingle.js'
+// import CrochetStitchDouble from './crochetStitchDouble.js'
+// import CrochetStitchSlip from './crochetStitchSlip.js'
 
-const CrochetStitchFactory = new FactoryClass(CrochetStitch, 'type')
+const CrochetStitchFactory = new FactoryClass(CrochetStitch, false, 4)
 
 CrochetStitchFactory
-  .registerClass(CrochetStitch)
-  .registerClass(CrochetStitchOrigin)
-  .registerClass(CrochetStitchChain)
-  .registerClass(CrochetStitchSingle)
-  .registerClass(CrochetStitchDouble)
-  .registerClass(CrochetStitchSlip)
+  .registerClass(CrochetStitch, 'default', ['default', true, 0, 'mk:default:default'])
+  // .registerClass(CrochetStitchOrigin)
+  .registerClass(CrochetStitch, 'origin', ['origin', false, 0, 'makeorigin'])
+  // .registerClass(CrochetStitchChain)
+  .registerClass(CrochetStitch, 'ch', ['ch', true, 0, 'mk:external:start; mk:draw_sc:finish:5'])
+  // .registerClass(CrochetStitchSingle)
+  .registerClass(CrochetStitch, 'sc', ['sc', true, 1, 'mk:external:start; mk:sequence:finish; mv:other; mk:external:hook; mk:default:loop; merge:right'])
+  // .registerClass(CrochetStitchDouble)
+  .registerClass(CrochetStitch, 'dc', ['dc', true, 1, 'mk:external:start; mk:sequence:finish; mv:other; mk:external:hook; mk:default:loop; mk:default:hook; mk:default:loop; merge:right'])
+  // .registerClass(CrochetStitchSlip)
+  .registerClass(CrochetStitch, 'slst', ['slst', true, 1, 'mk:external:start; mk:sequence:finish; mv:other; mk:external:hook; merge:right'])
 
 export default CrochetStitchFactory

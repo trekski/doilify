@@ -7,19 +7,19 @@ class CrochetStitch {
   // *** CLASS STATIC METHODS ***
   // and their wrappers to use them in instances
 
-  get sequence () { return 'mk:default:default' } // reciupe how to create stitches internal graph
+  get sequence () { return this._sequence } // reciupe how to create stitches internal graph
 
-  get type () { return 'default' } // unambiguous string for each subclass
+  get type () { return this._type } // unambiguous string for each subclass
 
-  get desc () { return 'default stitch class' } // human friendlz description
+  // get desc () { return 'default stitch class' } // human friendlz description
 
-  get requiresPrevious () { return true } // true if the stitch requires prev. sittches last loop to hook into
+  get requiresPrevious () { return this._reqPrev } // true if the stitch requires prev. sittches last loop to hook into
 
-  get requiredLoops () { return 0 } // how manz other loops are needed to construct the stitch
+  get requiredLoops () { return this._reqLoops } // how manz other loops are needed to construct the stitch
 
   // *** CONSTRUCTOR ***
 
-  constructor (context, attachToNode = null, otherLoops = []) {
+  constructor (type, requiresPrevious, requiredLoops, sequence, context, attachToNode = null, otherLoops = []) {
     // *** STATIC ATTRIBUTES ***
 
     // Create dedicated stitch numbering sequence
@@ -33,6 +33,10 @@ class CrochetStitch {
     this._nodes = []
     this._links = []
     this.id = CrochetStitch.COUNTER.next()
+    this._type = type
+    this._reqPrev = requiresPrevious
+    this._reqLoops = requiredLoops
+    this._sequence = sequence
 
     // temporary variables, used onlz when new Stitch is being created
     // to avoid immediate reactivity from Vue

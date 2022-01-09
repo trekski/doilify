@@ -57,6 +57,9 @@ function crocehtNodeDemo (log) {
   log(`${n} : string ${n.desc} `)
 
   log(crochetNodeFactory.knownClasses.get('default').class.name)
+  n = crochetNodeFactory.getNewObject('default', '', [0, 0])
+  const n4 = crochetNodeFactory.getNewObject('default', '', [0, 0])
+  log(n.type === n4.type)
 }
 
 export default crocehtNodeDemo

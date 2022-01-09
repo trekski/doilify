@@ -6,12 +6,16 @@ function crochetStitchDemo (log) {
 
   n = crochetNodeFactory.getNewObject('start', 'stitch', [0, 0])
   n = crochetNodeFactory.getNewObject('start', 'stitch', [0, 0])
+  s = 0
+  s = 1
+  log(n)
+
   s = crochetStitchFactory.getNewObject('default', 'doily', n)
 
   log`*** default stitch ***`
 
   log(`${s.id}`)
-  log(`${s.gsequence}`)
+  log(`${s.sequence}`)
   log(`nodes : ${s.getNodes()}`)
   log(`links : ${s.getLinks()}`)
   log(`start : ${s.getStartNode()}`)

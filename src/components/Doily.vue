@@ -134,15 +134,6 @@ export default {
       this.simulation.alpha(1).restart()
     },
     makeStitch () {
-      //
-      console.clear()
-      console.group('Doily > makeStitch')
-      console.log('live stitch:', this.live_node)
-      console.log('selected nodes:', this.selected_nodes)
-      console.log('st. type: ', this.appState.mainStitchType)
-      console.log('class:', CrochetStitchFactory.knownClasses.get('ch').class)
-      console.groupEnd()
-      //
       const s = CrochetStitchFactory.getNewObject(
         this.appState.mainStitchType,
         'doily',

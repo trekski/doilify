@@ -1,8 +1,7 @@
 class FactoryClass {
   constructor (exampleClass, attributeName = false, numAddArguments = 0) {
-    this.className = exampleClass.name // CrochetOperation
-    this.numAddArguments = numAddArguments // 0
-    // commandName
+    this.className = exampleClass.name
+    this.numAddArguments = numAddArguments
     this.knownClasses = new Map()
     if (attributeName !== false) {
       if (exampleClass.prototype[attributeName]) {
@@ -11,7 +10,6 @@ class FactoryClass {
       } else {
         throw new Error(`factoryClass : class '${exampleClass.name}' does not have the attribute/method '${attributeName}'`)
       }
-      // this.registerClass(exampleClass, additionalArguments)
     } else {
       this.getKeyType = false
       this.getKeyAttr = false
@@ -42,10 +40,6 @@ class FactoryClass {
   }
 
   getNewObject (type, ...rest) {
-    console.groupCollapsed(`factory > getNewObject > ${this.className}`)
-    console.log('type:', type)
-    console.log('rest:', rest)
-    console.groupEnd()
     const Cls = this.knownClasses.get(type).class
     const extraArgs = this.knownClasses.get(type).arguments
     if (typeof Cls === 'undefined') throw new Error(`${this.className} factory : invalid ${this.className} type '${type}'`)

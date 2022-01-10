@@ -16,9 +16,9 @@ CrochetStitchFactory
   // .registerClass(CrochetStitchChain)
   .registerClass(CrochetStitch, 'ch', ['ch', true, 0, 'mk:external:start; mk:draw:finish:5:ch'])
   // .registerClass(CrochetStitchSingle)
-  .registerClass(CrochetStitch, 'sc', ['sc', true, 1, 'mk:external:start; mk:sequence:finish; mv:other; mk:external:hook; mk:default:loop; merge:right'])
+  .registerClass(CrochetStitch, 'sc', ['sc', true, 1, 'mk:external:start; mk:sequence:finish; mv:other; mk:external:hook; mk:draw:loop:5:sc; merge:right'])
   // .registerClass(CrochetStitchDouble)
-  .registerClass(CrochetStitch, 'dc', ['dc', true, 1, 'mk:external:start; mk:sequence:finish; mv:other; mk:external:hook; mk:default:loop; mk:default:hook; mk:default:loop; merge:right'])
+  .registerClass(CrochetStitch, 'dc', ['dc', true, 1, 'mk:external:start; mk:sequence:finish; mv:other; mk:external:hook; mk:draw:loop:15:dc; merge:right'])
   // .registerClass(CrochetStitchSlip)
   .registerClass(CrochetStitch, 'slst', ['slst', true, 1, 'mk:external:start; mk:sequence:finish; mv:other; mk:external:hook; merge:right'])
 

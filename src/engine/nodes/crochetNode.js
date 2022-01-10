@@ -13,6 +13,8 @@ class CrochetNode {
 
   get color () { return this._color } // how to draw the node
 
+  get context () { return this._context }
+
   constructor (type, loopable = false, color = 'black', argContext, argCoordinates) {
     //  STATIC ATTRIBUTES
 

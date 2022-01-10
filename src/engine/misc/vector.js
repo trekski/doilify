@@ -51,18 +51,29 @@ class Vec2d {
     return (this._x * v._y - this._y * v._x)
   }
 
-  len (e) { //  length of the vector
-    if (typeof e === 'number') {
-      const now = this.len()
-      if (now === 0) {
-        return new Vec2d(0, 0)
-      } else {
-        return this.scale(e / now)
-      }
-    } else {
-      return Math.sqrt(this.dot(this))
-    }
+  get len () {
+    return Math.sqrt(this.dot(this))
   }
+
+  set len (e) {
+    if (typeof e !== 'number') return
+    const now = this.len
+    if (now === 0) return
+    [this._x, this._y] = this.scale(e / now).getArray()
+  }
+  // len (e) { //  length of the vector
+  //   if (typeof e === 'number') {
+  //     const now = this.len()
+  //     if (now === 0) {
+  //       return new Vec2d(0, 0)
+  //     } else {
+  //       console.log('ccc')
+  //       return this.scale(e / now)
+  //     }
+  //   } else {
+  //     return Math.sqrt(this.dot(this))
+  //   }
+  // }
 
   rot (phi) { // rotate the vector by angle phi
     if (typeof phi !== 'number' || isNaN(phi)) throw new Error('rot(phi) : phi must be a number')
@@ -82,7 +93,7 @@ class Vec2d {
   }
 
   unit () {
-    return this.scale(1 / this.len())
+    return this.scale(1 / this.len)
   }
 
   norm (sgn) {

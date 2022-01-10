@@ -9,7 +9,7 @@ class PlotBaseVector {
     // calc base vectors
     let basePhi = v.phi()
     if (isNaN(basePhi)) basePhi = 0
-    let baseLen = v.len()
+    let baseLen = v.len
     if (baseLen < 1) baseLen = 1
     this.origin = new Vec2d(from.getArray()) // to make a copy
     this.len = baseLen

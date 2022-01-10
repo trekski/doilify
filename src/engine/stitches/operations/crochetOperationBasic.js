@@ -6,10 +6,12 @@ class CrochetOperationBasic extends CrochetOperation {
   get minParams () { return 2 }
 
   static CALC_DEF_NEW_POS (fromNode, len, toNode) {
-    // default: point away from Com of fromNode neighborhood
+    // default: point away from CoM of fromNode neighborhood
     const start = fromNode.getVector()
-    let neighbors = fromNode.getNeighborNodes() // excludes fromNode
-    if (neighbors.length === 1) neighbors = [fromNode] // fallback
+    let neighbors = fromNode
+      .getNeighborNodes() // default: excludes fromNode
+      .filter(e => e.id !== toNode.id)
+    if (neighbors.length === 0) neighbors = [fromNode] // fallback
     const neighborVecs = neighbors.map(e => e.getVector())
     const avgNeighborVec = Vec2d.SUM(neighborVecs).scale(1 / neighborVecs.length)
     let delta = start.sub(avgNeighborVec)
@@ -23,7 +25,7 @@ class CrochetOperationBasic extends CrochetOperation {
       const dir = (start.len() < 0.01) ? new Vec2d(-1, 0) : start.unit().rot(Math.PI / 10)
       delta = dir.len(len)
     }
-    
+
     return start.add(delta)
   }
 

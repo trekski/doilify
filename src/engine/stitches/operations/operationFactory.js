@@ -10,6 +10,7 @@ import CrochetOperationMerge from './crochetOperationMerge.js'
 const CrochetOperationFactory = new FactoryClass(CrochetOperation, 'commandName')
 
 CrochetOperationFactory
+  .registerClass(CrochetOperation)
   .registerClass(CrochetOperationMakeOrigin)
   .registerClass(CrochetOperationBasic)
   .registerClass(CrochetOperationCopy)

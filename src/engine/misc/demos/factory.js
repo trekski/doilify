@@ -30,7 +30,8 @@ function factoryDemo (log) {
 
   class u { get Type () { return 1 } }
   const y = new FactoryClass(u, 'Type')
-  log(y.items.get(1).name)
+  y.registerClass(u)
+  log(y.knownClasses.get(1).class.name)
 }
 
 export default factoryDemo

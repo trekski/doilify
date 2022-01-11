@@ -42,8 +42,13 @@ export default {
         .forceSimulation()
         .velocityDecay(0.05)
         .alphaMin(0.00000001)
-        // .nodes(nds)
-        .force('charge', d3.forceManyBody().strength(-0.2)),
+        .force(
+          'charge',
+          d3.forceManyBody()
+            .strength(-0.2)
+            .distanceMin(5)
+            .distanceMax(50)
+        ),
       live_node: Object,
       selected_nodes: []
     }

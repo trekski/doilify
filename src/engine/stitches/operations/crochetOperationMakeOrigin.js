@@ -10,6 +10,7 @@ class CrochetOperationMakeOrigin extends CrochetOperation {
       this.subject.contextStitch,
       [0, 0]
     )
+
     newSubject.needleStack.push(newNode)
     return this.getBasicResult(newSubject, newNode)
   }

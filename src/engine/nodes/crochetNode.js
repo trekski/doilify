@@ -2,18 +2,20 @@ import IdGenerator from '../misc/helpers.js'
 import Vec2d from '../misc/vector.js'
 
 class CrochetNode {
-// *** CLASS STATIC METHODS ***
+// *** CLASS "STATIC" METHODS ***
   // and their wrappers to use them in instances
 
-  get type () { return 'default' } // unambiguous string for each subclass
+  get type () { return this._type } // unambiguous string for each subclass
 
-  get desc () { return 'default node class' } // human freindlz class desc.
+  // get desc () { return 'default node class' } // human freindly class desc.
 
-  get isLoopable () { return false } // can the node serve as a "loop" node other stitches conenct to
+  get isLoopable () { return this._isLoopable } // can the node serve as a "loop" node other stitches conenct to
 
-  get color () { return 'black' } // how to draw the node
+  get color () { return this._color } // how to draw the node
 
-  constructor (argContext, argCoordinates) {
+  get context () { return this._context }
+
+  constructor (type, loopable = false, color = 'black', argContext, argCoordinates) {
     //  STATIC ATTRIBUTES
 
     // create dedicated node numbering sequence
@@ -22,13 +24,18 @@ class CrochetNode {
     }
 
     // Parse and validate constructor argumetns
+    if (arguments.length < 5) throw new Error('CrochetNode : not enough arguments')
 
-    if (arguments.length < 2) throw new Error('CrochetNode : not enough arguments')
+    // these are expected to be determined by the factory
+    this._type = type
+    this._isLoopable = loopable
+    this._color = color
 
     // context where the node will be registered (stitch)
     // do I even need it...?
     this._context = argContext
 
+    // node coodtinates
     if (argCoordinates instanceof Array) {
       if (argCoordinates.length < 2) throw new Error('CrochetNode : there must be two coordinatess in coordinates Array')
       if (typeof (argCoordinates[0]) !== 'number' || typeof (argCoordinates[1]) !== 'number') throw new Error('CrochetNode : both coordinates must be numbers')

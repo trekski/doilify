@@ -5,21 +5,30 @@ class CrochetLink {
   // *** CLASS STATIC METHODS ***
   // and their wrappers to use them in instances
 
-  get defLen () { return 5 } // link lenght for ForceLayout simulation
+  get defLen () { return this._defLen } // link lenght for ForceLayout simulation
 
-  get type () { return 'default' } // unambiguous string for each subclass
+  get type () { return this._type } // unambiguous string for each subclass
 
-  get desc () { return 'default link class' } // human friendly desc.
+  // get desc () { return 'default link class' } // human friendly desc.
 
-  get isPrintable () { return false } // should it be drawn in documents
+  get isPrintable () { return this._isPrintable } // should it be drawn in documents
 
   get isDeleted () { return this.is_deleted }
 
-  get color () { return 'lightgray' } // how to draw it
+  get color () { return this._color } // how to draw it
 
   // *** CONSTRUCTOR ***
 
-  constructor (context, fromNode, toNode, length = undefined) {
+  constructor (
+    type = 'default',
+    defLen = 5,
+    isPrintable = false,
+    color = 'lightgray',
+    context,
+    fromNode,
+    toNode,
+    length = undefined
+  ) {
     // *** STATIC ATTRIBUTES ***
 
     // Create dedicated link numbering sequence
@@ -28,6 +37,12 @@ class CrochetLink {
     };
 
     // *** PRIVATE ATTRIBUTES ***
+
+    // class-like
+    this._defLen = defLen
+    this._type = type
+    this._isPrintable = isPrintable
+    this._color = color
 
     // basic
     this.source = fromNode

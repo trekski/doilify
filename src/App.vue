@@ -1,10 +1,27 @@
 <template>
   <div id="wrapper">
     <!-- where the doily graph will be displayed -->
+    <div style="position: absolute; left:60px;">
+      v. 0.9.21
+    </div>
+
     <MainGraph
       ref="MainGraph"
       :app-state="appState"
     />
+
+    <button
+      style="position:absolute; left:110px;"
+      @click="checkNewAppVer"
+    >
+      check for new versions
+    </button>
+    <button
+      v-if="NewSWAvailable"
+      style="position:absolute; left:320px;"
+    >
+      new verion available
+    </button>
 
     <!-- placeholder for key app icons - (almost) const. visible -->
     <transition name="fade">
@@ -98,8 +115,15 @@ export default {
     // MockGraph: MockGraph
     MainGraph: MainGraph
   },
+  created () {
+    this.setupAppVer()
+  },
   data () {
     return {
+      // PWA refresh flags
+      SWRegistration: null,
+      NewSWAvailable: false,
+      SWRefreshing: false,
       // is there a modal dialog window open, and if so, what is it
       ModalWindowParams: {
         outputParamName: null,
@@ -122,6 +146,32 @@ export default {
     }
   },
   methods: {
+    // PWA refresh info
+    async setupAppVer () {
+      this.SWRegistration = await navigator.serviceWorker.getRegistration()
+    },
+    async checkNewAppVer () {
+      this.NewSWAvailable = false
+      if (this.SWRegistration === null) {
+        console.log('no registered service worker')
+        return
+      }
+      const registration = await this.SWRegistration.update()
+      if (registration === null) {
+        this.SWRegistration = registration
+        if (registration.installing !== null) {
+          registration.installing.addEventListener(
+            'statechange', () => {
+              if (registration.waiting) {
+                this.NewSWAvailable = true
+              }
+            }
+          )
+        } else if (registration.waiting !== null) {
+          this.NewSWAvailable = true
+        }
+      }
+    },
     // testGraph
     testGraph () {
       alert('a')

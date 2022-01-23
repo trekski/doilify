@@ -171,6 +171,23 @@ class CrochetStitch {
 
     return false // nothing was found :(
   }
+
+  // if a stitcj is to be removed, it needs to:
+  // - remove all its nodes
+  // - remove all its links
+  apoptose () {
+    console.group(`stitch ${this.id} apoptose`)
+    this._links.forEach((item, i) => {
+      item.apoptose()
+    })
+    this._links.splice(0)
+    this._nodes.forEach((item, i) => {
+      item.apoptose()
+    })
+    this._nodes.splice(0)
+    this._context = undefined
+    console.groupEnd()
+  }
 }
 
 export default CrochetStitch

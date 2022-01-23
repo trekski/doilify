@@ -92,6 +92,8 @@ export default {
       return new Promise(resolve => setTimeout(resolve, ms))
     },
     refresh_simulation () {
+      console.group('restart sim')
+      // console.log(this.simulation.force('link').links)
       this.simulation
         .nodes(this.all_nodes)
         .force(
@@ -101,6 +103,8 @@ export default {
         )
         .alpha(1)
         .restart()
+      console.log(this.simulation.force('link').links())
+      console.groupEnd()
     },
     reheat_simulation () {
       this.simulation.alpha(1).restart()
@@ -115,6 +119,13 @@ export default {
       this.stitches.push(s)
       this.live_node = s.getLastLoop()
       this.refresh_simulation()
+    },
+    unmakeStitch () {
+      this.simulation.stop()
+      const s = this.stitches.pop()
+      this.live_node = this.stitches[this.stitches.length - 1].getLastLoop()
+      this.refresh_simulation()
+      s.apoptose()
     }
   }
 }

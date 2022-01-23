@@ -69,6 +69,22 @@
         >
           <img src="icons/select_tool_white.svg">
         </button>
+        <button
+          id="makeStitch"
+          class="icon shadow2px"
+          title="make stitch"
+          @click="makeStitch()"
+        >
+          <strong>M</strong>
+        </button>
+        <button
+          id="unmakeStitch"
+          class="icon shadow2px"
+          title="unmake stitch"
+          @click="unmakeStitch()"
+        >
+          <strong>U</strong>
+        </button>
       </div>
     </transition>
 
@@ -176,7 +192,19 @@ export default {
     testGraph () {
       alert('a')
     },
+    log (a) {
+      console.log(a)
+      console.log(this.$refs.MainGraph.$refs.graphDoily.stitches.length)
+    },
     // show/hide the main menu
+    makeStitch () {
+      this.$refs.MainGraph.$refs.graphDoily.makeStitch()
+      this.$refs.MainGraph.refocus()
+    },
+    unmakeStitch () {
+      this.$refs.MainGraph.$refs.graphDoily.unmakeStitch()
+      this.$refs.MainGraph.refocus()
+    },
     toggleMenu (a) {
       if (typeof a === 'undefined') {
         this.menuOpen = !this.menuOpen
@@ -315,6 +343,22 @@ button.img{
   position: absolute;
   bottom: 0px;
   left: 100px;
+}
+
+#makeStitch {
+  position: absolute;
+  bottom: 0px;
+  left: 150px;
+  width: 40px;
+  height: 40px;
+}
+
+#unmakeStitch {
+  position: absolute;
+  bottom: 0px;
+  left: 210px;
+  width: 40px;
+  height: 40px;
 }
 
 .shadow5px{

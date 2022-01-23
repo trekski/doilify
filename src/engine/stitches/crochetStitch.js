@@ -150,33 +150,10 @@ class CrochetStitch {
     return false // nothing was found :(
   }
 
-  getNextLoop (currentLoop, forceProgress) {
-    // to do: add exception for chain spaces
-
-    let wrkNode = currentLoop // start somewhere
-    let cont = true
-
-    while (cont) {
-      // proceed to next node in main sequence
-      const nextStchs = wrkNode.getNeighborLinks('out', 'sequence')
-      if (nextStchs.length > 0) {
-        // if possible,  return a "loop" node
-        wrkNode = nextStchs[0]
-        if (wrkNode.isLoopable()) return wrkNode
-      } else {
-        // if no more nodes, stop the search
-        cont = false
-      }
-    }
-
-    return false // nothing was found :(
-  }
-
-  // if a stitcj is to be removed, it needs to:
+  // if a stitch is to be removed, it needs to:
   // - remove all its nodes
   // - remove all its links
   apoptose () {
-    console.group(`stitch ${this.id} apoptose`)
     this._links.forEach((item, i) => {
       item.apoptose()
     })
@@ -186,7 +163,6 @@ class CrochetStitch {
     })
     this._nodes.splice(0)
     this._context = undefined
-    console.groupEnd()
   }
 }
 

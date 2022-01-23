@@ -115,18 +115,26 @@ export default {
       this.stitches.push(s)
       this.live_node = s.getLastLoop()
       this.refresh_simulation()
-      this.autoSelectNodes()
+      this.autoSelectLoops()
     },
     unmakeStitch () {
       this.simulation.stop()
       const s = this.stitches.pop()
-      this.live_node = this.stitches[this.stitches.length - 1].getLastLoop()
+      this.live_node = this.stitches.at(-1).getLastLoop()
       this.refresh_simulation()
       s.apoptose()
-      this.autoSelectNodes()
+      // this.autoSelectLoops()
     },
-    autoSelectNodes () {
-      return false
+    autoSelectLoops () { // after making a new stitch - automatically determine the new loops to be used in next
+      const lastUsedLoop = this.selected_nodes.at(-1)
+      const nextAvailableLoop = (lastUsedLoop !== undefined)
+        ? lastUsedLoop.getSeqLoop('next')
+        : undefined
+      const firstNewNode = (lastUsedLoop.context.isLazyNexLoop !== true && nextAvailableLoop !== undefined)
+        ? nextAvailableLoop
+        : lastUsedLoop
+      const requiredLoops = CrochetStitchFactory.getArgs(this.appState.mainStitchType)[2]
+      console.log(firstNewNode, requiredLoops)
     }
   }
 }

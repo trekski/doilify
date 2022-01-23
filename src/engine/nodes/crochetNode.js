@@ -169,7 +169,7 @@ class CrochetNode {
     }
 
     // default when all fails
-    return false
+    return undefined
   }
 
   getLoopOrdinal () {

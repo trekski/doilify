@@ -86,39 +86,6 @@ export default {
     this.refresh_simulation()
     this.live_node = s.getLastLoop()
     this.selected_nodes.push(s.getLastLoop())
-    // var n, n2
-    /*
-    this.sleep(200).then(() => {
-      n = s.getLastLoop()
-      s = CrochetStitchFactory.getNewObject('ch', 'doily', n)
-      this.stitches.push(s)
-      this.refresh_simulation()
-      this.sleep(200).then(() => {
-        n2 = s.getLastLoop()
-        s = CrochetStitchFactory.getNewObject('ch', 'doily', n2)
-        this.stitches.push(s)
-        this.refresh_simulation()
-        this.sleep(200).then(() => {
-          n2 = s.getLastLoop()
-          s = CrochetStitchFactory.getNewObject('ch', 'doily', n2)
-          this.stitches.push(s)
-          this.refresh_simulation()
-          this.sleep(200).then(() => {
-            n2 = s.getLastLoop()
-            s = CrochetStitchFactory.getNewObject('dc', 'doily', n2, [n])
-            this.stitches.push(s)
-            this.refresh_simulation()
-            this.sleep(200).then(() => {
-              this.refresh_simulation()
-              this.sleep(200).then(() => {
-                this.refresh_simulation()
-              })
-            })
-          })
-        })
-      })
-    })
-    */
   },
   methods: {
     sleep (ms) {

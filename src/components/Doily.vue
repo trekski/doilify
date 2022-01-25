@@ -14,6 +14,18 @@
         :link="l"
       />
     </g>
+    <g id="loop_selection_layer">
+      <circle
+        v-for="(n, index) in selectable_nodes"
+        :key="index"
+        :cx="n.x"
+        :cy="n.y"
+        r="2.5"
+        :class="{ isSelected: (this.selected_nodes.includes(n)) }"
+        Q
+        @click="toggleNodeSelection(n)"
+      />
+    </g>
   </g>
 </template>
 
@@ -78,6 +90,14 @@ export default {
       let l = []
       l = this.all_links.filter(e => (e.isPrintable & !e.isDeleted))
       return l
+    },
+    selectable_nodes () {
+      let n = []
+      n = this.all_nodes.filter(e => (e.isLoopable & !e.isDeleted))
+      return n
+    },
+    requiredLoops () {
+      return CrochetStitchFactory.getArgs(this.appState.mainStitchType)[2]
     }
   },
   mounted () {
@@ -125,17 +145,51 @@ export default {
       s.apoptose()
       // this.autoSelectLoops()
     },
-    autoSelectLoops () { // after making a new stitch - automatically determine the new loops to be used in next
+    autoSelectLoops () {
+      // after making a new stitch - automatically determine the new loops to be used in next
+      // check if we need to change
+      if (this.requiredLoops === 0) return this.selected_nodes
+      // check what are change options are
       const lastUsedLoop = this.selected_nodes.at(-1)
-      const nextAvailableLoop = (lastUsedLoop !== undefined)
-        ? lastUsedLoop.getSeqLoop('next')
-        : undefined
-      const firstNewNode = (lastUsedLoop.context.isLazyNexLoop !== true && nextAvailableLoop !== undefined)
-        ? nextAvailableLoop
+      const lastUserLazyLoop = this.selected_nodes
+        .filter(e => e.context.isLazyNexLoop)
+        .at(-1)
+      // figure out what to use, and use it
+      let nextNewNode = (lastUserLazyLoop !== undefined)
+        ? lastUserLazyLoop
         : lastUsedLoop
-      const requiredLoops = CrochetStitchFactory.getArgs(this.appState.mainStitchType)[2]
-      console.log(firstNewNode, requiredLoops)
+      const newNodes = (lastUserLazyLoop !== undefined)
+        ? [lastUserLazyLoop]
+        : []
+      nextNewNode = nextNewNode.getSeqLoop('next')
+      while (nextNewNode !== undefined && newNodes.length < this.requiredLoops) {
+        newNodes.push(nextNewNode)
+        nextNewNode = nextNewNode.getSeqLoop('next')
+      }
+      this.selected_nodes = newNodes
+      return newNodes
+    },
+    toggleNodeSelection (n) {
+      if (this.selected_nodes.includes(n)) {
+        this.selected_nodes = this.selected_nodes.filter(e => e.id !== n.id)
+      } else {
+        if (this.selected_nodes.length >= this.requiredLoops) return
+        this.selected_nodes.push(n)
+      }
     }
   }
 }
 </script>
+<style>
+  #loop_selection_layer circle {
+    fill: yellow;
+    opacity: 10%
+  }
+  #loop_selection_layer circle.isSelected {
+    fill: lime;
+    opacity: 70%
+  }
+  #loop_selection_layer circle:hover {
+    opacity: 100%
+  }
+</style>

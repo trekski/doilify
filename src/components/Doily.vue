@@ -24,7 +24,9 @@
         :class="{ isSelected: (this.selected_nodes.includes(n)) }"
         Q
         @click="toggleNodeSelection(n)"
-      />
+      >
+        <title>{{ n.id }}</title>
+      </circle>
     </g>
   </g>
 </template>
@@ -143,7 +145,7 @@ export default {
       this.live_node = this.stitches.at(-1).getLastLoop()
       this.refresh_simulation()
       s.apoptose()
-      // this.autoSelectLoops()
+      this.autoSelectLoops()
     },
     autoSelectLoops () {
       // after making a new stitch - automatically determine the new loops to be used in next
@@ -173,7 +175,6 @@ export default {
       if (this.selected_nodes.includes(n)) {
         this.selected_nodes = this.selected_nodes.filter(e => e.id !== n.id)
       } else {
-        if (this.selected_nodes.length >= this.requiredLoops) return
         this.selected_nodes.push(n)
       }
     }

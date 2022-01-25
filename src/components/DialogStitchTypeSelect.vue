@@ -52,7 +52,7 @@ export default {
         {
           name: 'basic',
           members: [
-            { code: 'slip', desc: 'slip stitch' },
+            { code: 'slst', desc: 'slip stitch' },
             { code: 'ch', desc: 'chain stitch' },
             { code: 'sc', desc: 'single crochet' },
             { code: 'hc', desc: 'half-double  crochet' },

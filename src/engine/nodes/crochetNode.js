@@ -153,21 +153,19 @@ class CrochetNode {
 
   getSeqLoop (dir = 'next', forceProgress = false) {
     // to do: add exception for chain spaces
-
     // proceed to next/prev node in main sequence
-    const nextNodes = (dir === 'next')
+    const seqLinks = (dir === 'next')
       ? this.getNeighborLinks('out', 'sequence')
       : (dir === 'prev')
         ? this.getNeighborLinks('in', 'sequence')
         : []
-
+    const nextNodes = seqLinks.map(e => e.getOtherEnd(this))
     // if there's a loop, return it, otherwise reiterate
     if (nextNodes.length > 0) {
       const possibleLoops = nextNodes.filter(e => e.isLoopable)
       if (possibleLoops.length > 0) return possibleLoops[0]
-      return possibleLoops[0].getNextLoop()
+      return nextNodes[0].getSeqLoop()
     }
-
     // default when all fails
     return undefined
   }

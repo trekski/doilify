@@ -10,7 +10,7 @@
       stroke="lightgray"
       stroke-width="1px"
     >
-      <title>{{ link._length }}</title>
+      <title>{{ link.type }}</title>
     </line>
     <circle
       v-for="(node, index) in stitch._nodes"

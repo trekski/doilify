@@ -105,11 +105,11 @@ class CrochetStitch {
   };
 
   getPreviousStitch () {
-    return this.getStartNode.getNeighborNodes('in', 'finish').getContext()
+    return this.getStartNode().getNeighborNodes('in')[0].context
   }
 
   getNextStitch () {
-    return this.getEndNode.getNeighborNodes('out', 'start').getContext()
+    return this.getEndNode().getNeighborNodes('out')[0].context
   }
 
   getFirstLoop () {

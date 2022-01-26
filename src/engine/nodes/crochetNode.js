@@ -127,27 +127,18 @@ class CrochetNode {
   // Returns all neighbor nodes of this node, filtered by node type and direction of their link
   getNeighborNodes (dir = '', type = '') {
     // where the temp results will be stored
-    var nodes = []
-
+    var nodes = this._links
     // The filtering link direction must be either empty, "IN" or "OUT"
     if (dir !== '' && dir !== 'in' && dir !== 'out') throw new Error('crochetNode.getNeighborNodes: invalid direction')
-
-    nodes = this._links.filter(
-      (link) => (
-        (
-          this === link.source &&
-          (dir === '' || dir === 'out') &&
-          (type === '' || type === link.target.type)
-        ) || (
-          this === link.target &&
-          (dir === '' || dir === 'in') &&
-          (type === '' || type === link.source.type)
-        )
-      )
-    ).map(
-      link => ((link.target === this) ? link.source : link.target)
-    )
-
+    console.log('initial: ', nodes.map(e => e.id))
+    nodes = nodes.filter(link => (dir !== 'out' || link.target !== this))
+    console.log('after out: ', nodes.map(e => e.id))
+    nodes = nodes.filter(link => (dir !== 'in' || link.source !== this))
+    console.log('after in: ', nodes.map(e => e.id))
+    nodes = nodes.map(link => ((link.target === this) ? link.source : link.target))
+    console.log('after map: ', nodes.map(e => e.id))
+    nodes = nodes.filter(node => (type === '' || node.type === type))
+    console.log('after type: ', nodes.map(e => e.id))
     return nodes
   }
 

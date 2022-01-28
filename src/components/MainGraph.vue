@@ -224,6 +224,9 @@ export default {
         case 'ArrowRight':
           this.$refs.graphDoily.shiftNodeSelection('prv')
           break
+        case 'KeyS':
+          this.$refs.graphDoily.toggleSimulation()
+          break
       }
     },
     touchChangePoints (e) {

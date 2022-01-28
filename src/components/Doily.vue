@@ -74,7 +74,8 @@ export default {
             .distanceMax(50)
         ),
       live_node: Object,
-      selected_nodes: []
+      selected_nodes: [],
+      simulationLive: true
     }
   },
   computed: {
@@ -120,10 +121,21 @@ export default {
     this.selected_nodes.push(s.getLastLoop())
   },
   methods: {
+    toggleSimulation () {
+      this.simulationLive = !this.simulationLive
+      if (this.simulationLive) {
+        this.refresh_simulation()
+        console.log('simulation is ON = ', this.simulationLive)
+      } else {
+        this.simulation.stop()
+        console.log('simulation is OFF = ', this.simulationLive)
+      }
+    },
     sleep (ms) {
       return new Promise(resolve => setTimeout(resolve, ms))
     },
     refresh_simulation () {
+      if (this.simulationLive !== true) return
       this.simulation
         .nodes(this.all_nodes)
         .force(

@@ -84,7 +84,6 @@ class CrochetStitch {
   }
 
   orderLoops () {
-    console.clear()
     this._nodes.forEach(n => { n.ordinal = undefined })
     let node = this.getStartNode()
     let index = 0

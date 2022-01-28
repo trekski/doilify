@@ -17,16 +17,25 @@
     </g>
     <g id="loop_selection_layer">
       <circle
-        v-for="(n, index) in selectable_nodes"
+        v-for="(n, index) in unselected_nodes"
         :key="index"
         :cx="n.x"
         :cy="n.y"
         r="2.5"
-        :class="{ isSelected: (selected_nodes.includes(n)) }"
-        q
         @click="toggleNodeSelection(n)"
       >
         <title>{{ n.id }}</title>
+      </circle>
+      <circle
+        v-for="(n, index) in selected_nodes"
+        :key="index"
+        :cx="n.x"
+        :cy="n.y"
+        r="2.5"
+        class="isSelected"
+        @click="toggleNodeSelection(n)"
+      >
+        <title>{{ n.id + " : " + index }}</title>
       </circle>
     </g>
   </g>
@@ -90,14 +99,13 @@ export default {
       return l
     },
     printable_links () {
-      let l = []
-      l = this.all_links.filter(e => (e.isPrintable & !e.isDeleted))
-      return l
+      return this.all_links.filter(e => (e.isPrintable & !e.isDeleted))
     },
     selectable_nodes () {
-      let n = []
-      n = this.all_nodes.filter(e => (e.isLoopable & !e.isDeleted))
-      return n
+      return this.all_nodes.filter(e => (e.isLoopable & !e.isDeleted))
+    },
+    unselected_nodes () {
+      return this.selectable_nodes.filter(e => !this.selected_nodes.includes(e))
     },
     requiredLoops () {
       return CrochetStitchFactory.getArgs(this.appState.mainStitchType)[2]
@@ -178,6 +186,7 @@ export default {
         nextNewNode = nextNewNode.getSeqLoop('next')
       }
       this.selected_nodes = newNodes
+      this.orderSelectedNodes()
       return newNodes
     },
     resetSelectedLoop () {
@@ -203,7 +212,40 @@ export default {
       } else {
         this.selected_nodes.push(n)
       }
-      // and then order the array along the main sequence
+      this.orderSelectedNodes()
+    },
+    shiftNodeSelection (dir = '') {
+      if (this.selected_nodes.length === 0) return
+      let node
+      if (dir === 'fwd') {
+        node = this.selected_nodes.at(-1).getSeqLoop('next', true)
+        if (node === undefined) return
+        this.selected_nodes.shift()
+        this.selected_nodes.push(node)
+      }
+      if (dir === 'prv') {
+        node = this.selected_nodes.at(0).getSeqLoop('prev', true)
+        if (node === undefined) return
+        this.selected_nodes.pop()
+        this.selected_nodes.unshift(node)
+      }
+      console.groupEnd()
+    },
+    orderSelectedNodes () {
+      const orderedNodes = this.selected_nodes
+      orderedNodes.sort(
+        (firstNode, secondNode) => {
+          let x1 = firstNode.context.ordinal
+          let x2 = secondNode.context.ordinal
+          if (x1 === undefined || x2 === undefined) return undefined
+          if (x1 !== x2) return (x2 - x1)
+          x1 = firstNode.ordinal
+          x2 = secondNode.ordinal
+          if (x1 === undefined || x2 === undefined) return undefined
+          return (x2 - x1)
+        }
+      )
+      this.selected_nodes = orderedNodes
     }
   }
 }

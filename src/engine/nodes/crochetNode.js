@@ -149,7 +149,7 @@ class CrochetNode {
     if (nextNodes.length > 0) {
       const possibleLoops = nextNodes.filter(e => e.isLoopable)
       if (possibleLoops.length > 0) return possibleLoops[0]
-      return nextNodes[0].getSeqLoop()
+      return nextNodes[0].getSeqLoop(dir, forceProgress)
     }
     // default when all fails
     return undefined

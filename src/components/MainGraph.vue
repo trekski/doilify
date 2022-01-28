@@ -219,8 +219,10 @@ export default {
           this.$emit('stitchSelected', 3)
           break
         case 'ArrowLeft':
+          this.$refs.graphDoily.shiftNodeSelection('fwd')
           break
         case 'ArrowRight':
+          this.$refs.graphDoily.shiftNodeSelection('prv')
           break
       }
     },

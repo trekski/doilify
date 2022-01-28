@@ -1,3 +1,4 @@
+
 <template>
   <g>
     <g id="technical_layer">
@@ -140,6 +141,7 @@ export default {
       this.autoSelectLoops()
     },
     unmakeStitch () {
+      if (this.stitches.length <= 1) return
       this.simulation.stop()
       const s = this.stitches.pop()
       this.live_node = this.stitches.at(-1).getLastLoop()

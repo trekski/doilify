@@ -9,12 +9,10 @@ class CrochetOperation {
     static nodeFactory = crochetNodeFactory
     static linkFactory = crochetLinkFactory
 
-    constructor (subject, cmds) {
-      if (!(subject instanceof OperationSubject)) throw new Error('crochetOperation : needs a valid operationSubject')
+    constructor (cmds) {
       if (!(cmds instanceof Array)) throw new Error('crochetOperation : params must be an array [string]')
       this.params = cmds.filter(e => (typeof e === 'string')) // first argument will be an Array of the operation parameters
       if (this.params.length < this.minParams) throw new Error(`crochetOperation : not enough parameters for '${this.commandName}'. Expected : ${this.minParams}`)
-      this.subject = subject // rest is the subject of the operation - components of the W.I.P. crochetStitch
     }
 
     getBasicResult (newSubject, newNode = false, newLink = false, delNode = false, delLink = false) {
@@ -32,8 +30,9 @@ class CrochetOperation {
       return this.linkFactory.getClass(byLinkType).prototype.defLen
     }
 
-    exec () {
-      return this.getBasicResult(this.subject) // no new links or nodes were created or removed
+    exec (subject) {
+      if (!(subject instanceof OperationSubject)) throw new Error('crochetOperation : needs a valid operationSubject')
+      return this.getBasicResult(subject) // no new links or nodes were created or removed
     }
 }
 

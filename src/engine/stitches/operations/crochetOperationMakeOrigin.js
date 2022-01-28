@@ -3,11 +3,11 @@ import CrochetOperation from './crochetOperation.js'
 class CrochetOperationMakeOrigin extends CrochetOperation {
   get commandName () { return 'makeorigin' }
 
-  exec () {
-    const newSubject = this.subject.copy()
+  exec (subject) {
+    const newSubject = subject.copy()
     const newNode = CrochetOperation.nodeFactory.getNewObject(
       'origin',
-      this.subject.contextStitch,
+      subject.contextStitch,
       [0, 0]
     )
 

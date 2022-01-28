@@ -4,9 +4,9 @@ import CrochetOperation from './crochetOperation.js'
 class CrochetOperationMerge extends CrochetOperation {
   get commandName () { return 'merge' }
 
-  exec () {
+  exec (subject) {
     const cmd = this.params[0]
-    const newSubject = this.subject.copy()
+    const newSubject = subject.copy()
 
     let targetNode, sourceNode
     let deletedLink = false

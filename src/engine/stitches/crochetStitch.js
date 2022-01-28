@@ -51,11 +51,11 @@ class CrochetStitch {
     while (instr) {
       const tokens = instr.split(':').map(e => e.trim())
       const action = tokens.shift()
-      const op = CrochetOperationFactory.getNewObject(action, subject, tokens)
+      const op = CrochetOperationFactory.getNewObject(action, tokens)
 
-      const res = op.exec()
+      const res = op.exec(subject)
+
       subject = res.subject
-
       if (res.newNode) newNodes.push(res.newNode)
       if (res.newLink) newLinks.push(res.newLink)
       if (res.delNode) {

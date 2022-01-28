@@ -4,9 +4,9 @@ import CrochetOperation from './crochetOperation.js'
 class CrochetOperationMove extends CrochetOperation {
   get commandName () { return 'mv' }
 
-  exec () {
+  exec (subject) {
     const cmd = this.params[0]
-    const newSubject = this.subject.copy()
+    const newSubject = subject.copy()
 
     if (cmd === 'needle') {
       newSubject.otherLoops.push(newSubject.needleStack.pop())

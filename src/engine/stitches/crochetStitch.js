@@ -8,8 +8,8 @@ class CrochetStitch {
   get sequence () { return this._sequence } // reciupe how to create stitches internal graph
   get type () { return this._type } // unambiguous string for each subclass
   get requiresPrevious () { return this._reqPrev } // true if the stitch requires prev. sittches last loop to hook into
-  get requiredLoops () { return this._reqLoops } // how manz other loops are needed to construct the stitch
-
+  get requiredLoops () { return this._reqLoops } // how many other loops are needed to construct the stitch
+  get ordinal () { return this._ordinal } // order of the stitch in the doily stitch stack
   // *** CONSTRUCTOR ***
   constructor (type, requiresPrevious, requiredLoops, sequence, context) {
     // *** INIT STATIC ATTRIBUTES ***
@@ -28,6 +28,7 @@ class CrochetStitch {
     this._reqPrev = requiresPrevious
     this._reqLoops = requiredLoops
     this._sequence = sequence
+    this._ordinal = undefined
   }
 
   crochet (attachToNode = null, otherLoops = []) {
@@ -79,6 +80,7 @@ class CrochetStitch {
     this._links.splice(0, 0, ...newLinks)
 
     this.orderLoops()
+    this.orderMe()
   }
 
   orderLoops () {
@@ -89,10 +91,17 @@ class CrochetStitch {
     while (node.context !== this) {
       console.log(node.id, node.isLoopable, index)
       if (node.isLoopable) { node.ordinal = index++ }
-      const link = node.getNeighborLinks('out', 'sequence')
-      if (link.length < 1) break
-      node = link[0].getOtherEnd(node)
+      const links = node.getNeighborLinks('out', 'sequence')
+      if (links.length < 1) break
+      node = links[0].getOtherEnd(node)
     }
+  }
+
+  orderMe () {
+    const prevStitch = this.getPreviousStitch()
+    this._ordinal = (prevStitch !== undefined)
+      ? prevStitch.ordinal + 1
+      : 0
   }
 
   // *** PUBLIC METHODS ***
@@ -123,11 +132,17 @@ class CrochetStitch {
   };
 
   getPreviousStitch () {
-    return this.getStartNode().getNeighborNodes('in')[0].context
+    const prevNodes = this.getStartNode().getNeighborNodes('in')
+    return (prevNodes.length > 0)
+      ? prevNodes[0].context
+      : undefined
   }
 
   getNextStitch () {
-    return this.getEndNode().getNeighborNodes('out')[0].context
+    const prevNodes = this.getStartNode().getNeighborNodes('out')
+    return (prevNodes.length > 0)
+      ? prevNodes[0].context
+      : undefined
   }
 
   getFirstLoop () {

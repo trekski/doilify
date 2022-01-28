@@ -105,6 +105,7 @@ export default {
   },
   mounted () {
     var s = CrochetStitchFactory.getNewObject('origin', 'doily')
+    s.crochet()
     this.stitches.push(s)
     this.refresh_simulation()
     this.live_node = s.getLastLoop()
@@ -131,7 +132,9 @@ export default {
     makeStitch () {
       const s = CrochetStitchFactory.getNewObject(
         this.appState.mainStitchType,
-        'doily',
+        'doily'
+      )
+      s.crochet(
         this.live_node,
         this.selected_nodes
       )

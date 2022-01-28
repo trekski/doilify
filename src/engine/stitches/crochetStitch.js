@@ -11,7 +11,7 @@ class CrochetStitch {
   get requiredLoops () { return this._reqLoops } // how manz other loops are needed to construct the stitch
 
   // *** CONSTRUCTOR ***
-  constructor (type, requiresPrevious, requiredLoops, sequence, context, attachToNode = null, otherLoops = []) {
+  constructor (type, requiresPrevious, requiredLoops, sequence, context) {
     // *** INIT STATIC ATTRIBUTES ***
 
     // Create dedicated stitch numbering sequence
@@ -28,7 +28,9 @@ class CrochetStitch {
     this._reqPrev = requiresPrevious
     this._reqLoops = requiredLoops
     this._sequence = sequence
+  }
 
+  crochet (attachToNode = null, otherLoops = []) {
     // temporary variables, used only when new Stitch is being created
     // to avoid immediate reactivity from Vue
     const newNodes = []
@@ -75,6 +77,22 @@ class CrochetStitch {
     // finally reference  all newly created objects to the stitch
     this._nodes.splice(0, 0, ...newNodes)
     this._links.splice(0, 0, ...newLinks)
+
+    this.orderLoops()
+  }
+
+  orderLoops () {
+    console.clear()
+    this._nodes.forEach(n => { n.ordinal = undefined })
+    let node = this.getStartNode()
+    let index = 0
+    while (node.context !== this) {
+      console.log(node.id, node.isLoopable, index)
+      if (node.isLoopable) { node.ordinal = index++ }
+      const link = node.getNeighborLinks('out', 'sequence')
+      if (link.length < 1) break
+      node = link[0].getOtherEnd(node)
+    }
   }
 
   // *** PUBLIC METHODS ***

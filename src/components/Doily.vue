@@ -21,8 +21,8 @@
         :cx="n.x"
         :cy="n.y"
         r="2.5"
-        :class="{ isSelected: (this.selected_nodes.includes(n)) }"
-        Q
+        :class="{ isSelected: (selected_nodes.includes(n)) }"
+        q
         @click="toggleNodeSelection(n)"
       >
         <title>{{ n.id }}</title>

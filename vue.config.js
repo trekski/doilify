@@ -7,7 +7,7 @@ module.exports = {
     demo: {
       entry: 'src/demo.js',
       title: 'Demo'
-    },
+    }
   },
   pwa: {
     name: 'Doilify',
@@ -31,7 +31,7 @@ module.exports = {
       // icons: [
       //   {"src":"./img/icons/myicon.png","sizes":"512x512","type":"image/png"}
       // ],
-      background_color: 'DarkGoldenRod',
+      background_color: 'DarkGoldenRod'
     }
   }
 }

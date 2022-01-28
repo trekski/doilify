@@ -8,6 +8,7 @@
     <MainGraph
       ref="MainGraph"
       :app-state="appState"
+      @stitch-selected="changeSelectedStitch"
     />
 
     <button
@@ -131,9 +132,6 @@ export default {
     // MockGraph: MockGraph
     MainGraph: MainGraph
   },
-  created () {
-    this.setupAppVer()
-  },
   data () {
     return {
       // PWA refresh flags
@@ -160,6 +158,9 @@ export default {
       menuOpen: false,
       menuSelection: false
     }
+  },
+  created () {
+    this.setupAppVer()
   },
   methods: {
     // PWA refresh info
@@ -253,6 +254,14 @@ export default {
         case 'main_color' : this.appState.mainStitchColor = event.value; break
         case 'main_stitch' : this.appState.mainStitchType = event.value; break
         default: this.appState.editingMode = 'crochet'
+      }
+      this.$refs.MainGraph.refocus()
+    },
+    changeSelectedStitch (event) {
+      switch (event) {
+        case 1 : this.appState.mainStitchType = 'ch'; break
+        case 2 : this.appState.mainStitchType = 'dc'; break
+        case 3 : this.appState.mainStitchType = 'slst'; break
       }
       this.$refs.MainGraph.refocus()
     }

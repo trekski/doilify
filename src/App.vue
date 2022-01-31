@@ -12,7 +12,7 @@
     />
 
     <button
-      style="position:absolute; left:110px;"
+      style="position:absolute; left:110px; visibility: hidden"
       @click="checkNewAppVer"
     >
       check for new versions
@@ -41,7 +41,7 @@
         <button
           id="selectTool"
           class="icon img shadow2px"
-          title="select the tool you wANt to use"
+          title="select the tool you want to use"
           @click="changeModal('edit_mode', appState.editingMode, 'tool_type', 'NONE', 'Pick a tool', 'Toolbox' )"
         >
           <img src="icons/select_tool_white.svg">
@@ -50,15 +50,8 @@
           id="selectColor"
           class="icon img shadow2px"
           title="select stitch color"
+          style="visibility: hidden"
           @click="changeModal('main_color', appState.mainStitchColor, 'color', 'NONE', 'Pick main stitch color', 'Select Color' )"
-        >
-          <img src="icons/select_tool_white.svg">
-        </button>
-        <button
-          id="testGraph"
-          class="icon img shadow2px"
-          title="select stitch color"
-          @click="testGraph()"
         >
           <img src="icons/select_tool_white.svg">
         </button>
@@ -66,10 +59,40 @@
           id="selectStitchType"
           class="icon img shadow2px"
           title="select stitch type"
+          style="visibility: hidden"
           @click="changeModal('main_stitch', appState.mainStitchType, 'stitch_type', 'NONE', '', 'Select Stitch' )"
         >
           <img src="icons/select_tool_white.svg">
         </button>
+
+        <button
+          id="selectCH"
+          class="icon shadow2px"
+          title="make stitch"
+          :class="{active : appState.mainStitchType === 'ch'}"
+          @click="selectStich('ch')"
+        >
+          <strong>CH</strong>
+        </button>
+        <button
+          id="selectDC"
+          class="icon shadow2px"
+          title="make stitch"
+          :class="{active : appState.mainStitchType === 'dc'}"
+          @click="selectStich('dc')"
+        >
+          <strong>DC</strong>
+        </button>
+        <button
+          id="selectSL"
+          class="icon shadow2px"
+          title="make stitch"
+          :class="{active : appState.mainStitchType === 'slst'}"
+          @click="selectStich('slst')"
+        >
+          <strong>SLST</strong>
+        </button>
+
         <button
           id="makeStitch"
           class="icon shadow2px"
@@ -189,6 +212,10 @@ export default {
         }
       }
     },
+    selectStich (t) {
+      this.appState.mainStitchType = t
+      this.$refs.MainGraph.refocus()
+    },
     // testGraph
     testGraph () {
       alert('a')
@@ -301,6 +328,11 @@ button {
   transition: background 0.2s, color 0.2s, box-shadow 0.2s;
 }
 
+button.active {
+  color: var(--text-highlight-accent);
+  background: var(--main-accent-highlight);
+}
+
 button:hover {
   color: var(--text-highlight-accent);
   background: var(--main-accent-highlight);
@@ -340,12 +372,12 @@ button.img{
 }
 #selectStitchType {
   position: absolute;
-  bottom: 0px;
+  bottom: 60px;
   left: 0px;
 }
 #selectColor {
   position: absolute;
-  bottom: 0px;
+  bottom: 60px;
   left: 50px;
 }
 #testGraph {
@@ -354,10 +386,34 @@ button.img{
   left: 100px;
 }
 
+#selectCH {
+  position: absolute;
+  bottom: 0px;
+  left: 10px;
+  width: 40px;
+  height: 40px;
+}
+
+#selectDC {
+  position: absolute;
+  bottom: 0px;
+  left: 70px;
+  width: 40px;
+  height: 40px;
+}
+
+#selectSL {
+  position: absolute;
+  bottom: 0px;
+  left: 130px;
+  width: 40px;
+  height: 40px;
+}
+
 #makeStitch {
   position: absolute;
   bottom: 0px;
-  left: 150px;
+  left: 210px;
   width: 40px;
   height: 40px;
 }
@@ -365,7 +421,7 @@ button.img{
 #unmakeStitch {
   position: absolute;
   bottom: 0px;
-  left: 210px;
+  left: 270px;
   width: 40px;
   height: 40px;
 }

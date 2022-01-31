@@ -68,6 +68,7 @@ export default {
       default: Object
     }
   },
+  emits: ['stitchSelected'],
   data () {
     return {
       // variables to keep track of how the users interacts with the graph
@@ -204,6 +205,27 @@ export default {
       switch (e.code) {
         case 'KeyM':
           this.$refs.graphDoily.makeStitch()
+          break
+        case 'KeyU':
+          this.$refs.graphDoily.unmakeStitch()
+          break
+        case 'Digit1':
+          this.$emit('stitchSelected', 1)
+          break
+        case 'Digit2':
+          this.$emit('stitchSelected', 2)
+          break
+        case 'Digit3':
+          this.$emit('stitchSelected', 3)
+          break
+        case 'ArrowLeft':
+          this.$refs.graphDoily.shiftNodeSelection('fwd')
+          break
+        case 'ArrowRight':
+          this.$refs.graphDoily.shiftNodeSelection('prv')
+          break
+        case 'KeyS':
+          this.$refs.graphDoily.toggleSimulation()
           break
       }
     },

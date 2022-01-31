@@ -53,6 +53,10 @@ class FactoryClass {
     return Cls
   }
 
+  getArgs (type) {
+    return this.knownClasses.get(type).arguments
+  }
+
   isValidType (type) {
     return this.knownClasses.has(type)
   }

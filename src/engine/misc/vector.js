@@ -61,19 +61,11 @@ class Vec2d {
     if (now === 0) return
     [this._x, this._y] = this.scale(e / now).getArray()
   }
-  // len (e) { //  length of the vector
-  //   if (typeof e === 'number') {
-  //     const now = this.len()
-  //     if (now === 0) {
-  //       return new Vec2d(0, 0)
-  //     } else {
-  //       console.log('ccc')
-  //       return this.scale(e / now)
-  //     }
-  //   } else {
-  //     return Math.sqrt(this.dot(this))
-  //   }
-  // }
+
+  setLength (l) {
+    this.len = l
+    return this
+  }
 
   rot (phi) { // rotate the vector by angle phi
     if (typeof phi !== 'number' || isNaN(phi)) throw new Error('rot(phi) : phi must be a number')

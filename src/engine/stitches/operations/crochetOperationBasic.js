@@ -38,13 +38,13 @@ class CrochetOperationBasic extends CrochetOperation {
     return start.add(delta)
   }
 
-  exec () {
+  exec (subject) {
     const [newLinkType, newNodeType, newLinkLength = false, drawPathName = ''] = this.params
-    const newSubject = this.subject.copy()
+    const newSubject = subject.copy()
     const sourceNode = newSubject.needleStack.pop() // get the node to work on
     const activeNode = newSubject.needleStack[0] // and see what's left next
-    const newNode = CrochetOperation.nodeFactory.getNewObject(newNodeType, this.subject.contextStitch, sourceNode.getVector())
-    const newLink = CrochetOperation.linkFactory.getNewObject(newLinkType, this.subject.contextStitch, sourceNode, newNode)
+    const newNode = CrochetOperation.nodeFactory.getNewObject(newNodeType, subject.contextStitch, sourceNode.getVector())
+    const newLink = CrochetOperation.linkFactory.getNewObject(newLinkType, subject.contextStitch, sourceNode, newNode)
 
     const linkLength = (newLinkLength !== false)
       ? newLinkLength

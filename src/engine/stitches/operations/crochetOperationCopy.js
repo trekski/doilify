@@ -3,11 +3,11 @@ import CrochetOperation from './crochetOperation.js'
 class CrochetOperationCopy extends CrochetOperation {
   get commandName () { return 'cp' }
 
-  exec () {
+  exec (subject) {
     const cmd = this.params[0]
     if (cmd !== 'needle' && cmd !== 'other') throw new Error(`crochetOperationCopy : Expected parameter to be 'needle' or 'other', got '${cmd}'`)
 
-    const newSubject = this.subject.copy()
+    const newSubject = subject.copy()
     const tmp = (
       cmd === 'needle'
         ? newSubject.needleStack.pop()

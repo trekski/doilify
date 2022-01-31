@@ -8,10 +8,10 @@ class CrochetStitch {
   get sequence () { return this._sequence } // reciupe how to create stitches internal graph
   get type () { return this._type } // unambiguous string for each subclass
   get requiresPrevious () { return this._reqPrev } // true if the stitch requires prev. sittches last loop to hook into
-  get requiredLoops () { return this._reqLoops } // how manz other loops are needed to construct the stitch
-
+  get requiredLoops () { return this._reqLoops } // how many other loops are needed to construct the stitch
+  get ordinal () { return this._ordinal } // order of the stitch in the doily stitch stack
   // *** CONSTRUCTOR ***
-  constructor (type, requiresPrevious, requiredLoops, sequence, context, attachToNode = null, otherLoops = []) {
+  constructor (type, requiresPrevious, requiredLoops, sequence, context) {
     // *** INIT STATIC ATTRIBUTES ***
 
     // Create dedicated stitch numbering sequence
@@ -28,7 +28,10 @@ class CrochetStitch {
     this._reqPrev = requiresPrevious
     this._reqLoops = requiredLoops
     this._sequence = sequence
+    this._ordinal = undefined
+  }
 
+  crochet (attachToNode = null, otherLoops = []) {
     // temporary variables, used only when new Stitch is being created
     // to avoid immediate reactivity from Vue
     const newNodes = []
@@ -48,11 +51,11 @@ class CrochetStitch {
     while (instr) {
       const tokens = instr.split(':').map(e => e.trim())
       const action = tokens.shift()
-      const op = CrochetOperationFactory.getNewObject(action, subject, tokens)
+      const op = CrochetOperationFactory.getNewObject(action, tokens)
 
-      const res = op.exec()
+      const res = op.exec(subject)
+
       subject = res.subject
-
       if (res.newNode) newNodes.push(res.newNode)
       if (res.newLink) newLinks.push(res.newLink)
       if (res.delNode) {
@@ -75,6 +78,29 @@ class CrochetStitch {
     // finally reference  all newly created objects to the stitch
     this._nodes.splice(0, 0, ...newNodes)
     this._links.splice(0, 0, ...newLinks)
+
+    this.orderLoops()
+    this.orderMe()
+  }
+
+  orderLoops () {
+    this._nodes.forEach(n => { n.ordinal = undefined })
+    let node = this.getStartNode()
+    let index = 0
+    while (node.context !== this) {
+      console.log(node.id, node.isLoopable, index)
+      if (node.isLoopable) { node.ordinal = index++ }
+      const links = node.getNeighborLinks('out', 'sequence')
+      if (links.length < 1) break
+      node = links[0].getOtherEnd(node)
+    }
+  }
+
+  orderMe () {
+    const prevStitch = this.getPreviousStitch()
+    this._ordinal = (prevStitch !== undefined)
+      ? prevStitch.ordinal + 1
+      : 0
   }
 
   // *** PUBLIC METHODS ***
@@ -105,11 +131,17 @@ class CrochetStitch {
   };
 
   getPreviousStitch () {
-    return this.getStartNode.getNeighborNodes('in', 'finish').getContext()
+    const prevNodes = this.getStartNode().getNeighborNodes('in')
+    return (prevNodes.length > 0)
+      ? prevNodes[0].context
+      : undefined
   }
 
   getNextStitch () {
-    return this.getEndNode.getNeighborNodes('out', 'start').getContext()
+    const prevNodes = this.getStartNode().getNeighborNodes('out')
+    return (prevNodes.length > 0)
+      ? prevNodes[0].context
+      : undefined
   }
 
   getFirstLoop () {
@@ -150,26 +182,19 @@ class CrochetStitch {
     return false // nothing was found :(
   }
 
-  getNextLoop (currentLoop, forceProgress) {
-    // to do: add exception for chain spaces
-
-    let wrkNode = currentLoop // start somewhere
-    let cont = true
-
-    while (cont) {
-      // proceed to next node in main sequence
-      const nextStchs = wrkNode.getNeighborLinks('out', 'sequence')
-      if (nextStchs.length > 0) {
-        // if possible,  return a "loop" node
-        wrkNode = nextStchs[0]
-        if (wrkNode.isLoopable()) return wrkNode
-      } else {
-        // if no more nodes, stop the search
-        cont = false
-      }
-    }
-
-    return false // nothing was found :(
+  // if a stitch is to be removed, it needs to:
+  // - remove all its nodes
+  // - remove all its links
+  apoptose () {
+    this._links.forEach((item, i) => {
+      item.apoptose()
+    })
+    this._links.splice(0)
+    this._nodes.forEach((item, i) => {
+      item.apoptose()
+    })
+    this._nodes.splice(0)
+    this._context = undefined
   }
 }
 

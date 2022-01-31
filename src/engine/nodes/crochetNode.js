@@ -126,29 +126,43 @@ class CrochetNode {
 
   // Returns all neighbor nodes of this node, filtered by node type and direction of their link
   getNeighborNodes (dir = '', type = '') {
-    // where the temp results will be stored
-    var nodes = []
-
     // The filtering link direction must be either empty, "IN" or "OUT"
     if (dir !== '' && dir !== 'in' && dir !== 'out') throw new Error('crochetNode.getNeighborNodes: invalid direction')
-
-    nodes = this._links.filter(
-      (link) => (
-        (
-          this === link.source &&
-          (dir === '' || dir === 'out') &&
-          (type === '' || type === link.target.type)
-        ) || (
-          this === link.target &&
-          (dir === '' || dir === 'in') &&
-          (type === '' || type === link.source.type)
-        )
-      )
-    ).map(
-      link => ((link.target === this) ? link.source : link.target)
-    )
-
+    var nodes = this._links
+      .filter(link => (dir !== 'out' || link.target !== this))
+      .filter(link => (dir !== 'in' || link.source !== this))
+      .map(link => ((link.target === this) ? link.source : link.target))
+      .filter(node => (type === '' || node.type === type))
     return nodes
+  }
+
+  getSeqLoop (dir = 'next', forceProgress = false) {
+    // to do: add exception for chain spaces
+    // proceed to next/prev node in main sequence
+    const seqLinks = (dir === 'next')
+      ? this.getNeighborLinks('out', 'sequence')
+      : (dir === 'prev')
+        ? this.getNeighborLinks('in', 'sequence')
+        : []
+    const nextNodes = seqLinks.map(e => e.getOtherEnd(this))
+    // if there's a loop, return it, otherwise reiterate
+    if (nextNodes.length > 0) {
+      const possibleLoops = nextNodes.filter(e => e.isLoopable)
+      if (possibleLoops.length > 0) return possibleLoops[0]
+      return nextNodes[0].getSeqLoop(dir, forceProgress)
+    }
+    // default when all fails
+    return undefined
+  }
+
+  getLoopOrdinal () {
+    // not a loop
+    if (this.isLoopable) return undefined
+    // loop, but not first loop
+    const prevLoop = this.getSeqLoop('prev')
+    if (prevLoop !== false) return prevLoop.getLoopOrdinal + 1
+    // first loop
+    return 0
   }
 
   getNeighborCount () {

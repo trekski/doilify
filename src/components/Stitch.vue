@@ -8,16 +8,16 @@
       :x2="link.target.x"
       :y2="link.target.y"
       stroke="lightgray"
-      stroke-width="2px"
+      stroke-width="1px"
     >
-      <title>{{ link._length }}</title>
+      <title>{{ link.type }}</title>
     </line>
     <circle
       v-for="(node, index) in stitch._nodes"
       :key="index"
       :cx="node.x"
       :cy="node.y"
-      r="1.5"
+      r="0.5"
       fill="gray"
       stroke="0"
     >

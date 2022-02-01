@@ -43,6 +43,7 @@
             stroke-widht="1"
             stroke="red"
           />
+          <text>{{'to:' + this.touchData.to}}</text>
         </g>
         <Doily
           ref="graphDoily"
@@ -266,11 +267,11 @@ export default {
         const newTo = new Vec2d(e.touches[1].clientX, e.touches[1].clientY)
         const newDir = newTo.sub(newFrom)
         const newMid = newFrom.add(newTo).scale(0.5)
-        const newLen = newFrom.sub(newTo).len()
+        const newLen = newFrom.sub(newTo).len
         // // previous positions
         const curDir = this.touchData.to.sub(this.touchData.from)
         const curMid = this.touchData.from.add(this.touchData.to).scale(0.5)
-        const curLen = this.touchData.from.sub(this.touchData.to).len()
+        const curLen = this.touchData.from.sub(this.touchData.to).len
         // // rotation that happened
         const deltaRot = (newDir.phi() - curDir.phi()) * 180 / Math.PI
         // // translation that happened
@@ -332,7 +333,7 @@ export default {
 }
 
 #graph text {
-  font: bold 30px sans-serif;
+  font: bold 10px sans-serif;
   font-family: courier;
   fill: gray;
   stroke-width: 0px;

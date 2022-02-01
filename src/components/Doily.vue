@@ -6,6 +6,7 @@
         v-for="(s, index) in stitches"
         :key="index"
         :stitch="s"
+        title="a"
       />
     </g>
     <g id="diagram_layer">
@@ -265,13 +266,13 @@ export default {
 <style>
   #loop_selection_layer circle {
     fill: yellow;
-    opacity: 10%
+    opacity: 0.1;
   }
   #loop_selection_layer circle.isSelected {
     fill: lime;
-    opacity: 70%
+    opacity: 0.7;
   }
   #loop_selection_layer circle:hover {
-    opacity: 100%
+    opacity: 1;
   }
 </style>

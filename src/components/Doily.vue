@@ -1,14 +1,6 @@
 
 <template>
   <g>
-    <g id="technical_layer">
-      <Stitch
-        v-for="(s, index) in stitches"
-        :key="index"
-        :stitch="s"
-        title="a"
-      />
-    </g>
     <g id="diagram_layer">
       <PrintableLink
         v-for="(l, index) in printable_links"
@@ -38,6 +30,14 @@
       >
         <title>{{ n.id + " : " + index }}</title>
       </circle>
+    </g>
+    <g id="technical_layer">
+      <Stitch
+        v-for="(s, index) in stitches"
+        :key="index"
+        :stitch="s"
+        title="a"
+      />
     </g>
   </g>
 </template>

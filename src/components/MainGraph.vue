@@ -43,7 +43,7 @@
             stroke-widht="1"
             stroke="red"
           />
-          <text>{{'to:' + this.touchData.to}}</text>
+          <text>{{ 'to:' + touchData.to }}</text>
         </g>
         <Doily
           ref="graphDoily"

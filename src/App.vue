@@ -2,7 +2,7 @@
   <div id="wrapper">
     <!-- where the doily graph will be displayed -->
     <div style="position: absolute; left:60px;">
-      v. 0.9.22
+      v. 0.9.23
     </div>
 
     <MainGraph

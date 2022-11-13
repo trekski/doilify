@@ -7,6 +7,10 @@ module.exports = {
     demo: {
       entry: 'src/demo.js',
       title: 'Demo'
+    },
+    svg: {
+      entry: 'src/svg.js',
+      title: 'SVG'
     }
   },
   pwa: {

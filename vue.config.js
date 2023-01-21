@@ -1,12 +1,20 @@
 module.exports = {
   pages: {
     index: {
-      entry: 'src/main.js',
+      entry: 'src/pages/app.js',
       title: 'Doilify'
     },
     demo: {
-      entry: 'src/demo.js',
+      entry: 'src/pages/demo.js',
       title: 'Demo'
+    },
+    svg: {
+      entry: 'src/pages/svg.js',
+      title: 'SVG'
+    },
+    gui_tests: {
+      entry: 'src/pages/gui_tests.js',
+      title: 'GUI'
     }
   },
   pwa: {

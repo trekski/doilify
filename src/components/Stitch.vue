@@ -10,7 +10,7 @@
       stroke="lightgray"
       stroke-width="1px"
     >
-      <title>{{ link.type }}</title>
+      <title>{{ link.getContext().id + ' : ' + link.id + ' (' + link.type + ')' }}</title>
     </line>
     <circle
       v-for="(node, index) in stitch._nodes"
@@ -21,7 +21,7 @@
       fill="gray"
       stroke="0"
     >
-      <title>{{ node.toString() }}</title>
+      <title>{{ node.getContext().id + ' : ' + node.toString() }}</title>
     </circle>
   </g>
 </template>

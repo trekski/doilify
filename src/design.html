@@ -1,0 +1,99 @@
+<html>
+    <head>
+        <style>
+            body {padding : 0px;}
+            #icons_bar {
+                position: fixed;
+                bottom: 25px;
+                left: 50%;
+                transform:  translateX(-50%);
+                display: flex;
+                justify-content: center;
+                column-gap: 10px;
+            }
+            #icons_bar_right {
+                position: fixed;
+                bottom: 25px;
+                right: 50px;
+                display: flex;
+                justify-content: center;
+                column-gap: 10px;
+            }
+            #graph {
+                border: 1px solid green;
+                position: absolute;
+                width: 100%;
+                height:100%;
+                position: fixed;
+                top: 0px;
+                left: 0px;
+            }
+            .icon_group {
+                border-radius: 10px;
+                height: 50px;
+                min-width: 50px;
+                display: flex;
+                overflow-x: hidden;
+                align-items:center;
+                justify-content:center;
+            }
+            .icon_group:hover { max-width: 1000px; gap: 5px; padding: 0px 5px 0px 0px;}
+            .icon_group > div.icon {
+                background: green;
+                height: 40px;
+                flex-basis: auto;
+                flex-shrink: 0;
+                overflow: hidden;
+                transition: width 0.2s, opacity 0.2s;
+            }
+            .icon_group > div.icon.secondary {
+                width: 0px;
+                opacity: 0%;
+            }
+            .icon_group:hover > div.icon.secondary {
+                width: 40px;
+                opacity: 100%;
+            }
+            .icon_group > div.icon.main {
+                width: 40px;
+                opacity: 100%;
+            }
+            .icon_group:hover > div.icon.main {
+                width: 0px;
+                opacity: 0%;
+            }
+            .border_black {background:gray;}
+        </style>
+    </head>
+    <body>
+        <div id="graph">
+        <svg>
+             <use xlink:href="icons.svg#symbol852" />
+        </svg>
+        </div>
+        <div id="icons_bar">
+            <div class="icon_group border_black" id="grp1">
+                <div class="icon main">a</div>
+                <div class="icon secondary">b</div>
+            </div>
+            <div class="icon_group border_black" id="grp2">
+                <div class="icon main">c</div>
+                <div class="icon secondary">d</div>
+                <div class="icon secondary">e</div>
+                <div class="icon secondary">f</div>
+            </div>
+            <div class="icon_group border_black" id="grp3">
+                <div class="icon main">g</div>
+                <div class="icon secondary">h</div>
+                <div class="icon secondary">i</div>
+            </div>
+        </div>
+        <div id="icons_bar_right">
+            <div class="icon_group border_black" id="grp1">
+                <div class="icon main">c</div>
+                <div class="icon secondary">h</div>
+                <div class="icon secondary">i</div>     
+            </div>
+        </div>
+    </body>
+</html>

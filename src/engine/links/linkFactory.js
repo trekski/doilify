@@ -11,6 +11,6 @@ crochetLinkFactory
   .registerClass(CrochetLink, 'external', ['external', 5, false, 'lightgray'])
   .registerClass(CrochetLink, 'chain_space', ['chain_space', 10, false, 'lightgray'])
   .registerClass(CrochetLink, 'zero', ['zero', 0, false, 'lightgray'])
-  .registerClass(CrochetDraw, 'draw', ['sequence', 5, true, 'lightgray'])
+  .registerClass(CrochetDraw, 'draw', ['draw', 5, true, 'lightgray'])
 
 export default crochetLinkFactory

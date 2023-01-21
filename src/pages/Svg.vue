@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import SvgIcons from './components/svgIcons.vue'
+import SvgIcons from '../components/svgIcons.vue'
 
 export default {
   name: 'svg',

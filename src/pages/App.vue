@@ -142,10 +142,10 @@
 </template>
 
 <script>
-import MainMenu from './components/MainMenu.vue'
-import ModalWindow from './components/ModalWindow.vue'
+import MainMenu from '../components/MainMenu.vue'
+import ModalWindow from '../components/ModalWindow.vue'
 // import MockGraph from './components/MockGraph.vue'
-import MainGraph from './components/MainGraph.vue'
+import MainGraph from '../components/MainGraph.vue'
 
 export default {
   name: 'App',

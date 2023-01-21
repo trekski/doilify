@@ -9,15 +9,15 @@
 
 <script>
 
-import vectorDemo from './engine/misc/demos/vector.js'
-import helperDemo from './engine/misc/demos/helpers.js'
-import graphicsDemo from './engine/misc/demos/graphics.js'
-import factoryDemo from './engine/misc/demos/factory.js'
-import crochetNodeDemo from './engine/nodes/demos/crochetNode.js'
-import crochetLinkDemo from './engine/links/demos/crochetLink.js'
-import crochetDrawDemo from './engine/links/demos/crochetDraw.js'
-import crochetOperationDemo from './engine/stitches/operations/demos/operations.js'
-import crochetStitchDemo from './engine/stitches/demos/stitchFactory.js'
+import vectorDemo from '../engine/misc/demos/vector.js'
+import helperDemo from '../engine/misc/demos/helpers.js'
+import graphicsDemo from '../engine/misc/demos/graphics.js'
+import factoryDemo from '../engine/misc/demos/factory.js'
+import crochetNodeDemo from '../engine/nodes/demos/crochetNode.js'
+import crochetLinkDemo from '../engine/links/demos/crochetLink.js'
+import crochetDrawDemo from '../engine/links/demos/crochetDraw.js'
+import crochetOperationDemo from '../engine/stitches/operations/demos/operations.js'
+import crochetStitchDemo from '../engine/stitches/demos/stitchFactory.js'
 
 const l = []
 
@@ -71,6 +71,7 @@ export default {
 
 <style>
 #app {
+  color: black;
 }
 pre {margin: 0px}
 </style>

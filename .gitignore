@@ -24,3 +24,6 @@ pnpm-debug.log*
 
 # firebase
 .firebase
+
+# obsidian
+.obsidian

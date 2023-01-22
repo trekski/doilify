@@ -20,13 +20,13 @@ export default {
 
 <style>
 .icon_group {
-  border: palevioletred solid 1px;
-  background: grey;
+  background:whitesmoke;
   display: flex;
   justify-content: center;
   align-items: center;
   padding: 5px;
   border-radius: 5px;
+  box-shadow: 5px 5px 12px -5px darkgrey;
 }
 .column {
   flex-direction: column;

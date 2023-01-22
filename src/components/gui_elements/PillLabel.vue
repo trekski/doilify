@@ -1,7 +1,7 @@
 <template>
   <div
     class="pill_label"
-    :style="{'background-color': color}"
+    :style="{'background-color': this.color}"
   >
     <div><slot>label not provided</slot></div>
   </div>
@@ -13,7 +13,7 @@ export default {
   props: {
     color: {
       type: String,
-      default: 'lightgray'
+      default: 'cornsilk'
     }
   }
 }

@@ -24,6 +24,7 @@
           v-for="(name, j) in grp"
           :key="j"
           :name="name"
+          inactive=true
           @mouseover="changeInfoLabel(name)"
           @mouseleave="changeInfoLabel()"
         />
@@ -74,7 +75,6 @@ export default {
   position: fixed;
   display: flex;
   justify-content: center;
-  border: yellow solid 1px;
   /**/
   bottom: 25px;
   left: 50%;
@@ -95,6 +95,6 @@ export default {
 #editToolbar #Icons {
   display: flex;
   justify-content: center;
-  column-gap: 10px;
+  column-gap: 7px;
 }
 </style>

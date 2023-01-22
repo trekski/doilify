@@ -1,5 +1,5 @@
 <template>
-  <button class="icon_button">
+  <button class="icon_button" :class="{selected: selected, inactive: inactive}">
     {{ name }}
   </button>
 </template>
@@ -29,9 +29,9 @@ export default {
       type: Boolean,
       default: false
     },
-    active: {
+    inactive: {
       type: Boolean,
-      default: true
+      default: false
     }
   }
 }
@@ -42,5 +42,19 @@ export default {
   height: 40px;
   width: 40px;
   overflow: hidden;
+  border: none;
+  border-radius: 2px;
+  background: whitesmoke;
+}
+.icon_button:hover {
+  background: cornsilk;
+}
+.icon_button.selected {
+  background: cornsilk;
+  color: darkgoldenrod
+}
+.icon_button.inactive {
+  background: whitesmoke;
+  color: #BBB;
 }
 </style>

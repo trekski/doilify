@@ -17,7 +17,7 @@ export default {
 <style>
 .icon_spacer {
   border: none;
-  background: red;
+  background: lightgray;
   height: 90%;
   width: 2px;
   border-radius: 1px;

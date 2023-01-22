@@ -24,6 +24,7 @@ export default {
   background: grey;
   display: flex;
   justify-content: center;
+  align-items: center;
   padding: 5px;
   border-radius: 5px;
 }

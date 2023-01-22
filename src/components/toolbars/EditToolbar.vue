@@ -4,7 +4,7 @@
       v-if="show_label"
       id="infoLabel"
     >
-      {{ info_label_value }}
+      <PillLabel>{{ info_label_value }}</PillLabel>
     </div>
     <div id="Icons">
       <IconGroup
@@ -12,6 +12,14 @@
         :key="i"
         dir="row"
       >
+        <IconButton
+          v-for="(name, j) in grp"
+          :key="j"
+          :name="name"
+          @mouseover="changeInfoLabel(name)"
+          @mouseleave="changeInfoLabel()"
+        />
+        <IconSpacer />
         <IconButton
           v-for="(name, j) in grp"
           :key="j"
@@ -27,18 +35,23 @@
 <script>
 import IconButton from '../gui_elements/IconButton.vue'
 import IconGroup from '../gui_elements/IconGroup.vue'
+import PillLabel from '../gui_elements/PillLabel.vue'
+import IconSpacer from '../gui_elements/IconSpacer.vue'
 
 export default {
   name: 'EditToolbar',
   components: {
     IconButton: IconButton,
-    IconGroup: IconGroup
+    IconGroup: IconGroup,
+    PillLabel: PillLabel,
+    IconSpacer: IconSpacer
   },
   data () {
     return {
       name_groups: [
         ['foo', 'bar'],
-        ['button_a', 'button_b', 'ccccc']
+        ['button_a', 'button_b', 'ccccc', 'ddd'],
+        ['fjfjf']
       ],
       info_label_value: ''
     }
@@ -60,29 +73,28 @@ export default {
 #editToolbar {
   position: fixed;
   display: flex;
-  flex-direction: column;
   justify-content: center;
   border: yellow solid 1px;
   /**/
   bottom: 25px;
   left: 50%;
   transform:  translateX(-50%);
+  flex-direction: column;
   /*
   left: 25px;
   top: 50%;
   transform:  translateY(-50%);
-  flex-direction: column;
+  flex-direction: row;
   row-gap: 10px;
   */
 }
 #editToolbar #infoLabel {
   display: flex;
   justify-content: center;
-  padding: 3px;
-  border: solid fuchsia 1px;
 }
 #editToolbar #Icons {
   display: flex;
+  justify-content: center;
   column-gap: 10px;
 }
 </style>

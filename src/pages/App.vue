@@ -2,7 +2,8 @@
   <div id="wrapper">
     <!-- where the doily graph will be displayed -->
     <div style="position: absolute; left:60px;">
-      v. 0.9.23
+      v. 0.9.23 {{ publicPath }}
+      <img :src="publicPath + 'icons/toolCrochet.svg'">
     </div>
 
     <MainGraph
@@ -157,6 +158,8 @@ export default {
   },
   data () {
     return {
+      // test
+      publicPath: process.env.BASE_URL,
       // PWA refresh flags
       SWRegistration: null,
       NewSWAvailable: false,
@@ -184,6 +187,7 @@ export default {
   },
   created () {
     this.setupAppVer()
+    fetch(this.publicPath + 'test.json').then(r => r.json()).then(r => { console.log(r) })
   },
   methods: {
     // PWA refresh info

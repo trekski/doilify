@@ -1,5 +1,8 @@
 <template>
-  <button class="icon_button" :class="{selected: selected, inactive: inactive}">
+  <button
+    class="icon_button"
+    :class="{selected: selected, inactive: inactive}"
+  >
     {{ name }}
   </button>
 </template>

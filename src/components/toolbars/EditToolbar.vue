@@ -13,6 +13,10 @@
         dir="row"
       >
         <IconButton
+          name="xxx"
+          selected="true"
+        />
+        <IconButton
           v-for="(name, j) in grp"
           :key="j"
           :name="name"
@@ -24,7 +28,7 @@
           v-for="(name, j) in grp"
           :key="j"
           :name="name"
-          inactive=true
+          inactive="true"
           @mouseover="changeInfoLabel(name)"
           @mouseleave="changeInfoLabel()"
         />

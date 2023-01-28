@@ -1,5 +1,5 @@
 <template>
-  <div class="icon_spacer"></div>
+  <div class="icon_spacer" />
 </template>
 
 <script>

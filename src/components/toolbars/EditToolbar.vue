@@ -13,23 +13,14 @@
         dir="row"
       >
         <IconButton
-          name="xxx"
-          selected="true"
-        />
-        <IconButton
-          v-for="(name, j) in grp"
-          :key="j"
-          :name="name"
-          @mouseover="changeInfoLabel(name)"
-          @mouseleave="changeInfoLabel()"
-        />
-        <IconSpacer />
-        <IconButton
-          v-for="(name, j) in grp"
-          :key="j"
-          :name="name"
-          inactive="true"
-          @mouseover="changeInfoLabel(name)"
+          v-for="(button) in grp"
+          :key="button.key"
+          :labelText="button.labelText"
+          :inactive="button.inactive"
+          :selected="button.selected"
+          :shortLabel="button.shortLabel"
+          :icon="button.icon"
+          @mouseover="changeInfoLabel(button.description)"
           @mouseleave="changeInfoLabel()"
         />
       </IconGroup>
@@ -41,22 +32,55 @@
 import IconButton from '../gui_elements/IconButton.vue'
 import IconGroup from '../gui_elements/IconGroup.vue'
 import PillLabel from '../gui_elements/PillLabel.vue'
-import IconSpacer from '../gui_elements/IconSpacer.vue'
+// import IconSpacer from '../gui_elements/IconSpacer.vue'
 
 export default {
   name: 'EditToolbar',
   components: {
     IconButton: IconButton,
     IconGroup: IconGroup,
-    PillLabel: PillLabel,
-    IconSpacer: IconSpacer
+    PillLabel: PillLabel
+    // IconSpacer: IconSpacer
   },
   data () {
     return {
       name_groups: [
-        ['foo', 'bar'],
-        ['button_a', 'button_b', 'ccccc', 'ddd'],
-        ['fjfjf']
+        [
+          {
+            key: 0,
+            icon: 'svg:svg-icon-new-page',
+            description: 'add new page'
+          },
+          {
+            key: 1,
+            icon: 'svg:svg-icon-default',
+            description: 'first button v.1'
+          },
+          {
+            key: 2,
+            labelText: 'button 1.1',
+            icon: 'svg:svg-icon-default',
+            description: 'first button v.2'
+          },
+          {
+            key: 3,
+            shortLabel: 'BUT',
+            icon: 'svg:svg-icon-default',
+            description: 'first button v.3'
+          },
+          {
+            key: 4,
+            labelText: 'button 2',
+            inactive: true,
+            description: 'second button'
+          },
+          {
+            key: 5,
+            labelText: 'button 3',
+            selected: true,
+            description: 'third button'
+          }
+        ]
       ],
       info_label_value: ''
     }

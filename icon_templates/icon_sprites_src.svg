@@ -5,6 +5,10 @@
    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
    xmlns:svg="http://www.w3.org/2000/svg"
    xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   sodipodi:docname="icon_sprites_src.svg"
+   inkscape:version="1.0 (4035a4f, 2020-05-01)"
    id="svg8"
    version="1.1"
    viewBox="0 0 210 297"
@@ -12,6 +16,25 @@
    width="210mm">
   <defs
      id="defs2" />
+  <sodipodi:namedview
+     inkscape:window-maximized="0"
+     inkscape:window-y="25"
+     inkscape:window-x="0"
+     inkscape:window-height="847"
+     inkscape:window-width="1440"
+     showgrid="false"
+     inkscape:document-rotation="0"
+     inkscape:current-layer="layer1"
+     inkscape:document-units="mm"
+     inkscape:cy="153.07087"
+     inkscape:cx="165.68546"
+     inkscape:zoom="2.0846948"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     borderopacity="1.0"
+     bordercolor="#666666"
+     pagecolor="#ffffff"
+     id="base" />
   <metadata
      id="metadata5">
     <rdf:RDF>
@@ -25,46 +48,59 @@
     </rdf:RDF>
   </metadata>
   <g
-     id="layer1">
+     id="layer1"
+     inkscape:groupmode="layer"
+     inkscape:label="Warstwa 1">
     <g
-       id="svg-icon-test1">
+       id="svg-icon-default">
       <rect
-         style="fill:none;stroke:#000000;stroke-width:0.1px"
-         y="0"
-         x="0"
-         height="40"
+         style="fill:none;stroke-width:0.1;stroke-linecap:round;stroke-linejoin:bevel;stroke:#000000"
+         id="rect10"
          width="40"
-         id="rect842" />
+         height="40"
+         x="0"
+         y="0" />
       <path
-         id="path844"
-         d="m 11.16,24.70 c -0.25,-6.67 2.01,-14.81 9.04,-13.04 6.20,1.5 10.89,5.022 8.56,11.67 z" />
+         style="fill:#000000;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         d="M 5.9658137,6.3371879 7.5250626,17.161283 18.812728,15.193257 17.01744,4.2459911 Z"
+         id="path12" />
       <path
-         id="path846"
-         d="m 20.852895,32.594679 3.336463,-5.453835 8.276996,5.261346 z"
-         style="fill:#ff0000" />
+         id="path14"
+         style="fill:#000000;stroke:none;stroke-width:0.1;stroke-linecap:round;stroke-linejoin:bevel"
+         d="m 35.958215,10.228951 a 6.400939,6.400939 0 0 1 -6.400939,6.400939 6.400939,6.400939 0 0 1 -6.400939,-6.400939 6.400939,6.400939 0 0 1 6.400939,-6.4009385 6.400939,6.400939 0 0 1 6.400939,6.4009385 z" />
+      <path
+         style="fill:#000000;stroke:none;stroke-width:0.26458300000000001px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         d="M 11.6723,21.838497 2.6356807,33.573553 17.320188,36.46025 Z"
+         id="path17" />
+      <path
+         id="path39"
+         style="fill:#ff0000;stroke:none;stroke-width:0.1;stroke-linecap:round;stroke-linejoin:bevel"
+         inkscape:transform-center-x="0.60115692"
+         inkscape:transform-center-y="0.20129869"
+         d="m 27.172613,35.707198 -1.220691,-5.392419 -5.134175,-2.051469 4.751281,-2.827296 0.364516,-5.516829 4.157144,3.645055 5.359458,-1.358119 -2.182025,5.080063 2.947811,4.677465 -5.505709,-0.505403 z" />
     </g>
     <g
-       id="svg-icon-test2">
+       id="svg-icon-new-page">
       <rect
-         id="rect887"
+         style="fill:none;stroke:#000000;stroke-width:0.1;stroke-linecap:round;stroke-linejoin:bevel"
+         id="rect49"
          width="40"
          height="40"
          x="41"
-         y="0"
-         style="fill:none;stroke:#000000;stroke-width:0.1px" />
+         y="0" />
       <path
-         d="m 51.436367,10.791552 2.218825,10.791551 3.126523,-6.454759 7.463316,-1.109412 -3.933369,-4.3367921 0.605133,-5.0427813 -5.950481,-0.5042781 -6.757326,-2.4205349 0.70599,4.5385031 -3.025669,5.2444923 z"
-         id="path893" />
-      <rect
-         id='xcv'
-         x="1"
-         y="1"
-         width="2"
-         height="3" />
+         id="path51"
+         style="fill:#000000;stroke:none;stroke-width:0.99999899999999997px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         d="M 291.64844 10.552734 L 165.9707 11.992188 L 166.93164 137.18945 L 265.74609 137.18945 L 291.16992 104.57227 L 291.64844 10.552734 z M 279.6582 20.626953 L 280.13672 97.376953 L 252.31445 96.416016 L 253.27539 123.75977 L 178.44336 123.2793 L 177.96289 23.503906 L 279.6582 20.626953 z M 220.65625 75.310547 L 188.99609 77.230469 L 188.51758 86.34375 L 222.57422 84.425781 L 220.65625 75.310547 z "
+         transform="scale(0.26458333)" />
       <path
-         d="m 59.605674,34.190056 c 0.302567,-4.336791 -8.875294,-3.42909 0,-4.437647 8.875294,-1.008558 2.319679,-6.555616 7.463316,-3.025669 5.143635,3.529946 2.7231,4.034226 2.218822,6.152194 -0.504277,2.117966 -7.665026,-0.403423 -9.682138,1.311122 z"
-         id="path895"
-         style="fill:#ff0000" />
+         style="fill:#000000;stroke:none;stroke-width:0.26458300000000001px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         d="M 49.751487,8.6303598 V 11.168701 L 71.200469,10.407198 70.946634,7.9957746 Z"
+         id="path55" />
+      <path
+         style="fill:#ff0000;stroke:none;stroke-width:0.26458300000000001px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         d="M 70.185131,17.006885 49.878403,17.133803 50.132236,14.21471 69.931298,14.087793 Z"
+         id="path57" />
     </g>
   </g>
 </svg>

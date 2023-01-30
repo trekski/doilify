@@ -3,17 +3,20 @@
     id="toolbars_wrapper"
     class="wrapper"
   >
+    <SvgIcons style="display: none" />
     <EditToolbar />
   </div>
 </template>
 
 <script>
 import EditToolbar from '../components/toolbars/EditToolbar.vue'
+import SvgIcons from '../components/gui_elements/IconSprites.vue'
 
 export default {
   name: 'GUITets',
   components: {
-    EditToolbar: EditToolbar
+    EditToolbar: EditToolbar,
+    SvgIcons: SvgIcons
   }
 }
 </script>
@@ -23,11 +26,10 @@ html, body
 {
     height: 100%;
     margin: 0px;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 #app {
-  border: red solid 1px;
-  outline-offset: -1px;
   margin: 0px;
   padding: 0px;
   height: 100%;

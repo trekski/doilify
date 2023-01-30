@@ -28,10 +28,6 @@ const props = defineProps({
     type: String,
     default: ''
   },
-  description: {
-    type: String,
-    default: 'button description'
-  },
   shortLabel: {
     type: String,
     default: ''

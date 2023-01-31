@@ -23,6 +23,7 @@
           @mouseover="changeInfoLabel(button.description)"
           @mouseleave="changeInfoLabel()"
         />
+        <IconSpacer />
       </IconGroup>
     </div>
   </div>
@@ -32,7 +33,6 @@
 import IconButton from '../gui_elements/IconButton.vue'
 import IconGroup from '../gui_elements/IconGroup.vue'
 import PillLabel from '../gui_elements/PillLabel.vue'
-// import IconSpacer from '../gui_elements/IconSpacer.vue'
 
 export default {
   name: 'EditToolbar',
@@ -40,7 +40,6 @@ export default {
     IconButton: IconButton,
     IconGroup: IconGroup,
     PillLabel: PillLabel
-    // IconSpacer: IconSpacer
   },
   data () {
     return {

@@ -7,16 +7,14 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: 'PillLabel',
-  props: {
-    color: {
-      type: String,
-      default: 'rgb(240,240,240)'
-    }
+<script setup>
+import { defineProps } from 'vue'
+defineProps({
+  color: {
+    type: String,
+    default: 'rgb(240,240,240)'
   }
-}
+})
 </script>
 
 <style>

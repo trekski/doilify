@@ -2,16 +2,14 @@
   <div class="icon_spacer" />
 </template>
 
-<script>
-export default {
-  name: 'IconSpacer',
-  props: {
-    dir: {
-      type: String,
-      default: 'row'
-    }
+<script setup>
+import { defineProps } from 'vue'
+defineProps({
+  dir: {
+    type: String,
+    default: 'row'
   }
-}
+})
 </script>
 
 <style>

@@ -92,16 +92,17 @@ console.log(iconType, iconSrc)
   background: whitesmoke;
   color: rgb(150, 150, 150);
 }
+.icon{
+  display: flex;
+  position: relative;
+  background-color: inherit;
+}
 .svg_icon {
   border: none;
   width: 40px;
   height: 40px;
   --color: black;
   --color2: rgb(30, 80, 140);;
-}
-.svg_icon:hover {
-  --scolor: rgb(100,100,100);
-  --scolor2: rgb(40, 71, 152);
 }
 .inactive .svg_icon {
   --color: rgb(150, 150, 150);
@@ -111,17 +112,8 @@ console.log(iconType, iconSrc)
   --color: rgb(40, 95, 170);
   --color2: rgb(100, 170, 255);
 }
-.selected:hover .svg_icon {
-  ---color: rgb(80, 160, 255);
-  ---color2: rgb(160, 220, 255);
-}
 .label {
   padding: 0px 5px;
-}
-.icon{
-  display: flex;
-  position: relative;
-  background-color: inherit;
 }
 .icon_tag {
   position: absolute;

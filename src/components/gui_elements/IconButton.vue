@@ -71,7 +71,7 @@ console.log(iconType, iconSrc)
   border: none;
   border-radius: 2px;
   padding: 0px;
-  background: whitesmoke;
+  background: var(--color-background);
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -79,17 +79,13 @@ console.log(iconType, iconSrc)
   column-gap: 0px;
 }
 .icon_button:hover {
-  background: rgb(220,220,220);
+  background: var(--color-background-high1);
 }
 .icon_button.selected {
-  background: rgb(220,220,220);
-  color: rgb(40, 80, 170);
-}
-.icon_button.selected:hover {
-  background: rgb(220,230,245);
+  background: var(--color-background-high2);
+  color: var(--color-main-high);
 }
 .icon_button.inactive {
-  background: whitesmoke;
   color: rgb(150, 150, 150);
 }
 .icon{
@@ -101,16 +97,16 @@ console.log(iconType, iconSrc)
   border: none;
   width: 40px;
   height: 40px;
-  --color: black;
-  --color2: rgb(30, 80, 140);;
+  --color: var(--color-main);
+  --color2: var(--color-accent);
 }
 .inactive .svg_icon {
-  --color: rgb(150, 150, 150);
-  --color2: rgb(200, 200, 200);
+  --color: var(--color-main-low);
+  --color2: var(--color-accent-low);
 }
 .selected .svg_icon {
-  --color: rgb(40, 95, 170);
-  --color2: rgb(100, 170, 255);
+  --color: var(--color-main-high);
+  --color2: var(--color-accent-high);
 }
 .label {
   padding: 0px 5px;

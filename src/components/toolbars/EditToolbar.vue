@@ -1,14 +1,14 @@
 <template>
   <div id="editToolbar">
     <div
-      v-if="show_label"
+      v-if="showLabel"
       id="infoLabel"
     >
-      <PillLabel>{{ info_label_value }}</PillLabel>
+      <PillLabel>{{ infoLabelText }}</PillLabel>
     </div>
     <div id="Icons">
       <IconGroup
-        v-for="(grp, i) in name_groups"
+        v-for="(grp, i) in nameGroups"
         :key="i"
         dir="row"
       >
@@ -23,81 +23,69 @@
           @mouseover="changeInfoLabel(button.description)"
           @mouseleave="changeInfoLabel()"
         />
-        <IconSpacer />
       </IconGroup>
     </div>
   </div>
 </template>
 
-<script>
+<script setup>
+
+import { ref, computed } from 'vue'
 import IconButton from '../gui_elements/IconButton.vue'
 import IconGroup from '../gui_elements/IconGroup.vue'
 import PillLabel from '../gui_elements/PillLabel.vue'
 
-export default {
-  name: 'EditToolbar',
-  components: {
-    IconButton: IconButton,
-    IconGroup: IconGroup,
-    PillLabel: PillLabel
-  },
-  data () {
-    return {
-      name_groups: [
-        [
-          {
-            key: 0,
-            icon: 'svg:svg-icon-new-page',
-            description: 'add new page'
-          },
-          {
-            key: 1,
-            icon: 'svg:svg-icon-default',
-            description: 'first button v.1'
-          },
-          {
-            key: 2,
-            labelText: 'button 1.1',
-            icon: 'svg:svg-icon-default',
-            description: 'first button v.2'
-          },
-          {
-            key: 3,
-            shortLabel: 'BUT',
-            icon: 'svg:svg-icon-default',
-            description: 'first button v.3'
-          },
-          {
-            key: 4,
-            labelText: 'button 2',
-            inactive: true,
-            description: 'second button'
-          },
-          {
-            key: 5,
-            labelText: 'button 3',
-            selected: true,
-            description: 'third button'
-          }
-        ]
-      ],
-      info_label_value: ''
+const nameGroups = [
+  [
+    {
+      key: 0,
+      icon: 'svg:svg-icon-new-page',
+      description: 'add new page'
+    },
+    {
+      key: 1,
+      icon: 'svg:svg-icon-default',
+      description: 'first button v.1'
+    },
+    {
+      key: 2,
+      labelText: 'button 1.1',
+      icon: 'svg:svg-icon-default',
+      description: 'first button v.2'
+    },
+    {
+      key: 3,
+      shortLabel: 'BUT',
+      icon: 'svg:svg-icon-default',
+      description: 'first button v.3'
+    },
+    {
+      key: 4,
+      labelText: 'button 2',
+      inactive: true,
+      description: 'second button'
+    },
+    {
+      key: 5,
+      labelText: 'button 3',
+      selected: true,
+      description: 'third button'
     }
-  },
-  computed: {
-    show_label () {
-      return this.info_label_value !== ''
-    }
-  },
-  methods: {
-    changeInfoLabel (s = '') {
-      this.info_label_value = s
-    }
-  }
+  ]
+]
+
+const infoLabelText = ref('')
+
+const showLabel = computed(() => {
+  return infoLabelText.value !== ''
+})
+
+function changeInfoLabel (s = '') {
+  this.infoLabelText = s
 }
 </script>
 
-<style>
+<style scoped>
 #editToolbar {
   position: fixed;
   display: flex;

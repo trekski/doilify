@@ -1,5 +1,5 @@
 <template>
-  <div :class="['icon_group', dir]">
+  <div :class="['icon_group', dir, 'default_shadow']">
     <slot>
       no buttons provided
     </slot>
@@ -24,7 +24,7 @@ defineProps({
   align-items: center;
   padding: 5px;
   border-radius: 5px;
-  box-shadow: 5px 5px 12px -5px darkgrey;
+  /* box-shadow: 5px 5px 12px -5px darkgrey; */
 }
 .column {
   flex-direction: column;

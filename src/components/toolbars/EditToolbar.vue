@@ -15,10 +15,10 @@
         <IconButton
           v-for="(button) in grp"
           :key="button.key"
-          :labelText="button.labelText"
+          :label-text="button.labelText"
           :inactive="button.inactive"
           :selected="button.selected"
-          :shortLabel="button.shortLabel"
+          :short-label="button.shortLabel"
           :icon="button.icon"
           @mouseover="changeInfoLabel(button.description)"
           @mouseleave="changeInfoLabel()"

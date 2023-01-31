@@ -45,7 +45,7 @@ console.log(TextButton)
 }
 .modal_header {
   min-height: 1em;
-  padding: 10px;
+  padding: 7px;
   background: var(--color-background-high1);
   display: flex;
   justify-content: center;

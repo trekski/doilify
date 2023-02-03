@@ -3,7 +3,10 @@
     class="icon_button"
     :class="{selected: selected, inactive: inactive}"
   >
-    <div v-if="labelText" class="label">
+    <div
+      v-if="labelText"
+      class="label"
+    >
       {{ labelText }}
     </div>
     <div class="icon">
@@ -13,7 +16,10 @@
       >
         <use :xlink:href="iconSrc" />
       </svg>
-      <div v-if="shortLabel" class="icon_tag">
+      <div
+        v-if="shortLabel"
+        class="icon_tag"
+      >
         {{ shortLabel }}
       </div>
     </div>

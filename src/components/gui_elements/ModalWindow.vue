@@ -1,6 +1,8 @@
 <template>
   <div class="modal_container default_shadow">
-    <div class="modal_header">Window name</div>
+    <div class="modal_header">
+      Window name
+    </div>
     <div class="modal_content">
       <slot>Hello, World!</slot>
     </div>

@@ -1,7 +1,7 @@
 <template>
   <div
     class="pill_label"
-    :style="{'background-color': this.color, 'color' : 'gray'}"
+    :style="{'background-color': color, 'color' : 'gray'}"
   >
     <div><slot>label not provided</slot></div>
   </div>

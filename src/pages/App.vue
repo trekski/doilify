@@ -2,8 +2,7 @@
   <div id="wrapper">
     <!-- where the doily graph will be displayed -->
     <div style="position: absolute; left:60px;">
-      v. 0.9.23 {{ publicPath }}
-      <img :src="publicPath + 'icons/toolCrochet.svg'">
+      v. 0.9.23
     </div>
 
     <MainGraph
@@ -158,8 +157,6 @@ export default {
   },
   data () {
     return {
-      // test
-      publicPath: process.env.BASE_URL,
       // PWA refresh flags
       SWRegistration: null,
       NewSWAvailable: false,
@@ -186,36 +183,35 @@ export default {
     }
   },
   created () {
-    this.setupAppVer()
-    fetch(this.publicPath + 'test.json').then(r => r.json()).then(r => { console.log(r) })
+    //this.setupAppVer()
   },
   methods: {
-    // PWA refresh info
-    async setupAppVer () {
-      this.SWRegistration = await navigator.serviceWorker.getRegistration()
-    },
-    async checkNewAppVer () {
-      this.NewSWAvailable = false
-      if (this.SWRegistration === null) {
-        console.log('no registered service worker')
-        return
-      }
-      const registration = await this.SWRegistration.update()
-      if (registration === null) {
-        this.SWRegistration = registration
-        if (registration.installing !== null) {
-          registration.installing.addEventListener(
-            'statechange', () => {
-              if (registration.waiting) {
-                this.NewSWAvailable = true
-              }
-            }
-          )
-        } else if (registration.waiting !== null) {
-          this.NewSWAvailable = true
-        }
-      }
-    },
+    // // PWA refresh info
+    // async setupAppVer () {
+    //   this.SWRegistration = await navigator.serviceWorker.getRegistration()
+    // },
+    // async checkNewAppVer () {
+    //   this.NewSWAvailable = false
+    //   if (this.SWRegistration === null) {
+    //     console.log('no registered service worker')
+    //     return
+    //   }
+    //   const registration = await this.SWRegistration.update()
+    //   if (registration === null) {
+    //     this.SWRegistration = registration
+    //     if (registration.installing !== null) {
+    //       registration.installing.addEventListener(
+    //         'statechange', () => {
+    //           if (registration.waiting) {
+    //             this.NewSWAvailable = true
+    //           }
+    //         }
+    //       )
+    //     } else if (registration.waiting !== null) {
+    //       this.NewSWAvailable = true
+    //     }
+    //   }
+    // },
     selectStich (t) {
       this.appState.mainStitchType = t
       this.$refs.MainGraph.refocus()

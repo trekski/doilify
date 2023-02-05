@@ -3,7 +3,7 @@ import Vec2d from '../../misc/vector.js'
 
 class CrochetOperationBasic extends CrochetOperation {
   get commandName () { return 'mk' }
-  get minParams () { return 2 }
+  get minParams () { return 2 } 
 
   static CALC_DEF_NEW_POS (fromNode, len, toNode, lastNeedleNode) {
     // figure out where we are at

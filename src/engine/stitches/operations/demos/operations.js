@@ -6,18 +6,18 @@ import crochetLinkFactory from '../../../links/linkFactory.js'
 function crochetOperationDemo (log) {
   const st = 's'
 
-  log('make default')
+  log('make default') 
 
   let sub = new OperationSubject([], st, [])
 
-  let x = crochetOperationFactory.getNewObject('default', sub, [])
-  let r = x.exec()
+  let x = crochetOperationFactory.getNewObject('default', []) 
+  let r = x.exec(sub)
   log(r.newNode)
 
   log('make origin')
 
-  x = crochetOperationFactory.getNewObject('makeorigin', sub, [])
-  r = x.exec()
+  x = crochetOperationFactory.getNewObject('makeorigin', [])
+  r = x.exec(sub)
 
   log(`${r.newNode.type} : ${r.newNode.id}`)
 
@@ -26,8 +26,8 @@ function crochetOperationDemo (log) {
   log('make simple')
 
   sub = r.subject
-  x = crochetOperationFactory.getNewObject('mk', sub, ['external', 'struct'])
-  r = x.exec()
+  x = crochetOperationFactory.getNewObject('mk', ['external', 'struct'])
+  r = x.exec(sub)
 
   log(`new node : ${r.newNode.type} : ${r.newNode.id}`)
   log(`new link : ${r.newLink.type} : ${r.newLink.id}`)
@@ -44,7 +44,7 @@ function crochetOperationDemo (log) {
   log('before')
   log('needle: ' + sub.needleStack.map(e => e.id))
   log('other: ' + sub.otherLoops.map(e => e.id))
-  let z1 = crochetOperationFactory.getNewObject('cp', sub, ['needle']).exec()
+  let z1 = crochetOperationFactory.getNewObject('cp', ['needle']).exec(sub)
   log('after')
   log('needle: ' + z1.subject.needleStack.map(e => e.id))
   log('other: ' + z1.subject.otherLoops.map(e => e.id))
@@ -55,7 +55,7 @@ function crochetOperationDemo (log) {
   log('before')
   log('needle: ' + sub.needleStack.map(e => e.id))
   log('other: ' + sub.otherLoops.map(e => e.id))
-  z1 = crochetOperationFactory.getNewObject('cp', sub, ['other']).exec()
+  z1 = crochetOperationFactory.getNewObject('cp', ['other']).exec(sub)
   log('after')
   log('needle: ' + z1.subject.needleStack.map(e => e.id))
   log('other: ' + z1.subject.otherLoops.map(e => e.id))
@@ -66,7 +66,7 @@ function crochetOperationDemo (log) {
   log('before')
   log('needle: ' + sub.needleStack.map(e => e.id))
   log('other: ' + sub.otherLoops.map(e => e.id))
-  z1 = crochetOperationFactory.getNewObject('mv', sub, ['needle']).exec()
+  z1 = crochetOperationFactory.getNewObject('mv', ['needle']).exec(sub)
   log('after')
   log('needle: ' + z1.subject.needleStack.map(e => e.id))
   log('other: ' + z1.subject.otherLoops.map(e => e.id))
@@ -77,7 +77,7 @@ function crochetOperationDemo (log) {
   log('before')
   log('needle: ' + sub.needleStack.map(e => e.id))
   log('other: ' + sub.otherLoops.map(e => e.id))
-  z1 = crochetOperationFactory.getNewObject('mv', sub, ['other']).exec()
+  z1 = crochetOperationFactory.getNewObject('mv', ['other']).exec(sub)
   log('after')
   log('needle: ' + z1.subject.needleStack.map(e => e.id))
   log('other: ' + z1.subject.otherLoops.map(e => e.id))
@@ -106,8 +106,8 @@ function crochetOperationDemo (log) {
   log(`source ${s.id} : ${s.getNeighborNodes().map(e => e.id)}`)
   log(`target ${t.id} : ${t.getNeighborNodes().map(e => e.id)}`)
   sub = new OperationSubject([s, t], st, [])
-  x = crochetOperationFactory.getNewObject('merge', sub, ['left'])
-  r = x.exec()
+  x = crochetOperationFactory.getNewObject('merge', ['left'])
+  r = x.exec(sub)
 
   log`after merge`
 

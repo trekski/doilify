@@ -5,9 +5,8 @@ function crochetStitchDemo (log) {
   let s, n, n2
 
   n = crochetNodeFactory.getNewObject('start', 'stitch', [0, 0])
-  n = crochetNodeFactory.getNewObject('start', 'stitch', [0, 0])
+  n2 = crochetNodeFactory.getNewObject('start', 'stitch', [0, 0])
   s = 0
-  s = 1
   log(n)
 
   s = crochetStitchFactory.getNewObject('default', 'doily', n)
@@ -16,6 +15,7 @@ function crochetStitchDemo (log) {
 
   log(`${s.id}`)
   log(`${s.sequence}`)
+  
   log(`nodes : ${s.getNodes()}`)
   log(`links : ${s.getLinks()}`)
   log(`start : ${s.getStartNode()}`)
@@ -24,7 +24,7 @@ function crochetStitchDemo (log) {
   log`*** origin stitch ***`
 
   s = crochetStitchFactory.getNewObject('origin', 'doily')
-
+  s.crochet()
   log(`nodes : ${s.getNodes()}`)
   log(`links : ${s.getLinks()}`)
 
@@ -33,8 +33,8 @@ function crochetStitchDemo (log) {
   n = s.getLastLoop()
   log(`${n._links}`)
 
-  s = crochetStitchFactory.getNewObject('ch', 'doily', n)
-
+  s = crochetStitchFactory.getNewObject('ch', 'doily')
+  s.crochet(n)
   log(`nodes : ${s.getNodes()}`)
   log(`links : ${s.getLinks()}`)
   log(`links : ${s.getLinks().map(e => (e.source.id + ' -> ' + e.target.id + '(' + e.type + ')'))}`)
@@ -50,7 +50,8 @@ function crochetStitchDemo (log) {
 
   log('*** single crochet  ***')
 
-  s = crochetStitchFactory.getNewObject('sc', 'doily', n2, [n])
+  s = crochetStitchFactory.getNewObject('sc', 'doily')
+  s.crochet(n2, [n])
   log(`nodes : ${s.getNodes()}`)
   log('links :')
   s.getLinks().forEach(e => (
@@ -66,14 +67,14 @@ function crochetStitchDemo (log) {
     log(`    ${e.id} (${e.type}) : ${e.source.id} -> ${e.target.id}`)
   ))
 
-  log('*** slip stitch  ***')
+  // log('*** slip stitch  ***')
 
-  s = crochetStitchFactory.getNewObject('slst', 'doily', n2, [n])
-  log(`nodes : ${s.getNodes()}`)
-  log('links :')
-  s.getLinks().forEach(e => (
-    log(`    ${e.id} (${e.type}) : ${e.source.id} -> ${e.target.id}`)
-  ))
+  // s = crochetStitchFactory.getNewObject('slst', 'doily', n2, [n])
+  // log(`nodes : ${s.getNodes()}`)
+  // log('links :')
+  // s.getLinks().forEach(e => (
+  //   log(`    ${e.id} (${e.type}) : ${e.source.id} -> ${e.target.id}`)
+  // ))
 }
 
 export default crochetStitchDemo

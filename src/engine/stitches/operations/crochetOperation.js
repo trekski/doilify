@@ -5,7 +5,7 @@ import crochetLinkFactory from '../../links/linkFactory.js'
 class CrochetOperation {
   get commandName () { return 'default' }
   get minParams () { return 0 }
-
+ 
     static nodeFactory = crochetNodeFactory
     static linkFactory = crochetLinkFactory
 

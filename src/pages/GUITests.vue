@@ -4,8 +4,8 @@
     class="wrapper"
   >
     <SvgIcons style="display: none" />
-    <EditToolbar v-if="false" />
-    <ModalWindow>Lorem ipsum</ModalWindow>
+    <EditToolbar v-if="true" />
+    <ModalWindow v-if="true">Lorem ipsum</ModalWindow>
   </div>
 </template>
 

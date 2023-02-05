@@ -1,4 +1,4 @@
-class FactoryClass {
+class FactoryClass { 
   constructor (exampleClass, attributeName = false, numAddArguments = 0) {
     this.className = exampleClass.name
     this.numAddArguments = numAddArguments

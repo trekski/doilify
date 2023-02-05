@@ -1,23 +1,27 @@
-import CrochetOperation from './crochetOperation.js'
+import CrochetOperation from "./crochetOperation.js";
 
 class CrochetOperationCopy extends CrochetOperation {
-  get commandName () { return 'cp' }
+  get commandName() {
+    return "cp";
+  }
 
-  exec (subject) {
-    const cmd = this.params[0]
-    if (cmd !== 'needle' && cmd !== 'other') throw new Error(`crochetOperationCopy : Expected parameter to be 'needle' or 'other', got '${cmd}'`)
+  exec(subject) {
+    const cmd = this.params[0];
+    if (cmd !== "needle" && cmd !== "other")
+      throw new Error(
+        `crochetOperationCopy : Expected parameter to be 'needle' or 'other', got '${cmd}'`
+      );
 
-    const newSubject = subject.copy()
-    const tmp = (
-      cmd === 'needle'
+    const newSubject = subject.copy();
+    const tmp =
+      cmd === "needle"
         ? newSubject.needleStack.pop()
-        : newSubject.otherLoops.pop()
-    )
+        : newSubject.otherLoops.pop();
 
-    newSubject.otherLoops.push(tmp)
-    newSubject.needleStack.push(tmp)
-    return this.getBasicResult(newSubject)
+    newSubject.otherLoops.push(tmp);
+    newSubject.needleStack.push(tmp);
+    return this.getBasicResult(newSubject);
   }
 }
 
-export default CrochetOperationCopy
+export default CrochetOperationCopy;

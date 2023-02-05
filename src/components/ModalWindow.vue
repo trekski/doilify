@@ -8,40 +8,25 @@
         {{ message }}
       </div>
       <DialogToolSelect
-        v-if="valueType==='tool_type'"
+        v-if="valueType === 'tool_type'"
         :initial-value="dialogValue"
-        @toolSelected="processNewValue"
+        @tool-selected="processNewValue"
       />
       <DialogColorSelect
-        v-if="valueType==='color'"
+        v-if="valueType === 'color'"
         :initial-value="dialogValue"
-        @colorSelected="processNewValue"
+        @color-selected="processNewValue"
       />
       <DialogStitchTypeSelect
-        v-if="valueType==='stitch_type'"
+        v-if="valueType === 'stitch_type'"
         :initial-value="dialogValue"
-        @stitchTypeSelected="processNewValue"
+        @stitch-type-selected="processNewValue"
       />
-      <DialogPanHelp
-        v-if="valueType==='pan_help'"
-      />
+      <DialogPanHelp v-if="valueType === 'pan_help'" />
     </div>
-    <div
-      v-if="buttonsVisible"
-      class="windowButtons"
-    >
-      <button
-        v-if="OKvisible"
-        class="icon"
-        @click="modalOK"
-      >
-        OK
-      </button>
-      <button
-        v-if="CANCELvisible"
-        class="icon"
-        @click="modalCancel"
-      >
+    <div v-if="buttonsVisible" class="windowButtons">
+      <button v-if="OKvisible" class="icon" @click="modalOK">OK</button>
+      <button v-if="CANCELvisible" class="icon" @click="modalCancel">
         CANCEL
       </button>
     </div>
@@ -49,90 +34,93 @@
 </template>
 
 <script>
-import DialogToolSelect from './DialogToolSelect.vue'
-import DialogColorSelect from './DialogColorSelect.vue'
-import DialogStitchTypeSelect from './DialogStitchTypeSelect.vue'
-import DialogPanHelp from './DialogPanHelp.vue'
+import DialogToolSelect from "./DialogToolSelect.vue";
+import DialogColorSelect from "./DialogColorSelect.vue";
+import DialogStitchTypeSelect from "./DialogStitchTypeSelect.vue";
+import DialogPanHelp from "./DialogPanHelp.vue";
 
 export default {
-  name: 'ModalWindow',
+  name: "ModalWindow",
   components: {
     DialogToolSelect: DialogToolSelect,
     DialogColorSelect: DialogColorSelect,
     DialogStitchTypeSelect: DialogStitchTypeSelect,
-    DialogPanHelp: DialogPanHelp
+    DialogPanHelp: DialogPanHelp,
   },
   props: {
-    outputParamName: { // what is the parameter this modal is supposed to update
+    outputParamName: {
+      // what is the parameter this modal is supposed to update
       type: String,
-      default: ''
+      default: "",
     },
-    initialValue: { // what was the initial value upon modal opened
+    initialValue: {
+      // what was the initial value upon modal opened
       type: [String, Number, Boolean, Object],
-      default: ''
+      default: "",
     },
-    valueType: { // type of the  value determines what dialog is shown
+    valueType: {
+      // type of the  value determines what dialog is shown
       type: String,
-      default: ''
+      default: "",
     },
-    message: { // UX
+    message: {
+      // UX
       type: String,
-      default: 'message'
+      default: "message",
     },
-    title: { // UX
+    title: {
+      // UX
       type: String,
-      default: 'title'
+      default: "title",
     },
-    buttons: { // how does the modal behave
+    buttons: {
+      // how does the modal behave
       type: String,
-      default: ''
-    }
+      default: "",
+    },
   },
-  emits: ['modalResult'],
-  data () {
+  emits: ["modalResult"],
+  data() {
     return {
-      dialogValue: this.initialValue
-    }
+      dialogValue: this.initialValue,
+    };
   },
   computed: {
-    OKvisible () {
-      return (this.buttons === 'OK' || this.buttons === 'OK_CANCEL')
+    OKvisible() {
+      return this.buttons === "OK" || this.buttons === "OK_CANCEL";
     },
-    CANCELvisible () {
-      return (this.buttons === 'CANCEL' || this.buttons === 'OK_CANCEL')
+    CANCELvisible() {
+      return this.buttons === "CANCEL" || this.buttons === "OK_CANCEL";
     },
-    buttonsVisible () {
-      return (this.buttons !== 'NONE')
-    }
+    buttonsVisible() {
+      return this.buttons !== "NONE";
+    },
   },
   methods: {
     // CANCEL was clicked => clsoe modal without returning anything
-    modalCancel () {
-      this.$emit('modalResult', false)
+    modalCancel() {
+      this.$emit("modalResult", false);
     },
     // OK was clicked => send response (=latest selected value)
-    modalOK () {
-      this.sendResponse()
+    modalOK() {
+      this.sendResponse();
     },
     // vlaue was selected => store it and (if no OK button) emit it instantly
-    processNewValue (event) {
-      this.dialogValue = event
-      if (this.buttons === 'NONE') {
-        this.sendResponse()
+    processNewValue(event) {
+      this.dialogValue = event;
+      if (this.buttons === "NONE") {
+        this.sendResponse();
       }
     },
     // communicate selected vzlaue to parent(s)
-    sendResponse () {
-      this.$emit(
-        'modalResult',
-        {
-          param: this.outputParamName,
-          value: this.dialogValue
-        }
-      )
-    }
-  }
-}
+    sendResponse() {
+      this.$emit("modalResult", {
+        param: this.outputParamName,
+        value: this.dialogValue,
+      });
+    },
+  },
+};
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
@@ -178,16 +166,16 @@ export default {
 }
 
 .windowContent::-webkit-scrollbar {
-    width: 8px;
+  width: 8px;
 }
 
 .windowContent::-webkit-scrollbar-corner {
-    visibility: hidden;
+  visibility: hidden;
 }
 
 .windowContent::-webkit-scrollbar-thumb {
-    border-radius: 4px;
-    background: lightgray;
+  border-radius: 4px;
+  background: lightgray;
 }
 
 .windowButtons {
@@ -196,5 +184,4 @@ export default {
   width: 100%;
   padding: 0px;
 }
-
 </style>

@@ -1,54 +1,38 @@
 <template>
   <div class="menuPane">
     <div class="menuHeader">
-      <button
-        class="img"
-        @click="menuSelected()"
-      >
-        <img src="icons/close_x_white.svg">
+      <button class="img" @click="menuSelected()">
+        <img src="icons/close_x_white.svg" />
       </button>
       <div>MENU</div>
     </div>
     <div class="menuList">
-      <div
-        class="menuItem"
-        @click="menuSelected('panHelp')"
-      >
+      <div class="menuItem" @click="menuSelected('panHelp')">
         help with Zoom/Pan
       </div>
-      <div
-        class="menuItem"
-        @click="menuSelected('foo')"
-      >
-        foo
-      </div>
-      <div
-        class="menuItem"
-        @click="menuSelected('bar')"
-      >
-        bar
-      </div>
+      <div class="menuItem" @click="menuSelected('foo')">foo</div>
+      <div class="menuItem" @click="menuSelected('bar')">bar</div>
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'MainMenu',
-  emits: ['menuSelected'],
+  name: "MainMenu",
+  emits: ["menuSelected"],
   methods: {
-    menuSelected (opt = false) {
-      this.$emit('menuSelected', opt)
-    }
-  }
-}
+    menuSelected(opt = false) {
+      this.$emit("menuSelected", opt);
+    },
+  },
+};
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style>
 .menuPane {
   min-width: 250px;
-  max-width:30%;
+  max-width: 30%;
   height: 100%;
   background: white;
   color: var(--text-accent-highlight);
@@ -81,7 +65,6 @@ export default {
 .menuHeader div {
   font-size: 130%;
   width: 0px;
-  display:  inline-block;
+  display: inline-block;
 }
-
 </style>

@@ -1,20 +1,17 @@
 <template>
-  <div
-    class="pill_label"
-    :style="{'background-color': color, 'color' : 'gray'}"
-  >
+  <div class="pill_label" :style="{ 'background-color': color, color: 'gray' }">
     <div><slot>label not provided</slot></div>
   </div>
 </template>
 
 <script setup>
-import { defineProps } from 'vue'
+import { defineProps } from "vue";
 defineProps({
   color: {
     type: String,
-    default: 'rgb(240,240,240)'
-  }
-})
+    default: "rgb(240,240,240)",
+  },
+});
 </script>
 
 <style>

@@ -1,50 +1,66 @@
-import CrochetOperation from './crochetOperation.js'
+import CrochetOperation from "./crochetOperation.js";
 // import Vec2d from '../../misc/vector.js'
 
 class CrochetOperationMerge extends CrochetOperation {
-  get commandName () { return 'merge' }
+  get commandName() {
+    return "merge";
+  }
 
-  exec (subject) {
-    const cmd = this.params[0]
-    const newSubject = subject.copy()
+  exec(subject) {
+    const cmd = this.params[0];
+    const newSubject = subject.copy();
 
-    let targetNode, sourceNode
-    let deletedLink = false
+    let targetNode, sourceNode;
+    let deletedLink = false;
 
-    if (newSubject.needleStack.length < 2) throw new Error('crochetOperationMerge : not enough nodes on needle to merge')
+    if (newSubject.needleStack.length < 2)
+      throw new Error(
+        "crochetOperationMerge : not enough nodes on needle to merge"
+      );
 
-    if (cmd === 'left') {
-      targetNode = newSubject.needleStack.pop()
-      sourceNode = newSubject.needleStack.pop()
-    } else if (cmd === 'right') {
-      sourceNode = newSubject.needleStack.pop()
-      targetNode = newSubject.needleStack.pop()
+    if (cmd === "left") {
+      targetNode = newSubject.needleStack.pop();
+      sourceNode = newSubject.needleStack.pop();
+    } else if (cmd === "right") {
+      sourceNode = newSubject.needleStack.pop();
+      targetNode = newSubject.needleStack.pop();
     } else {
-      if (cmd !== 'left' && cmd !== 'right') throw new Error(`crochetOperationMerge : Expected direction to be 'left' or 'right', got '${cmd}'`)
+      if (cmd !== "left" && cmd !== "right")
+        throw new Error(
+          `crochetOperationMerge : Expected direction to be 'left' or 'right', got '${cmd}'`
+        );
     }
 
     const newPosition = sourceNode
       .getVector()
       .add(targetNode.getVector())
-      .scale(0.5)
+      .scale(0.5);
 
-    targetNode.setVector(newPosition)
+    targetNode.setVector(newPosition);
 
-    const linksToTransfer = sourceNode.getNeighborLinks()
-    const existingNeighbors = targetNode.getNeighborNodes()
+    const linksToTransfer = sourceNode.getNeighborLinks();
+    const existingNeighbors = targetNode.getNeighborNodes();
 
-    linksToTransfer.forEach(e => {
+    linksToTransfer.forEach((e) => {
       // if target and source were linked, this link is not valid anymore
       if (e.getOtherEnd(sourceNode) === targetNode) {
-        deletedLink = e
+        deletedLink = e;
       } else {
-        if (!existingNeighbors.includes(e.getOtherEnd(sourceNode))) { e.replaceNode(sourceNode, targetNode) }
+        if (!existingNeighbors.includes(e.getOtherEnd(sourceNode))) {
+          e.replaceNode(sourceNode, targetNode);
+        }
       }
-    })
-    const res = this.getBasicResult(newSubject, false, false, sourceNode, deletedLink)
+    });
+    const res = this.getBasicResult(
+      newSubject,
+      false,
+      false,
+      sourceNode,
+      deletedLink
+    );
 
-    return res
+    return res;
   }
 }
 
-export default CrochetOperationMerge
+export default CrochetOperationMerge;

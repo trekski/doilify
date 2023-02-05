@@ -1,7 +1,5 @@
 <template>
-  <div
-    id="graph_div"
-  >
+  <div id="graph_div">
     <svg
       id="graph"
       ref="defaultFocus"
@@ -27,287 +25,281 @@
         @keydown="k"
       >
         <g title="origin crosshair">
-          <line
-            x1="-30"
-            y1="0"
-            x2="30"
-            y2="0"
-            stroke-widht="1"
-            stroke="red"
-          />
-          <line
-            x1="0"
-            y1="-30"
-            x2="0"
-            y2="30"
-            stroke-widht="1"
-            stroke="red"
-          />
-          <text>{{ 'to:' + touchData.to }}</text>
+          <line x1="-30" y1="0" x2="30" y2="0" stroke-widht="1" stroke="red" />
+          <line x1="0" y1="-30" x2="0" y2="30" stroke-widht="1" stroke="red" />
+          <text>{{ "to:" + touchData.to }}</text>
         </g>
-        <Doily
-          ref="graphDoily"
-          :app-state="appState"
-        />
+        <DoilyCore ref="graphDoily" :app-state="appState" />
       </g>
     </svg>
   </div>
 </template>
 
 <script>
-import Vec2d from '../engine/misc/vector.js'
-import Doily from './Doily.vue'
+import Vec2d from "../engine/misc/vector.js";
+import DoilyCore from "./Doily.vue";
 
 export default {
-  name: 'MainGraph',
+  name: "MainGraph",
   components: {
-    Doily: Doily
+    DoilyCore: DoilyCore,
   },
   props: {
     appState: {
       type: Object,
-      default: Object
-    }
+      default: Object,
+    },
   },
-  emits: ['stitchSelected'],
-  data () {
+  emits: ["stitchSelected"],
+  data() {
     return {
       // variables to keep track of how the users interacts with the graph
       isDragged: false,
       touchData: {
         from: null,
         to: null,
-        info: ''
+        info: "",
       },
       shiftX: 0,
       shiftY: 0,
       scaleFactor: 200,
       rotateFactor: 0,
       baseShiftX: document.documentElement.clientWidth / 2,
-      baseShiftY: document.documentElement.clientHeight / 2
-    }
+      baseShiftY: document.documentElement.clientHeight / 2,
+    };
   },
   computed: {
-    graphScale () { return 2 ** (this.scaleFactor / 100) },
-    graphRotate () { return this.rotateFactor / 10 }
+    graphScale() {
+      return 2 ** (this.scaleFactor / 100);
+    },
+    graphRotate() {
+      return this.rotateFactor / 10;
+    },
   },
-  created () {
-    window.addEventListener('resize', this.adjsutBase)
+  created() {
+    window.addEventListener("resize", this.adjsutBase);
   },
-  mounted () {
-    this.refocus()
+  mounted() {
+    this.refocus();
   },
-  unmounted () {
-    window.removeEventListener('resize', this.adjsutBase)
+  unmounted() {
+    window.removeEventListener("resize", this.adjsutBase);
   },
   methods: {
-    refocus () {
-      this.$refs.defaultFocus.focus()
+    refocus() {
+      this.$refs.defaultFocus.focus();
     },
-    adjsutBase () {
-      this.baseShiftX = document.documentElement.clientWidth / 2
-      this.baseShiftY = document.documentElement.clientHeight / 2
+    adjsutBase() {
+      this.baseShiftX = document.documentElement.clientWidth / 2;
+      this.baseShiftY = document.documentElement.clientHeight / 2;
     },
-    executePan (deltaX, deltaY) {
+    executePan(deltaX, deltaY) {
       // to apply correct shifts, we need to transfortm pointer coords
       // into the SVG-after-transformation coords.
-      deltaX /= this.graphScale
-      deltaY /= this.graphScale
-      const rads = this.graphRotate / 360 * 2 * Math.PI
-      this.shiftX += deltaX * Math.cos(rads) + deltaY * Math.sin(rads)
-      this.shiftY += -deltaX * Math.sin(rads) + deltaY * Math.cos(rads)
+      deltaX /= this.graphScale;
+      deltaY /= this.graphScale;
+      const rads = (this.graphRotate / 360) * 2 * Math.PI;
+      this.shiftX += deltaX * Math.cos(rads) + deltaY * Math.sin(rads);
+      this.shiftY += -deltaX * Math.sin(rads) + deltaY * Math.cos(rads);
     },
-    executeZoom (deltaZoom) {
-      this.scaleFactor += deltaZoom
-      this.scaleFactor = Math.min(400, this.scaleFactor)
-      this.scaleFactor = Math.max(-400, this.scaleFactor)
+    executeZoom(deltaZoom) {
+      this.scaleFactor += deltaZoom;
+      this.scaleFactor = Math.min(400, this.scaleFactor);
+      this.scaleFactor = Math.max(-400, this.scaleFactor);
     },
-    executeRotation (deltaRotate) {
-      this.rotateFactor += deltaRotate
-      this.rotateFactor = this.rotateFactor % 3600
+    executeRotation(deltaRotate) {
+      this.rotateFactor += deltaRotate;
+      this.rotateFactor = this.rotateFactor % 3600;
     },
     // handle mouse events
-    dragStart () {
-      this.isDragged = true
+    dragStart() {
+      this.isDragged = true;
     },
-    dragStop () {
-      this.isDragged = false
+    dragStop() {
+      this.isDragged = false;
     },
-    dragPan (e) {
-      if (!this.isDragged) return
-      this.executePan(e.movementX, e.movementY)
+    dragPan(e) {
+      if (!this.isDragged) return;
+      this.executePan(e.movementX, e.movementY);
     },
-    dragZoom (e) {
-      if (!this.isDragged) return
-      const delta = (Math.abs(e.movementX) > Math.abs(e.movementY)) ? e.movementX : -e.movementY
-      this.executeZoom(delta)
+    dragZoom(e) {
+      if (!this.isDragged) return;
+      const delta =
+        Math.abs(e.movementX) > Math.abs(e.movementY)
+          ? e.movementX
+          : -e.movementY;
+      this.executeZoom(delta);
     },
-    dragPivot (e) {
+    dragPivot(e) {
       // if (!this.isDragged) return
-      const H = e.clientX - this.baseShiftX
-      const V = e.clientY - this.baseShiftY
-      const R = Math.sqrt(H * H + V * V)
-      let delta = 0
+      const H = e.clientX - this.baseShiftX;
+      const V = e.clientY - this.baseShiftY;
+      const R = Math.sqrt(H * H + V * V);
+      let delta = 0;
       if (Math.abs(H) > Math.abs(V)) {
         // dragging happened closer to horizontal mid-axis
-        delta = (H > 0) ? e.movementY : -e.movementY
+        delta = H > 0 ? e.movementY : -e.movementY;
       } else {
         // dragging happened closer to vertival mid-axis
-        delta = (V > 0) ? -e.movementX : e.movementX
+        delta = V > 0 ? -e.movementX : e.movementX;
       }
-      delta = delta * 650 / R
-      this.executeRotation(delta)
+      delta = (delta * 650) / R;
+      this.executeRotation(delta);
     },
-    mouseWheelUsed (e) {
-      const delta1 = e.wheelDeltaY / 4
+    mouseWheelUsed(e) {
+      const delta1 = e.wheelDeltaY / 4;
       // const delta2 = e.wheelDeltaX
-      this.executeZoom(delta1)
+      this.executeZoom(delta1);
       // this.executeRotation(delta2)
     },
-    keyPressedShifted (e) {
+    keyPressedShifted(e) {
       switch (e.code) {
-        case 'ArrowRight':
-          this.executePan(100, 0)
-          break
-        case 'ArrowLeft':
-          this.executePan(-100, 0)
-          break
-        case 'ArrowDown':
-          this.executePan(0, 100)
-          break
-        case 'ArrowUp':
-          this.executePan(0, -100)
-          break
-        case 'Minus':
-          this.executeZoom(-50)
-          break
-        case 'Equal':
-          this.executeZoom(50)
-          break
-        case 'Digit0':
-          this.scaleFactor = 0
-          break
-        case 'Slash':
-          this.rotateFactor = 0
-          break
-        case 'KeyH':
-          this.shiftX = 0
-          this.shiftY = 0
-          break
-        case 'Comma':
-          this.executeRotation(-150)
-          break
-        case 'Period':
-          this.executeRotation(150)
-          break
+        case "ArrowRight":
+          this.executePan(100, 0);
+          break;
+        case "ArrowLeft":
+          this.executePan(-100, 0);
+          break;
+        case "ArrowDown":
+          this.executePan(0, 100);
+          break;
+        case "ArrowUp":
+          this.executePan(0, -100);
+          break;
+        case "Minus":
+          this.executeZoom(-50);
+          break;
+        case "Equal":
+          this.executeZoom(50);
+          break;
+        case "Digit0":
+          this.scaleFactor = 0;
+          break;
+        case "Slash":
+          this.rotateFactor = 0;
+          break;
+        case "KeyH":
+          this.shiftX = 0;
+          this.shiftY = 0;
+          break;
+        case "Comma":
+          this.executeRotation(-150);
+          break;
+        case "Period":
+          this.executeRotation(150);
+          break;
       }
     },
-    keyPressed (e) {
+    keyPressed(e) {
       switch (e.code) {
-        case 'KeyM':
-          this.$refs.graphDoily.makeStitch()
-          break
-        case 'KeyU':
-          this.$refs.graphDoily.unmakeStitch()
-          break
-        case 'Digit1':
-          this.$emit('stitchSelected', 1)
-          break
-        case 'Digit2':
-          this.$emit('stitchSelected', 2)
-          break
-        case 'Digit3':
-          this.$emit('stitchSelected', 3)
-          break
-        case 'ArrowLeft':
-          this.$refs.graphDoily.shiftNodeSelection('fwd')
-          break
-        case 'ArrowRight':
-          this.$refs.graphDoily.shiftNodeSelection('prv')
-          break
-        case 'KeyS':
-          this.$refs.graphDoily.toggleSimulation()
-          break
+        case "KeyM":
+          this.$refs.graphDoily.makeStitch();
+          break;
+        case "KeyU":
+          this.$refs.graphDoily.unmakeStitch();
+          break;
+        case "Digit1":
+          this.$emit("stitchSelected", 1);
+          break;
+        case "Digit2":
+          this.$emit("stitchSelected", 2);
+          break;
+        case "Digit3":
+          this.$emit("stitchSelected", 3);
+          break;
+        case "ArrowLeft":
+          this.$refs.graphDoily.shiftNodeSelection("fwd");
+          break;
+        case "ArrowRight":
+          this.$refs.graphDoily.shiftNodeSelection("prv");
+          break;
+        case "KeyS":
+          this.$refs.graphDoily.toggleSimulation();
+          break;
       }
     },
-    touchChangePoints (e) {
+    touchChangePoints(e) {
       if (e.touches.length === 1) {
-        this.touchSet1(e.touches[0])
+        this.touchSet1(e.touches[0]);
       } else if (e.touches.length === 2) {
-        this.touchSet2(e.touches)
+        this.touchSet2(e.touches);
       } else {
-        this.touchClear()
+        this.touchClear();
       }
     },
-    touchSet2 (touches) {
-      const newFrom = new Vec2d(touches[0].clientX, touches[0].clientY)
-      const newTo = new Vec2d(touches[1].clientX, touches[1].clientY)
-      this.touchData.from = newFrom
-      this.touchData.to = newTo
+    touchSet2(touches) {
+      const newFrom = new Vec2d(touches[0].clientX, touches[0].clientY);
+      const newTo = new Vec2d(touches[1].clientX, touches[1].clientY);
+      this.touchData.from = newFrom;
+      this.touchData.to = newTo;
     },
-    touchSet1 (touch) {
-      const newFrom = new Vec2d(touch.clientX, touch.clientY)
-      this.touchData.from = newFrom
-      this.touchData.to = null
+    touchSet1(touch) {
+      const newFrom = new Vec2d(touch.clientX, touch.clientY);
+      this.touchData.from = newFrom;
+      this.touchData.to = null;
     },
-    touchClear () {
-      this.touchData.from = null
-      this.touchData.to = null
+    touchClear() {
+      this.touchData.from = null;
+      this.touchData.to = null;
     },
-    touchUsed (e) {
+    touchUsed(e) {
       if (e.touches.length === 1) {
-        const newFrom = new Vec2d(e.touches[0].clientX, e.touches[0].clientY)
-        const deltaTransl = newFrom.sub(this.touchData.from)
-        this.executePan(deltaTransl._x, deltaTransl._y)
-        this.touchData.from = newFrom
+        const newFrom = new Vec2d(e.touches[0].clientX, e.touches[0].clientY);
+        const deltaTransl = newFrom.sub(this.touchData.from);
+        this.executePan(deltaTransl._x, deltaTransl._y);
+        this.touchData.from = newFrom;
       } else if (e.touches.length === 2) {
         // figure out geometry of what happened
         // // new positions
-        const newFrom = new Vec2d(e.touches[0].clientX, e.touches[0].clientY)
-        const newTo = new Vec2d(e.touches[1].clientX, e.touches[1].clientY)
-        const newDir = newTo.sub(newFrom)
-        const newMid = newFrom.add(newTo).scale(0.5)
-        const newLen = newFrom.sub(newTo).len
+        const newFrom = new Vec2d(e.touches[0].clientX, e.touches[0].clientY);
+        const newTo = new Vec2d(e.touches[1].clientX, e.touches[1].clientY);
+        const newDir = newTo.sub(newFrom);
+        const newMid = newFrom.add(newTo).scale(0.5);
+        const newLen = newFrom.sub(newTo).len;
         // // previous positions
-        const curDir = this.touchData.to.sub(this.touchData.from)
-        const curMid = this.touchData.from.add(this.touchData.to).scale(0.5)
-        const curLen = this.touchData.from.sub(this.touchData.to).len
+        const curDir = this.touchData.to.sub(this.touchData.from);
+        const curMid = this.touchData.from.add(this.touchData.to).scale(0.5);
+        const curLen = this.touchData.from.sub(this.touchData.to).len;
         // // rotation that happened
-        const deltaRot = (newDir.phi() - curDir.phi()) * 180 / Math.PI
+        const deltaRot = ((newDir.phi() - curDir.phi()) * 180) / Math.PI;
         // // translation that happened
-        const deltaTransl = newMid.sub(curMid)
+        const deltaTransl = newMid.sub(curMid);
         // // zoom that happened
-        var newFactor = 0
-        var newScale = 1
+        var newFactor = 0;
+        var newScale = 1;
         if (curLen > 0 && newLen > 0) {
-          newScale = newLen / curLen
-          newFactor = Math.log(newScale) / Math.log(2) * 100
+          newScale = newLen / curLen;
+          newFactor = (Math.log(newScale) / Math.log(2)) * 100;
         }
         // execute changes
-        this.executeRotation(-deltaRot * 10)
-        this.executeZoom(newFactor)
+        this.executeRotation(-deltaRot * 10);
+        this.executeZoom(newFactor);
         // // additional translation to make the "zoom/turn center" between pointers
-        const panCorrectionBase = curMid.sub(new Vec2d(this.baseShiftX, this.baseShiftY))
-        const panZoomCorrection = panCorrectionBase.scale(1 - newScale)
-        const panRotCorrection = panCorrectionBase.sub(panCorrectionBase.rot(newDir.phi() - curDir.phi()))
-        this.executePan(panZoomCorrection._x, panZoomCorrection._y)
-        this.executePan(panRotCorrection._x, panRotCorrection._y)
+        const panCorrectionBase = curMid.sub(
+          new Vec2d(this.baseShiftX, this.baseShiftY)
+        );
+        const panZoomCorrection = panCorrectionBase.scale(1 - newScale);
+        const panRotCorrection = panCorrectionBase.sub(
+          panCorrectionBase.rot(newDir.phi() - curDir.phi())
+        );
+        this.executePan(panZoomCorrection._x, panZoomCorrection._y);
+        this.executePan(panRotCorrection._x, panRotCorrection._y);
         // // normal translation
-        this.executePan(deltaTransl._x, deltaTransl._y)
+        this.executePan(deltaTransl._x, deltaTransl._y);
         // update "last position"
-        this.touchData.info = deltaRot
-        this.touchData.from = newFrom
-        this.touchData.to = newTo
+        this.touchData.info = deltaRot;
+        this.touchData.from = newFrom;
+        this.touchData.to = newTo;
       } else {
         // stop tracking
-        this.touchData.from = null
-        this.touchData.to = null
+        this.touchData.from = null;
+        this.touchData.to = null;
         // this.touchData.info = ''
       }
       // this.touchData.info = 3 // e.touches.length
-    }
-  }
-}
+    },
+  },
+};
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
@@ -342,5 +334,4 @@ export default {
   -ms-user-select: none; /* IE10+/Edge */
   user-select: none; /* Standard */
 }
-
 </style>

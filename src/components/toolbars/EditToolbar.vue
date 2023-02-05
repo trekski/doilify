@@ -1,19 +1,12 @@
 <template>
   <div id="editToolbar">
-    <div
-      v-if="showLabel"
-      id="infoLabel"
-    >
+    <div v-if="showLabel" id="infoLabel">
       <PillLabel>{{ infoLabelText }}</PillLabel>
     </div>
     <div id="Icons">
-      <IconGroup
-        v-for="(grp, i) in nameGroups"
-        :key="i"
-        dir="row"
-      >
+      <IconGroup v-for="(grp, i) in nameGroups" :key="i" dir="row">
         <IconButton
-          v-for="(button) in grp"
+          v-for="button in grp"
           :key="button.key"
           :label-text="button.labelText"
           :inactive="button.inactive"
@@ -29,59 +22,58 @@
 </template>
 
 <script setup>
-
-import { ref, computed } from 'vue'
-import IconButton from '../gui_elements/IconButton.vue'
-import IconGroup from '../gui_elements/IconGroup.vue'
-import PillLabel from '../gui_elements/PillLabel.vue'
+import { ref, computed } from "vue";
+import IconButton from "../gui_elements/IconButton.vue";
+import IconGroup from "../gui_elements/IconGroup.vue";
+import PillLabel from "../gui_elements/PillLabel.vue";
 
 const nameGroups = [
   [
     {
       key: 0,
-      icon: 'svg:svg-icon-new-page',
-      description: 'add new page'
+      icon: "svg:svg-icon-new-page",
+      description: "add new page",
     },
     {
       key: 1,
-      icon: 'svg:svg-icon-default',
-      description: 'first button v.1'
+      icon: "svg:svg-icon-default",
+      description: "first button v.1",
     },
     {
       key: 2,
-      labelText: 'button 1.1',
-      icon: 'svg:svg-icon-default',
-      description: 'first button v.2'
+      labelText: "button 1.1",
+      icon: "svg:svg-icon-default",
+      description: "first button v.2",
     },
     {
       key: 3,
-      shortLabel: 'BUT',
-      icon: 'svg:svg-icon-default',
-      description: 'first button v.3'
+      shortLabel: "BUT",
+      icon: "svg:svg-icon-default",
+      description: "first button v.3",
     },
     {
       key: 4,
-      labelText: 'button 2',
+      labelText: "button 2",
       inactive: true,
-      description: 'second button'
+      description: "second button",
     },
     {
       key: 5,
-      labelText: 'button 3',
+      labelText: "button 3",
       selected: true,
-      description: 'third button'
-    }
-  ]
-]
+      description: "third button",
+    },
+  ],
+];
 
-const infoLabelText = ref('')
+const infoLabelText = ref("");
 
 const showLabel = computed(() => {
-  return infoLabelText.value !== ''
-})
+  return infoLabelText.value !== "";
+});
 
-function changeInfoLabel (s = '') {
-  this.infoLabelText = s
+function changeInfoLabel(s = "") {
+  this.infoLabelText = s;
 }
 </script>
 
@@ -93,7 +85,7 @@ function changeInfoLabel (s = '') {
   /**/
   bottom: 25px;
   left: 50%;
-  transform:  translateX(-50%);
+  transform: translateX(-50%);
   flex-direction: column;
   /*
   left: 25px;

@@ -1,201 +1,215 @@
-import IdGenerator from '../misc/helpers.js'
-import CrochetOperationFactory from './operations/operationFactory.js'
-import OperationSubject from './operations/operationSubject.js'
+import IdGenerator from "../misc/helpers.js";
+import CrochetOperationFactory from "./operations/operationFactory.js";
+import OperationSubject from "./operations/operationSubject.js";
 
 class CrochetStitch {
   // *** CLASS STATIC METHODS ***
   // and their wrappers to use them in instances
-  get sequence () { return this._sequence } // reciupe how to create stitches internal graph
-  get type () { return this._type } // unambiguous string for each subclass
-  get requiresPrevious () { return this._reqPrev } // true if the stitch requires prev. sittches last loop to hook into
-  get requiredLoops () { return this._reqLoops } // how many other loops are needed to construct the stitch
-  get ordinal () { return this._ordinal } // order of the stitch in the doily stitch stack
+  get sequence() {
+    return this._sequence;
+  } // reciupe how to create stitches internal graph
+  get type() {
+    return this._type;
+  } // unambiguous string for each subclass
+  get requiresPrevious() {
+    return this._reqPrev;
+  } // true if the stitch requires prev. sittches last loop to hook into
+  get requiredLoops() {
+    return this._reqLoops;
+  } // how many other loops are needed to construct the stitch
+  get ordinal() {
+    return this._ordinal;
+  } // order of the stitch in the doily stitch stack
   // *** CONSTRUCTOR ***
-  constructor (type, requiresPrevious, requiredLoops, sequence, context) {
+  constructor(type, requiresPrevious, requiredLoops, sequence, context) {
     // *** INIT STATIC ATTRIBUTES ***
 
     // Create dedicated stitch numbering sequence
-    if (typeof CrochetStitch.COUNTER === 'undefined') {
-      CrochetStitch.COUNTER = new IdGenerator('ST')
-    };
+    if (typeof CrochetStitch.COUNTER === "undefined") {
+      CrochetStitch.COUNTER = new IdGenerator("ST");
+    }
 
     // *** PRIVATE ATTRIBUTES ***
-    this._context = context
-    this._nodes = []
-    this._links = []
-    this.id = CrochetStitch.COUNTER.next()
-    this._type = type
-    this._reqPrev = requiresPrevious
-    this._reqLoops = requiredLoops
-    this._sequence = sequence
-    this._ordinal = undefined
+    this._context = context;
+    this._nodes = [];
+    this._links = [];
+    this.id = CrochetStitch.COUNTER.next();
+    this._type = type;
+    this._reqPrev = requiresPrevious;
+    this._reqLoops = requiredLoops;
+    this._sequence = sequence;
+    this._ordinal = undefined;
   }
 
-  crochet (attachToNode = null, otherLoops = []) {
+  crochet(attachToNode = null, otherLoops = []) {
     // temporary variables, used only when new Stitch is being created
     // to avoid immediate reactivity from Vue
-    const newNodes = []
-    const newLinks = []
+    const newNodes = [];
+    const newLinks = [];
 
     // validate call parameters
-    if (this.requiresPrevious && attachToNode === null) throw new Error('crochetStitch : prev. stitch was required, but not provided')
-    if (otherLoops.length < this.requiredLoops) throw new Error('crochetStitch: not enough other loops')
+    if (this.requiresPrevious && attachToNode === null)
+      throw new Error(
+        "crochetStitch : prev. stitch was required, but not provided"
+      );
+    if (otherLoops.length < this.requiredLoops)
+      throw new Error("crochetStitch: not enough other loops");
 
-    const needle = []
-    needle.push(attachToNode)
-    let subject = new OperationSubject(needle, this, otherLoops)
+    const needle = [];
+    needle.push(attachToNode);
+    let subject = new OperationSubject(needle, this, otherLoops);
 
     // create the stitch'es nodes and links according to the sequence
-    const seq = this.sequence.split(';').map(e => e.trim())
-    let instr = seq.shift()
+    const seq = this.sequence.split(";").map((e) => e.trim());
+    let instr = seq.shift();
     while (instr) {
-      const tokens = instr.split(':').map(e => e.trim())
-      const action = tokens.shift()
-      const op = CrochetOperationFactory.getNewObject(action, tokens)
+      const tokens = instr.split(":").map((e) => e.trim());
+      const action = tokens.shift();
+      const op = CrochetOperationFactory.getNewObject(action, tokens);
 
-      const res = op.exec(subject)
+      const res = op.exec(subject);
 
-      subject = res.subject
-      if (res.newNode) newNodes.push(res.newNode)
-      if (res.newLink) newLinks.push(res.newLink)
+      subject = res.subject;
+      if (res.newNode) newNodes.push(res.newNode);
+      if (res.newLink) newLinks.push(res.newLink);
       if (res.delNode) {
-        res.delNode
-          .getNeighborLinks()
-          .forEach(e => {
-            e.apoptose()
-          })
-        const p = newNodes.indexOf(res.delNode)
-        if (p > -1) newNodes.splice(p, 1)
+        res.delNode.getNeighborLinks().forEach((e) => {
+          e.apoptose();
+        });
+        const p = newNodes.indexOf(res.delNode);
+        if (p > -1) newNodes.splice(p, 1);
       }
       if (res.delLink) {
-        const p = newLinks.indexOf(res.delLink)
-        if (p > -1) newLinks.splice(p, 1)
+        const p = newLinks.indexOf(res.delLink);
+        if (p > -1) newLinks.splice(p, 1);
       }
 
-      instr = seq.shift()
+      instr = seq.shift();
     }
 
     // finally reference  all newly created objects to the stitch
-    this._nodes.splice(0, 0, ...newNodes)
-    this._links.splice(0, 0, ...newLinks)
+    this._nodes.splice(0, 0, ...newNodes);
+    this._links.splice(0, 0, ...newLinks);
 
-    this.orderLoops()
-    this.orderMe()
+    this.orderLoops();
+    this.orderMe();
   }
 
-  orderLoops () {
-    this._nodes.forEach(n => { n.ordinal = undefined })
-    let node = this.getStartNode()
-    let index = 0
+  orderLoops() {
+    this._nodes.forEach((n) => {
+      n.ordinal = undefined;
+    });
+    let node = this.getStartNode();
+    let index = 0;
     while (node.context !== this) {
-      console.log(node.id, node.isLoopable, index)
-      if (node.isLoopable) { node.ordinal = index++ }
-      const links = node.getNeighborLinks('out', 'sequence')
-      if (links.length < 1) break
-      node = links[0].getOtherEnd(node)
+      console.log(node.id, node.isLoopable, index);
+      if (node.isLoopable) {
+        node.ordinal = index++;
+      }
+      const links = node.getNeighborLinks("out", "sequence");
+      if (links.length < 1) break;
+      node = links[0].getOtherEnd(node);
     }
   }
 
-  orderMe () {
-    const prevStitch = this.getPreviousStitch()
-    this._ordinal = (prevStitch !== undefined)
-      ? prevStitch.ordinal + 1
-      : 0
+  orderMe() {
+    const prevStitch = this.getPreviousStitch();
+    this._ordinal = prevStitch !== undefined ? prevStitch.ordinal + 1 : 0;
   }
 
   // *** PUBLIC METHODS ***
 
   // overrides the default .toString()
-  toString () {
-    return `[${this.id} (${this.type})]`
+  toString() {
+    return `[${this.id} (${this.type})]`;
   }
 
-  getNodes (nodeType = null) {
+  getNodes(nodeType = null) {
     return this._nodes.filter(
-      node => (nodeType === null || node.type === nodeType)
-    )
-  };
+      (node) => nodeType === null || node.type === nodeType
+    );
+  }
 
-  getLinks (linkType = null) {
+  getLinks(linkType = null) {
     return this._links.filter(
-      link => (linkType === null || link.type === linkType)
-    )
-  };
-
-  getStartNode () {
-    return (this.type === 'origin') ? this.getNodes()[0] : this.getNodes('start')[0]
-  };
-
-  getEndNode () {
-    return (this.type === 'origin') ? this.getNodes()[0] : this.getNodes('finish')[0]
-  };
-
-  getPreviousStitch () {
-    const prevNodes = this.getStartNode().getNeighborNodes('in')
-    return (prevNodes.length > 0)
-      ? prevNodes[0].context
-      : undefined
+      (link) => linkType === null || link.type === linkType
+    );
   }
 
-  getNextStitch () {
-    const prevNodes = this.getStartNode().getNeighborNodes('out')
-    return (prevNodes.length > 0)
-      ? prevNodes[0].context
-      : undefined
+  getStartNode() {
+    return this.type === "origin"
+      ? this.getNodes()[0]
+      : this.getNodes("start")[0];
   }
 
-  getFirstLoop () {
-    let wrkNode = this.getStartNode() // start at the beginning
-    const sameStitch = this
+  getEndNode() {
+    return this.type === "origin"
+      ? this.getNodes()[0]
+      : this.getNodes("finish")[0];
+  }
+
+  getPreviousStitch() {
+    const prevNodes = this.getStartNode().getNeighborNodes("in");
+    return prevNodes.length > 0 ? prevNodes[0].context : undefined;
+  }
+
+  getNextStitch() {
+    const prevNodes = this.getStartNode().getNeighborNodes("out");
+    return prevNodes.length > 0 ? prevNodes[0].context : undefined;
+  }
+
+  getFirstLoop() {
+    let wrkNode = this.getStartNode(); // start at the beginning
+    const sameStitch = this;
 
     while (wrkNode.getContext() === sameStitch) {
       // if possible,  return a "loop" node
-      if (wrkNode.isLoopable) return wrkNode
+      if (wrkNode.isLoopable) return wrkNode;
       // otherwise, proceed to next node in main sequence
-      const nextStchs = wrkNode.getNeighborLinks('out', 'sequence')
+      const nextStchs = wrkNode.getNeighborLinks("out", "sequence");
       if (nextStchs.length > 0) {
-        wrkNode = nextStchs[0].getOtherEnd(wrkNode)
+        wrkNode = nextStchs[0].getOtherEnd(wrkNode);
       } else {
-        return false // nothing was found :(
+        return false; // nothing was found :(
       }
     }
 
-    return false // nothing was found :(
+    return false; // nothing was found :(
   }
 
-  getLastLoop () {
-    let wrkNode = this.getEndNode() // start at the beginning
-    const sameStitch = this
+  getLastLoop() {
+    let wrkNode = this.getEndNode(); // start at the beginning
+    const sameStitch = this;
 
     while (wrkNode.getContext() === sameStitch) {
       // if possible,  return a "loop" node
-      if (wrkNode.isLoopable) return wrkNode
+      if (wrkNode.isLoopable) return wrkNode;
       // otherwise, proceed to next node in main sequence
-      const nextStchs = wrkNode.getNeighborLinks('in', 'sequence')
+      const nextStchs = wrkNode.getNeighborLinks("in", "sequence");
       if (nextStchs.length > 0) {
-        wrkNode = nextStchs[0].getOtherEnd(wrkNode)
+        wrkNode = nextStchs[0].getOtherEnd(wrkNode);
       } else {
-        return false // nothing was found :(
+        return false; // nothing was found :(
       }
     }
 
-    return false // nothing was found :(
+    return false; // nothing was found :(
   }
 
   // if a stitch is to be removed, it needs to:
   // - remove all its nodes
   // - remove all its links
-  apoptose () {
-    this._links.forEach((item, i) => {
-      item.apoptose()
-    })
-    this._links.splice(0)
-    this._nodes.forEach((item, i) => {
-      item.apoptose()
-    })
-    this._nodes.splice(0)
-    this._context = undefined
+  apoptose() {
+    this._links.forEach((item) => {
+      item.apoptose();
+    });
+    this._links.splice(0);
+    this._nodes.forEach((item) => {
+      item.apoptose();
+    });
+    this._nodes.splice(0);
+    this._context = undefined;
   }
 }
 
-export default CrochetStitch
+export default CrochetStitch;

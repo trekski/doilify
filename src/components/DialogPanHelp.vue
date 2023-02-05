@@ -2,13 +2,13 @@
   <div>
     <div>You can navigate in three ways</div>
     <div>
-      <strong>mouse</strong><br>
+      <strong>mouse</strong><br />
       <ul>
         <li><strong>drag</strong> - pans the diagram</li>
         <li><strong>shift + drag</strong> - zooms in/out</li>
         <li><strong>ctrl/cmd + drag</strong> - rotates</li>
       </ul>
-      <strong>keyboard</strong><br>
+      <strong>keyboard</strong><br />
       <ul>
         <li><strong>shift + arrows</strong> - pans the diagram</li>
         <li><strong>shift + +/-</strong> - zooms in/out</li>
@@ -22,12 +22,10 @@
 </template>
 
 <script>
-
 export default {
-  name: 'DialogPanHelp'
-}
+  name: "DialogPanHelp",
+};
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style>
-</style>
+<style></style>

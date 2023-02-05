@@ -10,7 +10,9 @@
       stroke="lightgray"
       stroke-width="1px"
     >
-      <title>{{ link.getContext().id + ' : ' + link.id + ' (' + link.type + ')' }}</title>
+      <title>
+        {{ link.getContext().id + " : " + link.id + " (" + link.type + ")" }}
+      </title>
     </line>
     <circle
       v-for="(node, index) in stitch._nodes"
@@ -21,42 +23,38 @@
       fill="gray"
       stroke="0"
     >
-      <title>{{ node.getContext().id + ' : ' + node.toString() }}</title>
+      <title>{{ node.getContext().id + " : " + node.toString() }}</title>
     </circle>
   </g>
 </template>
 
 <script>
-// import Stitch from './Stitch.vue'
-
 export default {
-  name: 'Stitch',
-  components: {
-  },
+  name: "StitchSprite",
+  components: {},
   props: {
     stitch: {
       type: Object,
-      default: Object
-    }
+      default: Object,
+    },
   },
-  data () {
-    return {}
+  data() {
+    return {};
   },
   computed: {
-    nodes () {
-      return Array.from(this.stitch._nodes.keys())
-    }
+    nodes() {
+      return Array.from(this.stitch._nodes.keys());
+    },
   },
-  mounted () {
-  }
-}
+  mounted() {},
+};
 </script>
 
 <style>
-  .stitch circle:hover{
-    fill: gold
-  }
-  .stitch line:hover{
-    stroke: lime
-  }
+.stitch circle:hover {
+  fill: gold;
+}
+.stitch line:hover {
+  stroke: lime;
+}
 </style>

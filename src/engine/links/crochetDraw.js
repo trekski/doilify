@@ -1,6 +1,6 @@
-import CrochetLink from './crochetLink.js'
-import { PathLookupReigstry } from '../misc/graphics.js'
-import DrawableLines from './drawableLines.js'
+import CrochetLink from "./crochetLink.js";
+import { PathLookupReigstry } from "../misc/graphics.js";
+import DrawableLines from "./drawableLines.js";
 
 class CrochetDraw extends CrochetLink {
   // override crochetLink dfaults
@@ -17,22 +17,20 @@ class CrochetDraw extends CrochetLink {
 
   // get color () { return 'black' }
 
-  constructor () {
-    super(...arguments)
-    this.selectNewPath(arguments[5])
+  constructor() {
+    super(...arguments);
+    this.selectNewPath(arguments[5]);
   }
 
-  setNewPath (p = '') {
-    this.pathCommands = PathLookupReigstry.getParsedPath(p)
+  setNewPath(p = "") {
+    this.pathCommands = PathLookupReigstry.getParsedPath(p);
   }
 
-  selectNewPath (name) {
-    let path = DrawableLines.getLineDef(name)
-    path = (path == null)
-      ? DrawableLines.getLineDef('default')
-      : path
-    this.setNewPath(path)
+  selectNewPath(name) {
+    let path = DrawableLines.getLineDef(name);
+    path = path == null ? DrawableLines.getLineDef("default") : path;
+    this.setNewPath(path);
   }
 }
 
-export default CrochetDraw
+export default CrochetDraw;

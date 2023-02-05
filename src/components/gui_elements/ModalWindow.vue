@@ -1,8 +1,6 @@
 <template>
   <div class="modal_container default_shadow">
-    <div class="modal_header">
-      Window name
-    </div>
+    <div class="modal_header">Window name</div>
     <div class="modal_content">
       <slot>Hello, World!</slot>
     </div>
@@ -18,21 +16,21 @@
 </template>
 
 <script setup>
-import { defineProps } from 'vue'
-import TextButton from './TextButton.vue'
+import { defineProps } from "vue";
+import TextButton from "./TextButton.vue";
 
 defineProps({
   acknowledge: {
     type: String,
-    default: 'OK we 3r'
+    default: "OK we 3r",
   },
   deny: {
     type: String,
-    default: 'Cancel'
-  }
-})
+    default: "Cancel",
+  },
+});
 
-console.log(TextButton)
+console.log(TextButton);
 </script>
 
 <style scoped>
@@ -62,6 +60,6 @@ console.log(TextButton)
   display: flex;
   justify-content: center;
   align-items: center;
-  column-gap: 10px;;
+  column-gap: 10px;
 }
 </style>

@@ -1,15 +1,15 @@
 <template>
-  <div style="text-align: left;">
+  <div style="text-align: left">
     <div
       v-for="(group, i) in allowedStitches"
       :key="i"
       class="stitchGroup"
-      :class="{ groupSelected : group.name === selectedGroup, groupHighlighted : group.name === highlightedGroup}"
+      :class="{
+        groupSelected: group.name === selectedGroup,
+        groupHighlighted: group.name === highlightedGroup,
+      }"
     >
-      <div
-        class="groupHeader"
-        @click="selectGroup(group.name)"
-      >
+      <div class="groupHeader" @click="selectGroup(group.name)">
         <div class="groupName">
           {{ group.name }}
         </div>
@@ -20,13 +20,10 @@
           v-for="(item, j) in group.members"
           :key="j"
           class="listItem"
-          :class="{ stitchSelected : item.code === selectedStitch }"
+          :class="{ stitchSelected: item.code === selectedStitch }"
           @click="stitchTypeSelected(item.code)"
         >
-          <button
-            class="stitchIcon"
-            :title="item.code"
-          />
+          <button class="stitchIcon" :title="item.code" />
           <div class="stitchLabel">
             {{ item.desc }}
           </div>
@@ -38,83 +35,80 @@
 
 <script>
 export default {
-  name: 'DialogStitchTypeSelect',
+  name: "DialogStitchTypeSelect",
   props: {
     initialValue: {
       type: String,
-      default: 'ch'
-    }
+      default: "ch",
+    },
   },
-  emits: ['stitchTypeSelected'],
-  data () {
+  emits: ["stitchTypeSelected"],
+  data() {
     return {
       allowedStitches: [
         {
-          name: 'basic',
+          name: "basic",
           members: [
-            { code: 'slst', desc: 'slip stitch' },
-            { code: 'ch', desc: 'chain stitch' },
-            { code: 'sc', desc: 'single crochet' },
-            { code: 'hc', desc: 'half-double  crochet' },
-            { code: 'dc', desc: 'double crochet' },
-            { code: 'tc', desc: 'treble crochet' }
-          ]
+            { code: "slst", desc: "slip stitch" },
+            { code: "ch", desc: "chain stitch" },
+            { code: "sc", desc: "single crochet" },
+            { code: "hc", desc: "half-double  crochet" },
+            { code: "dc", desc: "double crochet" },
+            { code: "tc", desc: "treble crochet" },
+          ],
         },
         {
-          name: 'decreases',
+          name: "decreases",
           members: [
-            { code: 'sc2tog', desc: 'sc two together' },
-            { code: 'sc3tog', desc: 'sc three together' },
-            { code: 'dc2tog', desc: 'dc two together' },
-            { code: 'dc3tog', desc: 'dc three together' },
-            { code: 'dc4tog', desc: 'dc four together' },
-            { code: 'tc2tog', desc: 'tc two together' },
-            { code: 'tc3tog', desc: 'tc three together' },
-            { code: 'tc4tog', desc: 'tc four together' }
-          ]
+            { code: "sc2tog", desc: "sc two together" },
+            { code: "sc3tog", desc: "sc three together" },
+            { code: "dc2tog", desc: "dc two together" },
+            { code: "dc3tog", desc: "dc three together" },
+            { code: "dc4tog", desc: "dc four together" },
+            { code: "tc2tog", desc: "tc two together" },
+            { code: "tc3tog", desc: "tc three together" },
+            { code: "tc4tog", desc: "tc four together" },
+          ],
         },
         {
-          name: 'fancy',
+          name: "fancy",
           members: [
-            { code: 'pic3', desc: '3-chain picot' },
-            { code: 'pic5', desc: '5-chain picot' },
-            { code: 'pop', desc: 'popcorn stitch' },
-            { code: 'puff', desc: 'puff stitch' }
-          ]
-        }
+            { code: "pic3", desc: "3-chain picot" },
+            { code: "pic5", desc: "5-chain picot" },
+            { code: "pop", desc: "popcorn stitch" },
+            { code: "puff", desc: "puff stitch" },
+          ],
+        },
       ],
-      newGroupSelected: '',
-      newStitchSelected: ''
-    }
+      newGroupSelected: "",
+      newStitchSelected: "",
+    };
   },
   computed: {
-    selectedGroup () {
-      if (this.newGroupSelected !== '') return this.newGroupSelected
-      return this.highlightedGroup
+    selectedGroup() {
+      if (this.newGroupSelected !== "") return this.newGroupSelected;
+      return this.highlightedGroup;
     },
-    highlightedGroup () {
-      return this.allowedStitches
-        .filter(
-          g => {
-            return g.members
-              .filter(s => s.code === this.initialValue)
-              .length > 0
-          }
-        )[0].name
+    highlightedGroup() {
+      return this.allowedStitches.filter((g) => {
+        return g.members.filter((s) => s.code === this.initialValue).length > 0;
+      })[0].name;
     },
-    selectedStitch () {
-      return (this.newStitchSelected !== '') ? this.newStitchSelected : this.initialValue
-    }
+    selectedStitch() {
+      return this.newStitchSelected !== ""
+        ? this.newStitchSelected
+        : this.initialValue;
+    },
   },
   methods: {
-    selectGroup (g) {
-      this.newGroupSelected = g
+    selectGroup(g) {
+      this.newGroupSelected = g;
     },
-    stitchTypeSelected (stitchType) {
-      this.$emit('stitchTypeSelected', stitchType)
-    }
-  }
-}
+    stitchTypeSelected(stitchType) {
+      this.$emit("stitchTypeSelected", stitchType);
+    },
+  },
+};
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
@@ -142,10 +136,12 @@ export default {
   color: var(--text-accent-highlight);
 }
 .groupHighlighted .groupHeader {
-  box-shadow: 0px 0px 0px 2px var(--main-accent-highlight), inset 0px 0px 0px 2px var(--main-accent-highlight);
+  box-shadow: 0px 0px 0px 2px var(--main-accent-highlight),
+    inset 0px 0px 0px 2px var(--main-accent-highlight);
 }
 .groupHighlighted .groupHeader:hover {
-  box-shadow: 0px 0px 0px 5px var(--main-accent), inset 0px 0px 0px 2px var(--main-accent);
+  box-shadow: 0px 0px 0px 5px var(--main-accent),
+    inset 0px 0px 0px 2px var(--main-accent);
 }
 .groupArrow {
   border: solid transparent;
@@ -169,7 +165,7 @@ export default {
   transition-delay: 0s;
   max-height: 0px;
 }
-.groupSelected  .groupList{
+.groupSelected .groupList {
   transition: all var(--transition-time) ease-out;
   transition-delay: var(--transition-delay);
   max-height: 500px;
@@ -177,7 +173,7 @@ export default {
 .stitchIcon {
   height: 30px;
   min-width: 30px;
-  width: 30px
+  width: 30px;
 }
 .listItem {
   display: flex;
@@ -187,14 +183,21 @@ export default {
 .listItem:hover .stitchIcon {
   background: var(--main-accent-highlight);
 }
-.stitchLabel {transition: all 0.2s}
-.listItem.stitchSelected .stitchLabel { color: var(--main-accent-highlight);}
-.listItem:hover .stitchLabel { color: var(--main-accent-highlight);}
+.stitchLabel {
+  transition: all 0.2s;
+}
+.listItem.stitchSelected .stitchLabel {
+  color: var(--main-accent-highlight);
+}
+.listItem:hover .stitchLabel {
+  color: var(--main-accent-highlight);
+}
 .listItem.stitchSelected .stitchIcon {
-  box-shadow: 0px 0px 0px 2px var(--main-accent-highlight), inset 0px 0px 0px 2px var(--main-accent-highlight);
+  box-shadow: 0px 0px 0px 2px var(--main-accent-highlight),
+    inset 0px 0px 0px 2px var(--main-accent-highlight);
 }
 .listItem.stitchSelected:hover .stitchIcon {
-  box-shadow: 0px 0px 0px 5px var(--main-accent), inset 0px 0px 0px 2px var(--main-accent);
+  box-shadow: 0px 0px 0px 5px var(--main-accent),
+    inset 0px 0px 0px 2px var(--main-accent);
 }
-
 </style>

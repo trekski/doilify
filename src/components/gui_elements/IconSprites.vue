@@ -3,10 +3,7 @@
     xmlns:svg="http://www.w3.org/2000/svg"
     xmlns="http://www.w3.org/2000/svg"
   >
-    <symbol
-      id="svg-icon-default"
-      viewBox="0 0 40 40"
-    >
+    <symbol id="svg-icon-default" viewBox="0 0 40 40">
       <path
         id="path12"
         class="svg-icon-main"
@@ -30,10 +27,7 @@
         inkscape:transform-center-y="0.20129869"
       />
     </symbol>
-    <symbol
-      id="svg-icon-new-page"
-      viewBox="41 0 40 40"
-    >
+    <symbol id="svg-icon-new-page" viewBox="41 0 40 40">
       <path
         id="path51"
         class="svg-icon-main"
@@ -55,6 +49,12 @@
 </template>
 
 <style>
-  .svg-icon-main {fill: var(--color); stroke: var(--color)}
-  .svg-icon-accent {fill: var(--color2); stroke: var(--color2)}
+.svg-icon-main {
+  fill: var(--color);
+  stroke: var(--color);
+}
+.svg-icon-accent {
+  fill: var(--color2);
+  stroke: var(--color2);
+}
 </style>

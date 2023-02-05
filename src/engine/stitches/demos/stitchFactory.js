@@ -1,71 +1,75 @@
-import crochetStitchFactory from '../stitchFactory.js'
-import crochetNodeFactory from '../../nodes/nodeFactory.js'
+import crochetStitchFactory from "../stitchFactory.js";
+import crochetNodeFactory from "../../nodes/nodeFactory.js";
 
-function crochetStitchDemo (log) {
-  let s, n, n2
+function crochetStitchDemo(log) {
+  let s, n, n2;
 
-  n = crochetNodeFactory.getNewObject('start', 'stitch', [0, 0])
-  n2 = crochetNodeFactory.getNewObject('start', 'stitch', [0, 0])
-  s = 0
-  log(n)
+  n = crochetNodeFactory.getNewObject("start", "stitch", [0, 0]);
+  n2 = crochetNodeFactory.getNewObject("start", "stitch", [0, 0]);
+  s = 0;
+  log(n);
 
-  s = crochetStitchFactory.getNewObject('default', 'doily', n)
+  s = crochetStitchFactory.getNewObject("default", "doily", n);
 
-  log`*** default stitch ***`
+  log`*** default stitch ***`;
 
-  log(`${s.id}`)
-  log(`${s.sequence}`)
-  
-  log(`nodes : ${s.getNodes()}`)
-  log(`links : ${s.getLinks()}`)
-  log(`start : ${s.getStartNode()}`)
-  log(`end : ${s.getEndNode()}`)
+  log(`${s.id}`);
+  log(`${s.sequence}`);
 
-  log`*** origin stitch ***`
+  log(`nodes : ${s.getNodes()}`);
+  log(`links : ${s.getLinks()}`);
+  log(`start : ${s.getStartNode()}`);
+  log(`end : ${s.getEndNode()}`);
 
-  s = crochetStitchFactory.getNewObject('origin', 'doily')
-  s.crochet()
-  log(`nodes : ${s.getNodes()}`)
-  log(`links : ${s.getLinks()}`)
+  log`*** origin stitch ***`;
 
-  log`*** chain stitch ***`
+  s = crochetStitchFactory.getNewObject("origin", "doily");
+  s.crochet();
+  log(`nodes : ${s.getNodes()}`);
+  log(`links : ${s.getLinks()}`);
 
-  n = s.getLastLoop()
-  log(`${n._links}`)
+  log`*** chain stitch ***`;
 
-  s = crochetStitchFactory.getNewObject('ch', 'doily')
-  s.crochet(n)
-  log(`nodes : ${s.getNodes()}`)
-  log(`links : ${s.getLinks()}`)
-  log(`links : ${s.getLinks().map(e => (e.source.id + ' -> ' + e.target.id + '(' + e.type + ')'))}`)
+  n = s.getLastLoop();
+  log(`${n._links}`);
 
-  n2 = s.getStartNode()
-  log(`start : ${n2.type} ${n2.id}`)
-  n2 = s.getEndNode()
-  log(`end : ${n2.type} ${n2.id}`)
-  n2 = s.getFirstLoop()
-  log(`first loop : ${n2.type} ${n2.id}`)
-  n2 = s.getLastLoop()
-  log(`last loop : ${n2.type} ${n2.id}`)
+  s = crochetStitchFactory.getNewObject("ch", "doily");
+  s.crochet(n);
+  log(`nodes : ${s.getNodes()}`);
+  log(`links : ${s.getLinks()}`);
+  log(
+    `links : ${s
+      .getLinks()
+      .map((e) => e.source.id + " -> " + e.target.id + "(" + e.type + ")")}`
+  );
 
-  log('*** single crochet  ***')
+  n2 = s.getStartNode();
+  log(`start : ${n2.type} ${n2.id}`);
+  n2 = s.getEndNode();
+  log(`end : ${n2.type} ${n2.id}`);
+  n2 = s.getFirstLoop();
+  log(`first loop : ${n2.type} ${n2.id}`);
+  n2 = s.getLastLoop();
+  log(`last loop : ${n2.type} ${n2.id}`);
 
-  s = crochetStitchFactory.getNewObject('sc', 'doily')
-  s.crochet(n2, [n])
-  log(`nodes : ${s.getNodes()}`)
-  log('links :')
-  s.getLinks().forEach(e => (
+  log("*** single crochet  ***");
+
+  s = crochetStitchFactory.getNewObject("sc", "doily");
+  s.crochet(n2, [n]);
+  log(`nodes : ${s.getNodes()}`);
+  log("links :");
+  s.getLinks().forEach((e) =>
     log(`    ${e.id} (${e.type}) : ${e.source.id} -> ${e.target.id}`)
-  ))
+  );
 
-  log('*** double crochet  ***')
+  log("*** double crochet  ***");
 
-  s = crochetStitchFactory.getNewObject('dc', 'doily', n2, [n])
-  log(`nodes : ${s.getNodes()}`)
-  log('links :')
-  s.getLinks().forEach(e => (
+  s = crochetStitchFactory.getNewObject("dc", "doily", n2, [n]);
+  log(`nodes : ${s.getNodes()}`);
+  log("links :");
+  s.getLinks().forEach((e) =>
     log(`    ${e.id} (${e.type}) : ${e.source.id} -> ${e.target.id}`)
-  ))
+  );
 
   // log('*** slip stitch  ***')
 
@@ -77,4 +81,4 @@ function crochetStitchDemo (log) {
   // ))
 }
 
-export default crochetStitchDemo
+export default crochetStitchDemo;

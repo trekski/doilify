@@ -1,29 +1,10 @@
-
 <template>
   <svg xmlns="http://www.w3.org/2000/svg">
-    <g
-      id="myDot"
-      width="10"
-      height="10"
-      viewBox="0 0 2 2"
-    >
-      <circle
-        cx="1"
-        cy="1"
-        r="1"
-      />
+    <g id="myDot" width="10" height="10" viewBox="0 0 2 2">
+      <circle cx="1" cy="1" r="1" />
     </g>
-    <g
-      id="myDot2"
-      width="10"
-      height="10"
-      viewBox="2 2 2 2"
-    >
-      <circle
-        cx="3"
-        cy="3"
-        r="1"
-      />
+    <g id="myDot2" width="10" height="10" viewBox="2 2 2 2">
+      <circle cx="3" cy="3" r="1" />
     </g>
     <symbol
       id="symbol1865"
@@ -48,12 +29,18 @@
 
 <script>
 export default {
-  name: 'SvgIcons'
-}
+  name: "SvgIcons",
+};
 </script>
 
 <style>
-.show {fill: inherit}
-.show.accent {fill: currentColor}
-.hide {fill-opacity: 0}
+.show {
+  fill: inherit;
+}
+.show.accent {
+  fill: currentColor;
+}
+.hide {
+  fill-opacity: 0;
+}
 </style>

@@ -1,24 +1,22 @@
 <template>
   <div :class="['icon_group', dir, 'default_shadow']">
-    <slot>
-      no buttons provided
-    </slot>
+    <slot> no buttons provided </slot>
   </div>
 </template>
 
 <script setup>
-import { defineProps } from 'vue'
+import { defineProps } from "vue";
 defineProps({
   dir: {
     type: String,
-    default: 'row'
-  }
-})
+    default: "row",
+  },
+});
 </script>
 
 <style>
 .icon_group {
-  background:whitesmoke;
+  background: whitesmoke;
   display: flex;
   justify-content: center;
   align-items: center;

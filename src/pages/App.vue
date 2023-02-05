@@ -1,9 +1,7 @@
 <template>
   <div id="wrapper">
     <!-- where the doily graph will be displayed -->
-    <div style="position: absolute; left:60px;">
-      v. 0.9.23
-    </div>
+    <div style="position: absolute; left: 60px">v. 0.9.23</div>
 
     <MainGraph
       ref="MainGraph"
@@ -12,64 +10,85 @@
     />
 
     <button
-      style="position:absolute; left:110px; visibility: hidden"
+      style="position: absolute; left: 110px; visibility: hidden"
       @click="checkNewAppVer"
     >
       check for new versions
     </button>
-    <button
-      v-if="NewSWAvailable"
-      style="position:absolute; left:320px;"
-    >
+    <button v-if="NewSWAvailable" style="position: absolute; left: 320px">
       new verion available
     </button>
 
     <!-- placeholder for key app icons - (almost) const. visible -->
     <transition name="fade">
-      <div
-        v-if="!menuOpen"
-        id="mainIcons"
-      >
+      <div v-if="!menuOpen" id="mainIcons">
         <button
           id="openMenu"
           class="icon img shadow2px"
           title="open the main menu"
           @click="toggleMenu(true)"
         >
-          <img src="icons/menu_burger_white.svg">
+          <img src="icons/menu_burger_white.svg" />
         </button>
         <button
           id="selectTool"
           class="icon img shadow2px"
           title="select the tool you want to use"
-          @click="changeModal('edit_mode', appState.editingMode, 'tool_type', 'NONE', 'Pick a tool', 'Toolbox' )"
+          @click="
+            changeModal(
+              'edit_mode',
+              appState.editingMode,
+              'tool_type',
+              'NONE',
+              'Pick a tool',
+              'Toolbox'
+            )
+          "
         >
-          <img src="icons/select_tool_white.svg">
+          <img src="icons/select_tool_white.svg" />
         </button>
         <button
           id="selectColor"
           class="icon img shadow2px"
           title="select stitch color"
           style="visibility: hidden"
-          @click="changeModal('main_color', appState.mainStitchColor, 'color', 'NONE', 'Pick main stitch color', 'Select Color' )"
+          @click="
+            changeModal(
+              'main_color',
+              appState.mainStitchColor,
+              'color',
+              'NONE',
+              'Pick main stitch color',
+              'Select Color'
+            )
+          "
         >
-          <img src="icons/select_tool_white.svg">
+          <img src="icons/select_tool_white.svg" />
         </button>
         <button
           id="selectStitchType"
           class="icon img shadow2px"
           title="select stitch type"
           style="visibility: hidden"
-          @click="changeModal('main_stitch', appState.mainStitchType, 'stitch_type', 'NONE', '', 'Select Stitch' )"
+          @click="
+            changeModal(
+              'main_stitch',
+              appState.mainStitchType,
+              'stitch_type',
+              'NONE',
+              '',
+              'Select Stitch'
+            )
+          "
         >
-          <img src="icons/select_tool_white.svg">
+          <img src="icons/select_tool_white.svg" />
         </button>
 
         <button
           id="selectCH"
           class="icon shadow2px"
           title="make stitch"
-          :class="{active : appState.mainStitchType === 'ch'}"
+          :class="{ active: appState.mainStitchType === 'ch' }"
           @click="selectStich('ch')"
         >
           <strong>CH</strong>
@@ -78,7 +97,7 @@
           id="selectDC"
           class="icon shadow2px"
           title="make stitch"
-          :class="{active : appState.mainStitchType === 'dc'}"
+          :class="{ active: appState.mainStitchType === 'dc' }"
           @click="selectStich('dc')"
         >
           <strong>DC</strong>
@@ -87,7 +106,7 @@
           id="selectSL"
           class="icon shadow2px"
           title="make stitch"
-          :class="{active : appState.mainStitchType === 'slst'}"
+          :class="{ active: appState.mainStitchType === 'slst' }"
           @click="selectStich('slst')"
         >
           <strong>SLST</strong>
@@ -142,20 +161,20 @@
 </template>
 
 <script>
-import MainMenu from '../components/MainMenu.vue'
-import ModalWindow from '../components/ModalWindow.vue'
+import MainMenu from "../components/MainMenu.vue";
+import ModalWindow from "../components/ModalWindow.vue";
 // import MockGraph from './components/MockGraph.vue'
-import MainGraph from '../components/MainGraph.vue'
+import MainGraph from "../components/MainGraph.vue";
 
 export default {
-  name: 'App',
+  name: "App",
   components: {
     MainMenu: MainMenu,
     ModalWindow: ModalWindow,
     // MockGraph: MockGraph
-    MainGraph: MainGraph
+    MainGraph: MainGraph,
   },
-  data () {
+  data() {
     return {
       // PWA refresh flags
       SWRegistration: null,
@@ -168,21 +187,21 @@ export default {
         valueType: null,
         message: null,
         title: null,
-        buttons: 'OK',
-        show: false
+        buttons: "OK",
+        show: false,
       },
       // what is the user doing a.t.m.
       appState: {
-        editingMode: 'crochet',
-        mainStitchColor: 'black',
-        mainStitchType: 'ch'
+        editingMode: "crochet",
+        mainStitchColor: "black",
+        mainStitchType: "ch",
       },
       // is the main menu currently open
       menuOpen: false,
-      menuSelection: false
-    }
+      menuSelection: false,
+    };
   },
-  created () {
+  created() {
     //this.setupAppVer()
   },
   methods: {
@@ -212,43 +231,58 @@ export default {
     //     }
     //   }
     // },
-    selectStich (t) {
-      this.appState.mainStitchType = t
-      this.$refs.MainGraph.refocus()
+    selectStich(t) {
+      this.appState.mainStitchType = t;
+      this.$refs.MainGraph.refocus();
     },
     // testGraph
-    testGraph () {
-      alert('a')
+    testGraph() {
+      alert("a");
     },
-    log (a) {
-      console.log(a)
-      console.log(this.$refs.MainGraph.$refs.graphDoily.stitches.length)
+    log(a) {
+      console.log(a);
+      console.log(this.$refs.MainGraph.$refs.graphDoily.stitches.length);
     },
     // show/hide the main menu
-    makeStitch () {
-      this.$refs.MainGraph.$refs.graphDoily.makeStitch()
-      this.$refs.MainGraph.refocus()
+    makeStitch() {
+      this.$refs.MainGraph.$refs.graphDoily.makeStitch();
+      this.$refs.MainGraph.refocus();
     },
-    unmakeStitch () {
-      this.$refs.MainGraph.$refs.graphDoily.unmakeStitch()
-      this.$refs.MainGraph.refocus()
+    unmakeStitch() {
+      this.$refs.MainGraph.$refs.graphDoily.unmakeStitch();
+      this.$refs.MainGraph.refocus();
     },
-    toggleMenu (a) {
-      if (typeof a === 'undefined') {
-        this.menuOpen = !this.menuOpen
+    toggleMenu(a) {
+      if (typeof a === "undefined") {
+        this.menuOpen = !this.menuOpen;
       } else {
-        this.menuOpen = Boolean(a)
+        this.menuOpen = Boolean(a);
       }
     },
     // react to selected menu action
-    menuAction (event) {
-      this.menuOpen = false
-      this.menuSelection = event
-      if (event === 'panHelp') this.changeModal('none', null, 'pan_help', 'OK', null, 'help on navigation')
-      this.$refs.MainGraph.refocus()
+    menuAction(event) {
+      this.menuOpen = false;
+      this.menuSelection = event;
+      if (event === "panHelp")
+        this.changeModal(
+          "none",
+          null,
+          "pan_help",
+          "OK",
+          null,
+          "help on navigation"
+        );
+      this.$refs.MainGraph.refocus();
     },
     // manage display of modal dialog windows
-    changeModal (output = null, initval = null, valtype = null, buttons = null, msg = null, title = null) {
+    changeModal(
+      output = null,
+      initval = null,
+      valtype = null,
+      buttons = null,
+      msg = null,
+      title = null
+    ) {
       // hide the modal
       if (!output && !msg) {
         this.ModalWindowParams = {
@@ -257,10 +291,10 @@ export default {
           valueType: null,
           message: null,
           title: null,
-          buttons: 'OK',
-          show: false
-        }
-      // open a new modal
+          buttons: "OK",
+          show: false,
+        };
+        // open a new modal
       } else {
         this.ModalWindowParams = {
           outputParamName: output,
@@ -269,31 +303,44 @@ export default {
           message: msg,
           title: title,
           buttons: buttons,
-          show: true
-        }
+          show: true,
+        };
       }
     },
     // react to evetns emitted by the modal window
-    processModalResponse (event) {
-      this.changeModal()
+    processModalResponse(event) {
+      this.changeModal();
       switch (event.param) {
-        case 'edit_mode' : this.appState.editingMode = event.value; break
-        case 'main_color' : this.appState.mainStitchColor = event.value; break
-        case 'main_stitch' : this.appState.mainStitchType = event.value; break
-        default: this.appState.editingMode = 'crochet'
+        case "edit_mode":
+          this.appState.editingMode = event.value;
+          break;
+        case "main_color":
+          this.appState.mainStitchColor = event.value;
+          break;
+        case "main_stitch":
+          this.appState.mainStitchType = event.value;
+          break;
+        default:
+          this.appState.editingMode = "crochet";
       }
-      this.$refs.MainGraph.refocus()
+      this.$refs.MainGraph.refocus();
     },
-    changeSelectedStitch (event) {
+    changeSelectedStitch(event) {
       switch (event) {
-        case 1 : this.appState.mainStitchType = 'ch'; break
-        case 2 : this.appState.mainStitchType = 'dc'; break
-        case 3 : this.appState.mainStitchType = 'slst'; break
+        case 1:
+          this.appState.mainStitchType = "ch";
+          break;
+        case 2:
+          this.appState.mainStitchType = "dc";
+          break;
+        case 3:
+          this.appState.mainStitchType = "slst";
+          break;
       }
-      this.$refs.MainGraph.refocus()
-    }
-  }
-}
+      this.$refs.MainGraph.refocus();
+    },
+  },
+};
 </script>
 
 <style>
@@ -304,15 +351,15 @@ export default {
   height: 100%;
 }
 
-html, body
-{
-    height: 100%;
-    margin: 0px;
-    font-family: sans-serif;
-    --main-accent: orange;
-    --main-accent-highlight: gold;
-    --text-accent: white;
-    --text-accent-highlight: DarkGoldenRod;
+html,
+body {
+  height: 100%;
+  margin: 0px;
+  font-family: sans-serif;
+  --main-accent: orange;
+  --main-accent-highlight: gold;
+  --text-accent: white;
+  --text-accent-highlight: DarkGoldenRod;
 }
 
 button {
@@ -338,7 +385,7 @@ button:hover {
   background: var(--main-accent-highlight);
 }
 
-button.img{
+button.img {
   font-size: 0px;
   min-width: 0px;
 }
@@ -426,19 +473,19 @@ button.img{
   height: 40px;
 }
 
-.shadow5px{
+.shadow5px {
   box-shadow: 5px 5px 5px gray;
 }
 
-.shadow2px{
+.shadow2px {
   box-shadow: 2px 2px 5px gray;
 }
 
-.fade-enter-active{
-  transition: all .2s 0s ease;
+.fade-enter-active {
+  transition: all 0.2s 0s ease;
 }
-.fade-leave-active{
-  transition: all .2s .1s ease;
+.fade-leave-active {
+  transition: all 0.2s 0.1s ease;
 }
 .fade-enter-from,
 .fade-leave-to {
@@ -447,24 +494,23 @@ button.img{
 
 #menuWrapper.fade-enter-from > *,
 #menuWrapper.fade-leave-to > * {
-  transform:  translateX(-300px);
+  transform: translateX(-300px);
 }
-#menuWrapper.fade-enter-active > *{
-  transition: all .2s 0s ease;
+#menuWrapper.fade-enter-active > * {
+  transition: all 0.2s 0s ease;
 }
-#menuWrapper.fade-leave-active > *{
-  transition: all .2s .1s ease;
+#menuWrapper.fade-leave-active > * {
+  transition: all 0.2s 0.1s ease;
 }
 
 #modalWrapper.fade-enter-from > *,
 #modalWrapper.fade-leave-to > * {
   transform: translate(-50%, -50%) scale(0.5);
 }
-#modalWrapper.fade-enter-active > *{
-  transition: all .2s 0s ease;
+#modalWrapper.fade-enter-active > * {
+  transition: all 0.2s 0s ease;
 }
-#modalWrapper.fade-leave-active > *{
-  transition: all .2s .1s ease;
+#modalWrapper.fade-leave-active > * {
+  transition: all 0.2s 0.1s ease;
 }
-
 </style>

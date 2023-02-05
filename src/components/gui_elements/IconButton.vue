@@ -1,25 +1,16 @@
 <template>
   <button
     class="icon_button"
-    :class="{selected: selected, inactive: inactive}"
+    :class="{ selected: selected, inactive: inactive }"
   >
-    <div
-      v-if="labelText"
-      class="label"
-    >
+    <div v-if="labelText" class="label">
       {{ labelText }}
     </div>
     <div class="icon">
-      <svg
-        v-if="iconType == 'svg'"
-        class="svg_icon"
-      >
+      <svg v-if="iconType == 'svg'" class="svg_icon">
         <use :xlink:href="iconSrc" />
       </svg>
-      <div
-        v-if="shortLabel"
-        class="icon_tag"
-      >
+      <div v-if="shortLabel" class="icon_tag">
         {{ shortLabel }}
       </div>
     </div>
@@ -27,47 +18,46 @@
 </template>
 
 <script setup>
-import { defineProps, computed } from 'vue'
+import { defineProps, computed } from "vue";
 
 const props = defineProps({
   labelText: {
     type: String,
-    default: ''
+    default: "",
   },
   shortLabel: {
     type: String,
-    default: ''
+    default: "",
   },
   icon: {
     type: String,
-    default: 'svg:svg-icon-default'
+    default: "svg:svg-icon-default",
   },
   selected: {
     type: Boolean,
-    default: false
+    default: false,
   },
   inactive: {
     type: Boolean,
-    default: false
-  }
-})
+    default: false,
+  },
+});
 
 const iconType = computed(() => {
-  const t = props.icon
-  return t.substring(t, t.search(':'))
-})
+  const t = props.icon;
+  return t.substring(t, t.search(":"));
+});
 
 const iconSrc = computed(() => {
-  if (props.icon.startsWith('svg:')) {
-    console.log('#' + props.icon.substring(4))
-    return '#' + props.icon.substring(4)
+  if (props.icon.startsWith("svg:")) {
+    console.log("#" + props.icon.substring(4));
+    return "#" + props.icon.substring(4);
   }
-  return ''
-})
+  return "";
+});
 
 // this line is here only becasue otherwise Dev Servers's hot reload of components throws no-unused-vars on these
-console.log(iconType, iconSrc)
-
+console.log(iconType, iconSrc);
 </script>
 
 <style>
@@ -94,7 +84,7 @@ console.log(iconType, iconSrc)
 .icon_button.inactive {
   color: rgb(150, 150, 150);
 }
-.icon{
+.icon {
   display: flex;
   position: relative;
   background-color: inherit;

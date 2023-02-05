@@ -1,4 +1,7 @@
 ### data
-* stitchTypesPallet : \[str\]
+
+- stitchTypesPallet : \[str\]
+
 ### methods
+
 - selectStitchType(str, int)

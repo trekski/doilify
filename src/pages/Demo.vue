@@ -1,14 +1,10 @@
 <template>
   <div>
-    <pre
-      v-for="(e, i) in log"
-      :key="i"
-    >{{ e }}</pre>
+    <pre v-for="(e, i) in log" :key="i">{{ e }}</pre>
   </div>
 </template>
 
 <script>
-
 // import vectorDemo from '../engine/misc/demos/vector.js'
 // import helperDemo from '../engine/misc/demos/helpers.js'
 // import graphicsDemo from '../engine/misc/demos/graphics.js'
@@ -17,16 +13,16 @@
 // import crochetLinkDemo from '../engine/links/demos/crochetLink.js'
 // import crochetDrawDemo from '../engine/links/demos/crochetDraw.js'
 // import crochetOperationDemo from '../engine/stitches/operations/demos/operations.js'
-import crochetStitchDemo from '../engine/stitches/demos/stitchFactory.js'
+import crochetStitchDemo from "../engine/stitches/demos/stitchFactory.js";
 
-const l = []
+const l = [];
 
-function log (a) {
-  l.push(`> ${a}`)
+function log(a) {
+  l.push(`> ${a}`);
 }
 
-function header (a) {
-  l.push(`\n*** ${a} ***\n\n`)
+function header(a) {
+  l.push(`\n*** ${a} ***\n\n`);
 }
 
 // header('Vec2d demo')
@@ -53,25 +49,27 @@ function header (a) {
 // header('crochet operation demo')
 // crochetOperationDemo(log)
 
-header('STITCH demo')
-crochetStitchDemo(log)
+header("STITCH demo");
+crochetStitchDemo(log);
 
 export default {
-  name: 'Demo',
+  name: "DemoTest",
   components: {
     // HelloWorld
   },
-  data () {
+  data() {
     return {
-      log: l
-    }
-  }
-}
+      log: l,
+    };
+  },
+};
 </script>
 
 <style>
 #app {
   color: black;
 }
-pre {margin: 0px}
+pre {
+  margin: 0px;
+}
 </style>

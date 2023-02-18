@@ -50,14 +50,11 @@ const iconType = computed(() => {
 
 const iconSrc = computed(() => {
   if (props.icon.startsWith("svg:")) {
-    console.log("#" + props.icon.substring(4));
     return "#" + props.icon.substring(4);
   }
   return "";
 });
 
-// this line is here only becasue otherwise Dev Servers's hot reload of components throws no-unused-vars on these
-console.log(iconType, iconSrc);
 </script>
 
 <style>

@@ -1,7 +1,7 @@
 <template>
   <div id="toolbars_wrapper" class="wrapper">
     <SvgIcons style="display: none" />
-    <EditToolbar v-if="true" />
+    <EditToolbar />
     <ModalWindow v-if="true">Lorem ipsum</ModalWindow>
   </div>
 </template>

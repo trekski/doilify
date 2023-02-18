@@ -30,7 +30,6 @@ defineProps({
   },
 });
 
-console.log(TextButton);
 </script>
 
 <style scoped>

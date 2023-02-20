@@ -2,14 +2,21 @@
   <div id="toolbars_wrapper" class="wrapper">
     <SvgIcons style="display: none" />
     <EditToolbar />
-    <ModalWindow v-if="true">Lorem ipsum</ModalWindow>
+    <ColorSelectModal @modal-return="test($event)"/>
   </div>
 </template>
 
 <script setup>
 import SvgIcons from "../components/gui_elements/IconSprites.vue";
 import EditToolbar from "../components/toolbars/EditToolbar.vue";
-import ModalWindow from "../components/gui_elements/ModalWindow.vue";
+import ColorSelectModal from "../components/modal_windows/ColorSelectModal.vue"
+
+function test (t) {
+  if (t.status === true) {
+    window.alert(t.payload)
+  }
+
+}
 </script>
 
 <style>

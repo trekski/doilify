@@ -4,18 +4,19 @@
       <PillLabel>{{ infoLabelText }}</PillLabel>
     </div>
     <div id="Icons">
-      <IconGroup v-for="(grp, i) in nameGroups" :key="i" dir="row">
-        <IconButton
-          v-for="button in grp"
-          :key="button.key"
-          :label-text="button.labelText"
-          :inactive="button.inactive"
-          :selected="button.selected"
-          :short-label="button.shortLabel"
-          :icon="button.icon"
-          @mouseover="changeInfoLabel(button.description)"
-          @mouseleave="changeInfoLabel()"
-        />
+      <IconGroup dir="row">
+        <template v-for="(button, i) in buttons" :key="button.key">
+          <IconSpacer v-if="i > 0" />
+          <IconButton
+            :label-text="button.labelText"
+            :inactive="button.inactive"
+            :selected="button.selected"
+            :short-label="button.shortLabel"
+            :icon="button.icon"
+            @mouseover="changeInfoLabel(button.description)"
+            @mouseleave="changeInfoLabel()"
+          />
+        </template>
       </IconGroup>
     </div>
   </div>
@@ -26,45 +27,47 @@ import { ref, computed } from "vue";
 import IconButton from "../gui_elements/IconButton.vue";
 import IconGroup from "../gui_elements/IconGroup.vue";
 import PillLabel from "../gui_elements/PillLabel.vue";
+import IconSpacer from "../gui_elements/IconSpacer.vue"
 
-const nameGroups = [
-  [
-    {
-      key: 0,
-      icon: "svg:svg-icon-new-page",
-      description: "add new page",
-    },
-    {
-      key: 1,
-      icon: "svg:svg-icon-default",
-      description: "first button v.1",
-    },
-    {
-      key: 2,
-      labelText: "button 1.1",
-      icon: "svg:svg-icon-default",
-      description: "first button v.2",
-    },
-    {
-      key: 3,
-      shortLabel: "BUT",
-      icon: "svg:svg-icon-default",
-      description: "first button v.3",
-    },
-    {
-      key: 4,
-      labelText: "button 2",
-      inactive: true,
-      description: "second button",
-    },
-    {
-      key: 5,
-      labelText: "button 3",
-      selected: true,
-      description: "third button",
-    },
-  ],
-];
+const buttons = [
+  {
+    key: "stitch_type",
+    icon: "svg:svg-icon-default",
+    labelText: "type",
+    description: "change stitch type",
+  },
+  {
+    key: "color",
+    icon: "svg:svg-icon-default",
+    labelText: "color",
+    description: "change stitch color",
+  },
+  {
+    key: "cut",
+    icon: "svg:svg-icon-default",
+    labelText: "cut",
+    description: "delete stitches",
+  },
+  {
+    key: "insert",
+    icon: "svg:svg-icon-default",
+    labelText: "insert",
+    description: "insert stitches (after selected)",
+  },
+  {
+    key: "move",
+    icon: "svg:svg-icon-default",
+    labelText: "move",
+    description: "change stitch connections",
+  },
+  {
+    key: "clone",
+    icon: "svg:svg-icon-default",
+    labelText: "clone",
+    description: "duplicate stitches",
+  },
+]
+;
 
 const infoLabelText = ref("");
 

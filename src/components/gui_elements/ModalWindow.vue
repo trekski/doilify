@@ -5,30 +5,32 @@
       <slot>Hello, World!</slot>
     </div>
     <div class="modal_buttons_bar">
-      <TextButton v-if="acknowledge">
-        {{ acknowledge }}
+      <TextButton v-if="affirmative" @click="$emit('affirmative')">
+        {{ affirmative }}
       </TextButton>
-      <TextButton v-if="deny">
-        {{ deny }}
+      <TextButton v-if="negative" @click="$emit('negative')">
+        {{ negative }}
       </TextButton>
     </div>
   </div>
 </template>
 
 <script setup>
-import { defineProps } from "vue";
+import { defineProps, defineEmits } from "vue";
 import TextButton from "./TextButton.vue";
 
 defineProps({
-  acknowledge: {
+  affirmative: {
     type: String,
-    default: "OK we 3r",
+    default: "OK",
   },
-  deny: {
+  negative: {
     type: String,
     default: "Cancel",
   },
 });
+
+defineEmits(['affirmative', 'negative']);
 
 </script>
 

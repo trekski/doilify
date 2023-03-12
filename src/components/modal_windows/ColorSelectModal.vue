@@ -1,6 +1,6 @@
 <template>
     <ModalWindow
-        negative = "Cancel"
+        negative = "don't change"
         affirmative = ''
         @negative =  "ReturnColor()"
     >

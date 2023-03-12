@@ -51,7 +51,8 @@
         />
         <IconSpacer />
         <IconButton
-          label-text="move"
+          label-text="clone"
+          :selected="tool_store.selected_tool=='clone'"
           icon="svg:svg-icon-clone-stitch"
           @mouseover="changeInfoLabel('duplicate stitches')"
           @mouseleave="changeInfoLabel()"
@@ -86,7 +87,7 @@ function changeInfoLabel(s = "") {
 
 function toggleTool(key) {
   if (key == "change_color") {
-    modal_store.openModal("color_select", "tool_store:edit_color","red")
+    modal_store.openModal("color_select", "tool_store:edit_color", tool_store.edit_color)
   }
   tool_store.selected_tool = key
 }

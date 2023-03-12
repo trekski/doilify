@@ -1,6 +1,6 @@
 <template>
   <div class="modal_container default_shadow">
-    <div class="modal_header">Window name</div>
+    <div class="modal_header">{{ windowName }}</div>
     <div class="modal_content">
       <slot>Hello, World!</slot>
     </div>
@@ -28,6 +28,10 @@ defineProps({
     type: String,
     default: "Cancel",
   },
+  windowName: {
+    type: String,
+    default: "[some modal window]",
+  }
 });
 
 defineEmits(['affirmative', 'negative']);

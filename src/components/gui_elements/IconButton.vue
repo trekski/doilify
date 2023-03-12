@@ -10,7 +10,14 @@
       <svg v-if="iconType == 'svg'" class="svg_icon">
         <use :xlink:href="iconSrc" />
       </svg>
-      <ColorBullet v-if="iconType == 'color'" :color="iconSrc" name="pick a color" :active="false" :radius="17"/>
+      <ColorBullet
+        v-if="iconType == 'color'"
+        :color="iconSrc"
+        name="pick a color"
+        :active="false"
+        :radius="13"
+        class="extra"
+      />
       <div v-if="shortLabel" class="icon_tag">
         {{ shortLabel }}
       </div>
@@ -77,10 +84,11 @@ const iconSrc = computed(() => {
   column-gap: 0px;
 }
 .icon_button:hover {
-  background: var(--color-background-high1);
+  --background: var(--color-background-high1);
+  color: var(--color-main-high);
 }
 .icon_button.selected {
-  background: var(--color-background-high2);
+  --background: var(--color-background-high2);
   color: var(--color-main-high);
 }
 .icon_button.inactive {
@@ -102,9 +110,16 @@ const iconSrc = computed(() => {
   --color: var(--color-main-low);
   --color2: var(--color-accent-low);
 }
-.selected .svg_icon {
+.icon_button:not(.inactive):hover .svg_icon , .selected .svg_icon {
   --color: var(--color-main-high);
   --color2: var(--color-accent-high);
+}
+.icon_button .icon .extra {
+  margin : 3px;
+}
+.selected .icon .extra, .icon_button:hover .icon .extra {
+  outline: solid 3px var(--color-accent-high);
+  outline-offset: 3px;
 }
 .label {
   padding: 0px 5px;

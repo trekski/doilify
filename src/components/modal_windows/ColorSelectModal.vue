@@ -1,5 +1,6 @@
 <template>
     <ModalWindow
+        window-name="pick a color"
         negative = "don't change"
         affirmative = ''
         @negative =  "ReturnColor()"
@@ -14,7 +15,8 @@
                 v-for="(item, j) in row"
                 :key="j"
                 :color="item.color"
-                :title="item.name"
+                :name="item.name"
+                :selected ="item.color == defaultColor"
                 @click="ReturnColor(item.color)"
             />
         </div>
@@ -24,8 +26,16 @@
 
 <script setup>
     import { defineEmits } from "vue"
+    import { defineProps } from "vue";
     import ModalWindow from "../gui_elements/ModalWindow.vue"
     import ColorBullet from "../gui_elements/ColorBullet.vue"
+
+    defineProps({
+        defaultColor: {
+            type: String,
+            default: "black",
+        }
+    })
 
     const allowedColors = [
         [
@@ -58,15 +68,6 @@
 </script>
 
 <style scoped>
-.color_bullet {
-    width: 40px;
-    height: 40px;
-    border-radius: 20px;
-    background-color: var(--button-color)
-}
-.color_bullet:hover {
-    box-shadow:  0px 0px 0px 5px var(--button-color) , inset 0px 0px 0px 4px white;
-}
 .color_table {
     display: flex;
     align-items: center;

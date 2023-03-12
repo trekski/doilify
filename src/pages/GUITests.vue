@@ -1,8 +1,8 @@
 <template>
   <div id="page_wrapper" class="page_wrapper">
     <SvgIcons style="display: none" />
-    <ModalWrapper />
     <EditToolbar />
+    <ModalWrapper />
   </div>
 </template>
 
@@ -42,7 +42,7 @@ body {
 .page_wrapper {
   position: relative;
   height: 100vh;
-  width: 100vh;
+  width: 100vw;
 }
 .wrapper {
   height: 100%;

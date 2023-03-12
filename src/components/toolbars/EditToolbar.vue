@@ -38,7 +38,7 @@ const buttons = [
   },
   {
     key: "color",
-    icon: "svg:svg-icon-default",
+    icon: "color:blue",
     labelText: "color",
     description: "change stitch color",
   },
@@ -50,7 +50,7 @@ const buttons = [
   },
   {
     key: "insert",
-    icon: "svg:svg-icon-default",
+    icon: "svg:svg-icon-insert-stitch",
     labelText: "insert",
     description: "insert stitches (after selected)",
   },
@@ -62,7 +62,7 @@ const buttons = [
   },
   {
     key: "clone",
-    icon: "svg:svg-icon-default",
+    icon: "svg:svg-icon-clone-stitch",
     labelText: "clone",
     description: "duplicate stitches",
   },

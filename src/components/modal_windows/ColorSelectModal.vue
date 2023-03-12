@@ -11,14 +11,14 @@
             :key="i" 
             class="color_row" 
         >
-            <div
+            <ColorBullet
                 v-for="(item, j) in row"
                 :key="j"
-                class="color_bullet"
-                :style="{'--button-color': item.color}"
+                :color="item.color"
                 :title="item.name"
-            ></div>
+            />
         </div>
+        
     </div>
     </ModalWindow>
 </template>
@@ -26,6 +26,7 @@
 <script setup>
     import { defineEmits } from "vue"
     import ModalWindow from "../gui_elements/ModalWindow.vue"
+    import ColorBullet from "../gui_elements/ColorBullet.vue"
 
     const allowedColors = [
         [

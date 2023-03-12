@@ -45,6 +45,6 @@
 </template>
 
 <style>
-  .svg-icon-main {fill: var(--color); stroke: var(--color)}
-  .svg-icon-accent {fill: var(--color2); stroke: var(--color2)}
+  .svg-icon-main {fill: var(--color); stroke: none}
+  .svg-icon-accent {fill: var(--color2); stroke: none}
 </style>

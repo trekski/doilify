@@ -10,6 +10,7 @@
       <svg v-if="iconType == 'svg'" class="svg_icon">
         <use :xlink:href="iconSrc" />
       </svg>
+      <ColorBullet v-if="iconType == 'color'" :color="iconSrc" name="pick a color" :active="false" radius="17"/>
       <div v-if="shortLabel" class="icon_tag">
         {{ shortLabel }}
       </div>
@@ -18,6 +19,7 @@
 </template>
 
 <script setup>
+import ColorBullet from "../gui_elements/ColorBullet.vue"
 import { defineProps, computed } from "vue";
 
 const props = defineProps({
@@ -51,6 +53,9 @@ const iconType = computed(() => {
 const iconSrc = computed(() => {
   if (props.icon.startsWith("svg:")) {
     return "#" + props.icon.substring(4);
+  }
+  if (props.icon.startsWith("color:")) {
+    return props.icon.substring(6);
   }
   return "";
 });

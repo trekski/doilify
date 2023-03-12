@@ -32,7 +32,7 @@ import IconSpacer from "../gui_elements/IconSpacer.vue"
 const buttons = [
   {
     key: "stitch_type",
-    icon: "svg:svg-icon-default",
+    icon: "svg:svg-icon-change-stitch-type",
     labelText: "type",
     description: "change stitch type",
   },
@@ -43,9 +43,9 @@ const buttons = [
     description: "change stitch color",
   },
   {
-    key: "cut",
-    icon: "svg:svg-icon-default",
-    labelText: "cut",
+    key: "delete",
+    icon: "svg:svg-icon-delete-stitch",
+    labelText: "delete",
     description: "delete stitches",
   },
   {
@@ -56,7 +56,7 @@ const buttons = [
   },
   {
     key: "move",
-    icon: "svg:svg-icon-default",
+    icon: "svg:svg-icon-reconnect-stitch",
     labelText: "move",
     description: "change stitch connections",
   },

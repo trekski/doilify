@@ -2,6 +2,7 @@
   <div id="page_wrapper" class="page_wrapper">
     <SvgIcons style="display: none" />
     <EditToolbar />
+    <ModeToolbar />
     <ModalWrapper />
   </div>
 </template>
@@ -9,6 +10,7 @@
 <script setup>
 import SvgIcons from "../components/gui_elements/IconSprites.vue";
 import EditToolbar from "../components/toolbars/EditToolbar.vue";
+import ModeToolbar from "../components/toolbars/ModeToolbar.vue";
 import ModalWrapper from "../components/modal_windows/ModalWrapper.vue";
 </script>
 

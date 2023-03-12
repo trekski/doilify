@@ -5,18 +5,58 @@
     </div>
     <div id="Icons">
       <IconGroup dir="row">
-        <template v-for="(button, i) in buttons" :key="button.key">
-          <IconSpacer v-if="i > 0" />
-          <IconButton
-            :label-text="button.labelText"
-            :inactive="button.inactive"
-            :selected="button.selected"
-            :short-label="button.shortLabel"
-            :icon="button.icon"
-            @mouseover="changeInfoLabel(button.description)"
-            @mouseleave="changeInfoLabel()"
-          />
-        </template>
+        <IconButton
+          label-text="type"
+          :selected="tool_store.selected_tool=='stitch_type'"
+          icon="svg:svg-icon-change-stitch-type"
+          @mouseover="changeInfoLabel('change stitch type')"
+          @mouseleave="changeInfoLabel()"
+          @click="toggleTool('stitch_type')"
+        />
+        <IconSpacer />
+        <IconButton
+          label-text="color"
+          :selected="tool_store.selected_tool=='change_color'"
+          :icon="'color:' + tool_store.edit_color"
+          @mouseover="changeInfoLabel('change stitch color')"
+          @mouseleave="changeInfoLabel()"
+          @click="toggleTool('change_color')"
+        />
+        <IconSpacer />
+        <IconButton
+          label-text="delete"
+          :selected="tool_store.selected_tool=='delete'"
+          icon="svg:svg-icon-delete-stitch"
+          @mouseover="changeInfoLabel('delete a stitch')"
+          @mouseleave="changeInfoLabel()"
+          @click="toggleTool('delete')"
+        />
+        <IconSpacer />
+        <IconButton
+          label-text="insert"
+          :selected="tool_store.selected_tool=='insert'"
+          icon="svg:svg-icon-insert-stitch"
+          @mouseover="changeInfoLabel('insert stitches (after selected)')"
+          @mouseleave="changeInfoLabel()"
+          @click="toggleTool('insert')"
+        />
+        <IconSpacer />
+        <IconButton
+          label-text="move"
+          :selected="tool_store.selected_tool=='move'"
+          icon="svg:svg-icon-reconnect-stitch"
+          @mouseover="changeInfoLabel('change stitch connections')"
+          @mouseleave="changeInfoLabel()"
+          @click="toggleTool('move')"
+        />
+        <IconSpacer />
+        <IconButton
+          label-text="move"
+          icon="svg:svg-icon-clone-stitch"
+          @mouseover="changeInfoLabel('duplicate stitches')"
+          @mouseleave="changeInfoLabel()"
+          @click="toggleTool('clone')"
+        />
       </IconGroup>
     </div>
   </div>
@@ -24,50 +64,15 @@
 
 <script setup>
 import { ref, computed } from "vue";
+import { useModalStore } from "../../stores/ModalStore";
+import { useToolStore } from "../../stores/ToolStore";
 import IconButton from "../gui_elements/IconButton.vue";
 import IconGroup from "../gui_elements/IconGroup.vue";
 import PillLabel from "../gui_elements/PillLabel.vue";
 import IconSpacer from "../gui_elements/IconSpacer.vue"
 
-const buttons = [
-  {
-    key: "stitch_type",
-    icon: "svg:svg-icon-change-stitch-type",
-    labelText: "type",
-    description: "change stitch type",
-  },
-  {
-    key: "color",
-    icon: "color:blue",
-    labelText: "color",
-    description: "change stitch color",
-  },
-  {
-    key: "delete",
-    icon: "svg:svg-icon-delete-stitch",
-    labelText: "delete",
-    description: "delete stitches",
-  },
-  {
-    key: "insert",
-    icon: "svg:svg-icon-insert-stitch",
-    labelText: "insert",
-    description: "insert stitches (after selected)",
-  },
-  {
-    key: "move",
-    icon: "svg:svg-icon-reconnect-stitch",
-    labelText: "move",
-    description: "change stitch connections",
-  },
-  {
-    key: "clone",
-    icon: "svg:svg-icon-clone-stitch",
-    labelText: "clone",
-    description: "duplicate stitches",
-  },
-]
-;
+const modal_store = useModalStore()
+const tool_store = useToolStore()
 
 const infoLabelText = ref("");
 
@@ -77,6 +82,13 @@ const showLabel = computed(() => {
 
 function changeInfoLabel(s = "") {
   this.infoLabelText = s;
+}
+
+function toggleTool(key) {
+  if (key == "change_color") {
+    modal_store.openModal("color_select", "tool_store:edit_color","red")
+  }
+  tool_store.selected_tool = key
 }
 </script>
 

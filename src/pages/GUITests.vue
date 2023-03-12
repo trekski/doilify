@@ -1,22 +1,15 @@
 <template>
-  <div id="toolbars_wrapper" class="wrapper">
+  <div id="page_wrapper" class="page_wrapper">
     <SvgIcons style="display: none" />
+    <ModalWrapper />
     <EditToolbar />
-    <ColorSelectModal @modal-return="test($event)"/>
   </div>
 </template>
 
 <script setup>
 import SvgIcons from "../components/gui_elements/IconSprites.vue";
 import EditToolbar from "../components/toolbars/EditToolbar.vue";
-import ColorSelectModal from "../components/modal_windows/ColorSelectModal.vue"
-
-function test (t) {
-  if (t.status === true) {
-    window.alert(t.payload)
-  }
-
-}
+import ModalWrapper from "../components/modal_windows/ModalWrapper.vue";
 </script>
 
 <style>
@@ -41,17 +34,18 @@ body {
   --color-accent-high: rgb(100, 170, 255);
   --color-accent-low: rgb(200, 200, 200);
 }
-
 #app {
   margin: 0px;
   padding: 0px;
   height: 100%;
 }
-
-.wrapper {
-  border: green solid 1px;
+.page_wrapper {
   position: relative;
-  outline-offset: -1px;
+  height: 100vh;
+  width: 100vh;
+}
+.wrapper {
   height: 100%;
+  width: 100%;
 }
 </style>

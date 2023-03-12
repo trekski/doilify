@@ -8,5 +8,4 @@ const app = createApp(GUITets)
 // import './registerServiceWorker'
 
 app.use(pinia)
-//createApp(GUITets).mount("#app")
 app.mount("#app");

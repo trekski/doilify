@@ -10,7 +10,7 @@
       <svg v-if="iconType == 'svg'" class="svg_icon">
         <use :xlink:href="iconSrc" />
       </svg>
-      <ColorBullet v-if="iconType == 'color'" :color="iconSrc" name="pick a color" :active="false" radius="17"/>
+      <ColorBullet v-if="iconType == 'color'" :color="iconSrc" name="pick a color" :active="false" :radius="17"/>
       <div v-if="shortLabel" class="icon_tag">
         {{ shortLabel }}
       </div>

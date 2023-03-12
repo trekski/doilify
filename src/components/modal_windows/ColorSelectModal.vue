@@ -1,8 +1,7 @@
 <template>
     <ModalWindow
-        deny = "Cancel"
-        acknowledge = "yes"
-        @affirmative = "ReturnColor('b')"
+        negative = "Cancel"
+        affirmative = ''
         @negative =  "ReturnColor()"
     >
     <div class="color_table">
@@ -16,9 +15,9 @@
                 :key="j"
                 :color="item.color"
                 :title="item.name"
+                @click="ReturnColor(item.color)"
             />
         </div>
-        
     </div>
     </ModalWindow>
 </template>
@@ -48,8 +47,8 @@
     
     const emit = defineEmits(['modalReturn']);
 
-    function ReturnColor (color) {
-        if (color === undefined) {
+    function ReturnColor (color = '') {
+        if (color === '') {
             emit('modalReturn', {'status' : false})
         } else {
             emit('modalReturn', {'status' : true, 'payload': color})

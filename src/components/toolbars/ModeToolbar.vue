@@ -8,15 +8,17 @@
         <IconButton
           :selected="false"
           icon="svg:svg-icon-mode-view"
-          @mouseover="changeInfoLabel('view without changing')"
+          @mouseover="changeInfoLabel('view w/o changing')"
           @mouseleave="changeInfoLabel()"
         />
+        <IconSpacer />
         <IconButton
           :selected="false"
           icon="svg:svg-icon-mode-crochet"
           @mouseover="changeInfoLabel('crochet naturally')"
           @mouseleave="changeInfoLabel()"
         />
+        <IconSpacer />
         <IconButton
           :selected="false"
           icon="svg:svg-icon-mode-edit"
@@ -30,12 +32,13 @@
 
 <script setup>
 import { ref, computed } from "vue";
-import { useToolStore } from "../../stores/ToolStore";
+// import { useToolStore } from "../../stores/ToolStore";
 import IconButton from "../gui_elements/IconButton.vue";
 import IconGroup from "../gui_elements/IconGroup.vue";
+import IconSpacer from "../gui_elements/IconSpacer.vue"
 import PillLabel from "../gui_elements/PillLabel.vue";
 
-const tool_store = useToolStore()
+// const tool_store = useToolStore()
 
 const infoLabelText = ref("");
 
@@ -58,11 +61,11 @@ function changeInfoLabel(s = "") {
   left: 25px;
   flex-direction: column;
 }
-#editToolbar #infoLabel {
+#modeToolbar #infoLabel {
   display: flex;
   justify-content: center;
 }
-#editToolbar #Icons {
+#modeToolbar #Icons {
   display: flex;
   justify-content: center;
   column-gap: 7px;

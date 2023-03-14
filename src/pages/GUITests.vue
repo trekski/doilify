@@ -28,12 +28,12 @@ body {
   --color-background-high1: rgb(220, 220, 220); /* hover default */
   --color-background-high2: rgb(220, 230, 245); /* selected default */
   /* main color for text and icons */
-  --color-main: black; /* default */
-  --color-main-high: rgb(40, 95, 170); /* selected */
+  --color-main: #444; /* default */
+  --color-main-high: rgb(40, 95, 220); /* selected */
   --color-main-low: rgb(150, 150, 150); /* inactive */
   /* accent color for icons */
   --color-accent: rgb(30, 80, 140);
-  --color-accent-high: rgb(100, 170, 255);
+  --color-accent-high: rgb(100, 180, 255);
   --color-accent-low: rgb(200, 200, 200);
 }
 #app {

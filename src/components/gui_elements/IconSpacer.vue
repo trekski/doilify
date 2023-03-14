@@ -12,7 +12,7 @@ defineProps({
 });
 </script>
 
-<style>
+<style scoped>
 .icon_spacer {
   border: none;
   background: lightgray;

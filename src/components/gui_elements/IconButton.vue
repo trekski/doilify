@@ -72,7 +72,7 @@ const iconSrc = computed(() => {
 <style>
 .icon_button {
   height: 40px;
-  min-width: 40px;
+  --min-width: 40px;
   border: none;
   border-radius: 2px;
   padding: 0px;

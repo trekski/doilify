@@ -1,5 +1,8 @@
 <template>
-  <div id="modeToolbar">
+  <div
+    id="modeToolbar"
+    :class="{'big_size' : sizeBig}"
+  >
     <div v-if="showLabel" id="infoLabel">
       <PillLabel>{{ infoLabelText }}</PillLabel>
     </div>
@@ -7,27 +10,14 @@
       <IconGroup
         dir="row"
         class="shrinking_container"
-        @mouseover="toggleGrayout(true)"
-        @mouseleave="toggleGrayout(false)"
+        @mouseenter="toggleBigSize(true)"
+        @mouseleave="toggleBigSize(false)"
       >
-        <template v-for=" b in buttons" :key="b.key">
-          <template v-if="b.key == selected_mode">
-            <IconButton
-              :selected="false"
-              :icon="b.icon"
-              :inactive="grayedOut"
-              @mouseover="changeInfoLabel('select a new mode')"
-              @mouseleave="changeInfoLabel()"
-              @click="changeSelectedMode(b.key)"
-            />
-          </template>
-        </template>
-        <IconSpacer v-if="grayedOut" />
         <template v-for=" b in buttons" :key="b.key">
           <IconButton
             :selected="false"
             :icon="b.icon"
-            :class="{'shrinking_item' : true | b.key != selected_mode}"
+            :class="{'shrinking_item' : b.key != selected_mode}"
             @mouseover="changeInfoLabel(b.info)"
             @mouseleave="changeInfoLabel()"
             @click="changeSelectedMode(b.key)"
@@ -49,7 +39,8 @@ import PillLabel from "../gui_elements/PillLabel.vue";
 // const tool_store = useToolStore()
 
 const infoLabelText = ref("");
-const grayedOut = ref(false);
+const sizeBig = ref(false);
+const selected_mode = ref('view')
 
 const buttons = [
   {
@@ -69,10 +60,9 @@ const buttons = [
   }
 ]
 
-const selected_mode = ref('view')
-
 function changeSelectedMode(key) {
   selected_mode.value = key
+  toggleBigSize()
 }
 
 const showLabel = computed(() => {
@@ -83,8 +73,12 @@ function changeInfoLabel(s = "") {
   this.infoLabelText = s;
 }
 
-function toggleGrayout(e) {
-  grayedOut.value = e
+function toggleBigSize(e) {
+  if (e == undefined) {
+    sizeBig.value = !sizeBig.value
+} else {
+    sizeBig.value = e
+  }
 }
 
 </script>
@@ -106,22 +100,25 @@ function toggleGrayout(e) {
   display: flex;
   column-gap: 7px;
 }
-#modeToolbar:hover #Icons {
+#modeToolbar.big_size #Icons {
   max-width: 200px;
 }
 .shrinking_container {
   column-gap: 0px;
-  transition: column-gap 0.2s;
+  transition: column-gap 0.5s;
 }
-.shrinking_container:hover {
-  column-gap: 5px;
+#modeToolbar.big_size .shrinking_container {
+  column-gap: 10px;
+}
+.shrinking_container * {
+  transition: max-width 0.5s;
+  max-width: 100px;
 }
 .shrinking_item {
   max-width: 0px;
-  transition: max-width 0.2s;
   overflow: hidden;
 }
-#modeToolbar:hover .shrinking_item {
+#modeToolbar.big_size .shrinking_item {
   max-width: 100px;
   overflow: hidden;
 }

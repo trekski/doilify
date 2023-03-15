@@ -1,37 +1,37 @@
 <template>
   <div
     id="modeToolbar"
-    :class="{'big_size' : sizeBig}"
   >
-    <div v-if="showLabel" id="infoLabel">
+    <div
+      id="infoLabel"
+      v-if="showLabel"
+    >
       <PillLabel>{{ infoLabelText }}</PillLabel>
     </div>
-    <div id="Icons">
-      <IconGroup
-        dir="row"
-        class="shrinking_container"
-        @mouseenter="toggleBigSize(true)"
-        @mouseleave="toggleBigSize(false)"
-      >
+    <IconGroup
+      id="IconRow"
+      dir="row"
+      :class="{'big_size' : sizeBig}"
+      @mouseenter="toggleBigSize(true)"
+      @mouseleave="toggleBigSize(false)"
+    >
+      <IconButton
+        :selected="false"
+        :inactive="true"
+        icon="none"
+        label-text="mode"
+      />
+      <template v-for=" b in buttons" :key="b.key">
         <IconButton
-          :selected="false"
-          :inactive="true"
-          icon="none"
-          class="shrinking_item"
-          label-text="mode"
+          :selected="b.key == selected_mode & sizeBig"
+          :class="{'fixed_item' : b.key == selected_mode}"
+          :icon="b.icon"
+          @mouseover="changeInfoLabel(b.info)"
+          @mouseleave="changeInfoLabel()"
+          @click="changeSelectedMode(b.key)"
         />
-        <template v-for=" b in buttons" :key="b.key">
-          <IconButton
-            :selected="b.key == selected_mode & sizeBig"
-            :icon="b.icon"
-            :class="{'shrinking_item' : b.key != selected_mode}"
-            @mouseover="changeInfoLabel(b.info)"
-            @mouseleave="changeInfoLabel()"
-            @click="changeSelectedMode(b.key)"
-          />
-        </template>
-      </IconGroup>
-    </div>
+      </template>
+    </IconGroup>
   </div>
 </template>
 
@@ -69,7 +69,7 @@ const buttons = [
 
 function changeSelectedMode(key) {
   selected_mode.value = key
-  toggleBigSize()
+  toggleBigSize(false)
 }
 
 const showLabel = computed(() => {
@@ -91,42 +91,35 @@ function toggleBigSize(e) {
 </script>
 
 <style scoped>
-#modeToolbar {
-  position: fixed;
+
+#infoLabel {
   display: flex;
   justify-content: center;
+  position: fixed;
+  bottom: 75px;
+  left: 25px;
+}
+
+#IconRow {
+  position: fixed;
   bottom: 25px;
   left: 25px;
-  flex-direction: column;
-}
-#modeToolbar #infoLabel {
   display: flex;
-  justify-content: center;
-}
-#modeToolbar #Icons {
-  display: flex;
-  column-gap: 7px;
-}
-#modeToolbar.big_size #Icons {
-  max-width: 200px;
-}
-.shrinking_container {
   column-gap: 0px;
-  transition: column-gap 0.5s;
+  transition: column-gap 1s;
 }
-#modeToolbar.big_size .shrinking_container {
+#IconRow.big_size {
   column-gap: 10px;
 }
-.shrinking_container * {
+#IconRow button {
   transition: max-width 0.3s, opacity 0.3s;
-}
-.shrinking_item {
   max-width: 0px;
+  opacity: 0;
   overflow: hidden;
-  opacity: 0%;
 }
-#modeToolbar.big_size .shrinking_item {
-  max-width: 100px;
-  opacity: 100%;
+
+#IconRow.big_size button, #IconRow button.fixed_item {
+  max-width: 50px;
+  opacity: 1;
 }
 </style>

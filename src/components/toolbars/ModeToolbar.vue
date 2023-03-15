@@ -13,9 +13,16 @@
         @mouseenter="toggleBigSize(true)"
         @mouseleave="toggleBigSize(false)"
       >
+        <IconButton
+          :selected="false"
+          :inactive="true"
+          icon="none"
+          class="shrinking_item"
+          label-text="mode"
+        />
         <template v-for=" b in buttons" :key="b.key">
           <IconButton
-            :selected="false"
+            :selected="b.key == selected_mode & sizeBig"
             :icon="b.icon"
             :class="{'shrinking_item' : b.key != selected_mode}"
             @mouseover="changeInfoLabel(b.info)"
@@ -111,15 +118,15 @@ function toggleBigSize(e) {
   column-gap: 10px;
 }
 .shrinking_container * {
-  transition: max-width 0.5s;
-  max-width: 100px;
+  transition: max-width 0.3s, opacity 0.3s;
 }
 .shrinking_item {
   max-width: 0px;
   overflow: hidden;
+  opacity: 0%;
 }
 #modeToolbar.big_size .shrinking_item {
   max-width: 100px;
-  overflow: hidden;
+  opacity: 100%;
 }
 </style>

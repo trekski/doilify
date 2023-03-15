@@ -26,5 +26,6 @@ defineProps({
   font-size: 13px;
   font-style: italic;
   opacity: 0.7;
+  width: fit-content;
 }
 </style>

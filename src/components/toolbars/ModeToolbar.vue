@@ -3,8 +3,8 @@
     id="modeToolbar"
   >
     <div
-      id="infoLabel"
       v-if="showLabel"
+      id="infoLabel"  
     >
       <PillLabel>{{ infoLabelText }}</PillLabel>
     </div>
@@ -40,7 +40,7 @@ import { ref, computed } from "vue";
 // import { useToolStore } from "../../stores/ToolStore";
 import IconButton from "../gui_elements/IconButton.vue";
 import IconGroup from "../gui_elements/IconGroup.vue";
-import IconSpacer from "../gui_elements/IconSpacer.vue"
+// import IconSpacer from "../gui_elements/IconSpacer.vue"
 import PillLabel from "../gui_elements/PillLabel.vue";
 
 // const tool_store = useToolStore()

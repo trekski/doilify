@@ -93,6 +93,7 @@ function toggleBigSize(e) {
   left: 25px;
   display: flex;
   flex-direction: column;
+  --unfold-time: 0.3s;
 }
 
 #infoLabel {
@@ -101,14 +102,14 @@ function toggleBigSize(e) {
 
 #IconRow {
   column-gap: 0px;
-  transition: column-gap 0.3s;
+  transition: column-gap var(--unfold-time);
   align-self: start;
 }
 #IconRow.big_size {
   column-gap: 10px;
 }
 #IconRow button {
-  transition: max-width 0.3s, opacity 0.3s;
+  transition: max-width var(--unfold-time), opacity var(--unfold-time);
   max-width: 0px;
   opacity: 0;
   overflow: hidden;

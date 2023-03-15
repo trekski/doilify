@@ -2,12 +2,7 @@
   <div
     id="modeToolbar"
   >
-    <div
-      v-if="showLabel"
-      id="infoLabel"  
-    >
-      <PillLabel>{{ infoLabelText }}</PillLabel>
-    </div>
+    <PillLabel v-if="showLabel & sizeBig" id="infoLabel" >{{ infoLabelText }}</PillLabel>
     <IconGroup
       id="IconRow"
       dir="row"
@@ -92,21 +87,22 @@ function toggleBigSize(e) {
 
 <style scoped>
 
-#infoLabel {
-  display: flex;
-  justify-content: center;
-  position: fixed;
-  bottom: 75px;
-  left: 25px;
-}
-
-#IconRow {
+#modeToolbar {
   position: fixed;
   bottom: 25px;
   left: 25px;
   display: flex;
+  flex-direction: column;
+}
+
+#infoLabel {
+  align-self: center;
+}
+
+#IconRow {
   column-gap: 0px;
-  transition: column-gap 1s;
+  transition: column-gap 0.3s;
+  align-self: start;
 }
 #IconRow.big_size {
   column-gap: 10px;
